@@ -1,146 +1,415 @@
-# tut00 — Python Basics (prerequisites for Objects)
+# tut00 — Python Basics
 
-> Just enough Python to make [`tut01_object.md`](tut01_object.md) land. If you already know another language, this chapter is mostly *"how does Python spell this thing?"* — short and brisk.
+Just enough Python to make Objects (tut01) feel natural.
+Each sub-topic = short notes + a runnable `.py` file in `../python_basics/`.
 
 ---
 
 ## 0.1 — Running Python & the REPL
 
-**Concept.** There are three ways you'll run Python during this course:
+There are three ways to run Python.
 
-1. **A script file** — write code in `something.py`, run it with `python something.py`. This is the default for everything we save in `python_basics/`.
-2. **The REPL** (Read–Eval–Print–Loop) — run `python` with no arguments and you get an interactive prompt (`>>>`). Type an expression, it prints the value. Great for poking at things.
-3. **A one-liner** — `python -c "print(2+2)"` runs a single statement from the command line. Useful in shell scripts.
+**1. A script file.**
+Write code in `something.py`, then run it from a terminal.
 
-**Three details that trip people up:**
-
-- **No semicolons, no braces.** Python uses **indentation** to mark blocks. The indentation level must be consistent within a block (4 spaces is the convention).
-- **`print()` is a function, not a statement.** Parentheses are required: `print("hi")`. (Python 2 differed; ignore Python 2.)
-- **The REPL auto-displays expressions.** In a `.py` file, just writing `2 + 2` produces no output — you must `print(2 + 2)`. In the REPL, typing `2 + 2` shows `4` because the REPL prints the value of every expression.
-
-**Comments.**
-
-```python
-# Single-line comment with #
-x = 5  # comments can also trail code
-
-"""
-A triple-quoted string used at the top of a function/class/module
-acts as a docstring — accessible via help() and __doc__.
-A bare triple-quoted string elsewhere is a no-op expression that
-people sometimes (mis)use as a multi-line comment.
-"""
+```bash
+python3 something.py
 ```
 
-**Coming from Java/C++/JS:**
+**2. The REPL** (interactive prompt).
+Type `python3` with no arguments.
+Each line is evaluated immediately.
 
-- No `main()` function is required to run a file — top-level code runs top to bottom. (There *is* a `if __name__ == "__main__":` idiom — sub-topic 0.8.)
-- No compile step. `python file.py` runs straight from source. (Internally it compiles to bytecode and caches in `__pycache__/`, but that's invisible.)
-- No braces means **whitespace is syntax**. Mixing tabs and spaces is a *syntax error* in Python 3.
-
-**Pitfalls.**
-
-1. **`IndentationError`** — the most common first-week error. Always use the same indent (4 spaces) inside a block. Configure your editor to insert spaces for Tab.
-2. **Running the wrong Python.** Many systems have both `python` (old Python 2) and `python3`. On modern Linux/Mac, `python3` is safe; on Windows, `python` usually works. We'll just say `python` in this course — substitute whichever is on your PATH.
-3. **Forgetting parentheses on `print`** — gives `SyntaxError`.
-
-**Runnable examples:** [`../python_basics/00a_running_python.py`](../python_basics/00a_running_python.py)
-
-**Run it:**
-```bash
-python "Python Tut 2026/python_basics/00a_running_python.py"
-```
-
-**Try the REPL too:**
-```bash
-python
+```text
+$ python3
 >>> 2 + 2
 4
 >>> name = "Akshay"
 >>> f"Hello, {name}!"
 'Hello, Akshay!'
->>> exit()   # or Ctrl-D
+>>> exit()
+```
+
+**3. A one-liner.**
+
+```bash
+python3 -c "print(2 + 2)"
+```
+
+---
+
+### `print()` is a function
+
+Parentheses are required.
+
+```python
+print("hi")
+```
+
+---
+
+### Indentation defines blocks
+
+No braces.
+4 spaces per level.
+
+```python
+if x > 5:
+    print("big")
+    print("still inside")
+print("outside")
+```
+
+---
+
+### Bare expressions are silent in a script
+
+The REPL shows the value of any expression you type.
+A `.py` file does not — you must call `print()`.
+
+```python
+2 + 2          # script: nothing shown
+print(2 + 2)   # script: 4
+```
+
+---
+
+### Comments and docstrings
+
+```python
+# single-line comment
+x = 5  # trailing comment
+
+def greet(name):
+    """A docstring — stored in greet.__doc__."""
+    return f"Hi, {name}!"
+```
+
+---
+
+### Common first-week errors
+
+`SyntaxError` → missing parentheses on `print`, missing `:`, or a typo.
+`IndentationError` → mixed or inconsistent indent.
+`TabError` → tabs mixed with spaces.
+
+---
+
+**Runnable examples:** [`../python_basics/00a_running_python.py`](../python_basics/00a_running_python.py)
+
+```bash
+python3 "python_tut_2026/python_basics/00a_running_python.py"
 ```
 
 ---
 
 ## 0.2 — Variables, names, and assignment
 
-**Concept.** The single most important sentence about Python variables:
+The single most important sentence:
 
-> **A variable is a name bound to an object.** It is not a box that holds a value; it is a *label* pointing at a value.
+> A variable is a **name bound to an object**.
+> Not a box that holds a value.
+> A label pointing at a value.
 
 When you write `x = 5`:
 
-1. Python creates (or reuses) the integer object `5`.
-2. The name `x` is bound to that object in the current namespace.
+1. Python creates the integer object `5`.
+2. The name `x` is bound to it.
 
-When you later write `x = "hi"`:
+When you write `x = "hi"` after:
 
 1. Python creates the string object `"hi"`.
-2. The name `x` is re-bound to the new object. The old `5` is unaffected and (if no other name references it) eventually garbage-collected.
+2. `x` is re-bound to the new object.
+3. The old `5` is unaffected.
 
-This is why Python is **dynamically typed**: the *name* `x` has no type — the *object* it points to does. A name can point to any object, and you can rebind it to a different type any time.
+---
 
-**Three rules of names.**
+### No declarations, no fixed type
 
-1. **No declarations.** First assignment creates the name. `int x;` doesn't exist in Python.
-2. **No type on the name.** `x = 5; x = "hi"` is legal. Type hints (`x: int = 5`) are optional documentation, not enforced at runtime.
-3. **Multiple names can point to the same object.** `a = b` makes `a` *another label* for the object `b` points to — no copy is made.
-
-**Tools to introspect names and bindings:**
-
-| What you want to know | How |
-|---|---|
-| What type is bound to `x`? | `type(x)` |
-| Are `a` and `b` the same object? | `a is b` |
-| What's the object's identity? | `id(x)` |
-| What names exist in the current scope? | `dir()` (no args) |
-| What's bound to a specific name (as a dict)? | `globals()`, `locals()` |
-
-**Assignment forms.**
+First assignment creates the name.
+The name has no type — the object does.
 
 ```python
-x = 5                    # simple assignment
-x, y = 1, 2              # tuple unpacking (very Pythonic)
-x, y = y, x              # swap — no temp variable needed
-a = b = c = 0            # chained: all three names → same object
-first, *rest = [1, 2, 3] # extended unpacking: first=1, rest=[2,3]
-x: int = 5               # annotated assignment (type hint, optional)
+x = 5
+print(type(x).__name__)   # int
+
+x = "hello"
+print(type(x).__name__)   # str
 ```
 
-**Augmented assignment** (`+=`, `-=`, etc.) has a subtlety:
+---
 
-- For **immutable** objects (`int`, `str`, `tuple`), `x += 1` is equivalent to `x = x + 1` — a *new* object is created, `x` is rebound.
-- For **mutable** objects (`list`), `lst += [4]` calls `lst.__iadd__([4])` which mutates the list in place. Same object, just changed.
+### `a = b` does not copy
 
-**Coming from Java/C++/JS:**
+Both names point to the **same** object.
 
-- **Java/C++:** Drop the mental model of "variables are typed boxes." Python is closer to Java's *reference* variables — only references exist, no primitives. Assignment never copies.
-- **JS:** Closest analogue. Python's `x = …` is like JS `let x = …` (no declaration keyword). But Python has no `const`. Convention is `UPPER_SNAKE_CASE` for constants, enforced by discipline, not the language.
-- **C:** A Python name is *not* a pointer you can manipulate. You can't dereference it, take its address, or do pointer arithmetic. You can only rebind it.
+```python
+a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)   # [1, 2, 3, 4]
+```
 
-**Naming rules and conventions.**
+Mutate through one name → see the change through the other.
 
-- **Rules:** letters, digits, underscores; can't start with a digit; case-sensitive (`Name` ≠ `name`); can't be a reserved keyword (`for`, `class`, `lambda`, etc.). See `import keyword; print(keyword.kwlist)`.
-- **PEP 8 conventions** (style guide everyone follows):
-  - `snake_case` for variables, functions, modules: `user_count`, `read_file`.
-  - `PascalCase` for classes: `UserAccount`.
-  - `UPPER_SNAKE_CASE` for constants: `MAX_RETRIES`.
-  - `_leading_underscore` = "internal, don't touch" (convention, not enforced).
-  - `__double_leading_underscore` = name mangling (covered in tut01.7).
-  - `__dunder__` = reserved for Python's protocol methods. Don't invent your own.
+---
 
-**Pitfalls.**
+### Rebinding is not mutation
 
-1. **Shadowing built-ins.** Don't name a variable `list`, `dict`, `str`, `id`, `type`, `sum`, `max`. You'll silently lose access to the built-in for the rest of that scope.
-2. **`UnboundLocalError`.** Inside a function, if you *assign* to a name anywhere in the function, Python treats it as local *for the whole function* — even on lines before the assignment. Touching it before the assignment raises `UnboundLocalError`. (Real fix is `global` or `nonlocal`; covered in tut00.7.)
-3. **Assuming `a = b` copies.** For mutable objects, both names now point to the same object. Modify through one, see the change through the other.
-4. **Confusing `=` (assignment) with `==` (equality).** `if x = 5:` is a SyntaxError in Python — unlike C, you can't accidentally use `=` in a condition. (Walrus `:=` is the explicit "assign-in-expression" form, added in 3.8.)
+`a = [99]` makes `a` point to a new list.
+`b` still points to the old one.
+
+```python
+a = [1, 2, 3]
+b = a
+a = [99]
+print(a)   # [99]
+print(b)   # [1, 2, 3]
+```
+
+---
+
+### Unpacking
+
+Assign several names in one shot.
+
+```python
+x, y = 1, 2
+x, y = y, x          # swap, no temp variable
+first, *rest = [10, 20, 30, 40]
+```
+
+---
+
+### Chained assignment
+
+All names point to the **same** object.
+
+```python
+p = q = r = []
+p.append("oops")
+print(q)   # ['oops']
+```
+
+If you wanted three separate empty lists, do it explicitly:
+
+```python
+p, q, r = [], [], []
+```
+
+---
+
+### Type hints are documentation, not enforcement
+
+```python
+age: int = 30
+age = "thirty"   # legal! Python does not check at runtime.
+```
+
+Tools like `mypy` and `pyright` check hints.
+Python itself ignores them.
+
+---
+
+### Don't shadow built-ins
+
+Names like `list`, `dict`, `str`, `id`, `type`, `sum`, `max` are built-in.
+Don't reuse them.
+
+```python
+list = [1, 2, 3]     # now list() the type is hidden in this scope
+```
+
+---
+
+### Naming conventions (PEP 8)
+
+- `snake_case` → variables, functions, modules
+- `PascalCase` → classes
+- `UPPER_SNAKE_CASE` → constants
+- `_leading_underscore` → "internal, don't touch"
+- `__dunder__` → reserved for Python's protocols
+
+---
 
 **Runnable examples:** [`../python_basics/00b_variables.py`](../python_basics/00b_variables.py)
 
-**Run it:**
 ```bash
 python3 "python_tut_2026/python_basics/00b_variables.py"
+```
+
+---
+
+## 0.3 — Basic types & literals
+
+The built-in types you'll use 95% of the time.
+
+| Type    | Example literal           | What it is                         |
+|---------|---------------------------|------------------------------------|
+| `int`   | `42`, `-7`, `1_000_000`   | Arbitrary-precision integer        |
+| `float` | `3.14`, `1.5e-3`          | 64-bit IEEE-754 double             |
+| `bool`  | `True`, `False`           | A subtype of `int`                 |
+| `str`   | `"hi"`, `'hi'`            | Immutable text                     |
+| `None`  | `None`                    | The single "no value" object       |
+
+---
+
+### `int` — unlimited size
+
+Python integers grow as needed.
+No 32- or 64-bit cap.
+
+```python
+print(2 ** 200)
+```
+
+Different bases:
+
+```python
+print(0xff)       # 255 — hex
+print(0o377)      # 255 — octal
+print(0b1111)     # 15  — binary
+print(1_000_000)  # underscores for readability
+```
+
+---
+
+### `float` — has precision gotchas
+
+Same as Java `double` or C `double`.
+
+```python
+print(0.1 + 0.2)               # 0.30000000000000004
+print(0.1 + 0.2 == 0.3)        # False
+```
+
+Use `math.isclose` to compare floats safely.
+
+```python
+import math
+print(math.isclose(0.1 + 0.2, 0.3))   # True
+```
+
+---
+
+### Division operators
+
+```python
+print(7 / 2)    # 3.5   — true division, always float
+print(7 // 2)   # 3     — floor division
+print(7 % 2)    # 1     — modulo
+print(2 ** 10)  # 1024  — power
+```
+
+`//` rounds toward negative infinity:
+
+```python
+print(-7 // 2)   # -4, not -3
+```
+
+---
+
+### `bool` is a subtype of `int`
+
+`True == 1`, `False == 0`.
+
+```python
+print(True + True)            # 2
+print(sum([True, False, True]))  # 2
+```
+
+---
+
+### Truthiness
+
+Every object can be tested with `if x:`.
+
+Falsy values:
+
+```text
+False, None, 0, 0.0, "", [], {}, (), set()
+```
+
+Everything else is truthy.
+
+Surprises:
+
+```python
+print(bool("False"))   # True — non-empty string
+print(bool([0]))       # True — list has one item
+```
+
+---
+
+### `None` — the one sentinel
+
+There is exactly one `None`.
+Check with `is`, never `==`.
+
+```python
+def f():
+    pass
+
+print(f() is None)   # True
+```
+
+---
+
+### Type conversions
+
+The type name is the constructor.
+
+```python
+print(int("42"))        # 42
+print(int("ff", 16))    # 255
+print(int(3.9))         # 3   — TRUNCATES, doesn't round
+print(float("3.14"))    # 3.14
+print(str(42))          # '42'
+print(list("abc"))      # ['a', 'b', 'c']
+```
+
+Common error — `int()` won't parse a decimal string:
+
+```python
+int("3.9")   # ValueError
+```
+
+Workaround:
+
+```python
+int(float("3.9"))   # 3
+```
+
+---
+
+### `type()` vs `isinstance()`
+
+`isinstance` accepts subclasses (so `bool` counts as `int`).
+Use `isinstance` by default.
+
+```python
+print(type(True) is int)        # False — type is bool
+print(isinstance(True, int))    # True  — bool is a subclass
+```
+
+Check against several types in one call:
+
+```python
+isinstance(x, (int, float))
+```
+
+---
+
+### Three "huh?" facts worth remembering
+
+1. `0.1 + 0.2 != 0.3` — floating point.
+2. `True + True == 2` — bool *is* int.
+3. `round(2.5) == 2` and `round(3.5) == 4` — Python rounds half-to-even.
+
+---
+
+**Runnable examples:** [`../python_basics/00c_basic_types.py`](../python_basics/00c_basic_types.py)
+
+```bash
+python3 "python_tut_2026/python_basics/00c_basic_types.py"
 ```
