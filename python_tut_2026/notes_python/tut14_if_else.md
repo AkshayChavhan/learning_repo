@@ -263,6 +263,236 @@ Available from Python 3.10 onward.
 
 ---
 
+## More `match` patterns (Python 3.10+)
+
+The basic `case 200:` form only checks equality.
+`match` is much more powerful — it can match shapes, capture values, and add guards.
+
+---
+
+### OR patterns — match several values in one case
+
+Use `|` between values to share one branch.
+Read it as "or".
+
+```python
+method = "POST"
+
+match method:
+    case "GET" | "POST":
+        print("read or write")
+    case "DELETE":
+        print("delete")
+    case _:
+        print("other")
+```
+
+```text
+read or write
+```
+
+Works with numbers too.
+
+```python
+n = 2
+
+match n:
+    case 1 | 2 | 3:
+        print("small")
+    case _:
+        print("big")
+```
+
+```text
+small
+```
+
+---
+
+### Case guards — add an `if` to a case
+
+A guard is an extra `if` after the pattern.
+The case only runs when the pattern matches **and** the guard is true.
+
+```python
+x = 7
+
+match x:
+    case n if n < 0:
+        print("negative")
+    case n if n > 0:
+        print("positive")
+    case _:
+        print("zero")
+```
+
+```text
+positive
+```
+
+The name (`n` here) captures the matched value so the guard can use it.
+
+---
+
+### OR patterns + guards together
+
+You can combine both in one case.
+Useful for "one of these values, but only when some condition holds".
+
+```python
+day = 3
+month = 4
+
+match day:
+    case 1 | 2 | 3 | 4 | 5 if month == 4:
+        print("early April")
+    case 1 | 2 | 3 | 4 | 5:
+        print("early in some other month")
+    case _:
+        print("later in the month")
+```
+
+```text
+early April
+```
+
+---
+
+### Capture patterns — bind a name
+
+A bare name in a pattern **captures** the matched value into that name.
+Then you can use it inside the case body.
+
+```python
+point = (3, 4)
+
+match point:
+    case (x, y):
+        print(f"x={x}, y={y}")
+```
+
+```text
+x=3, y=4
+```
+
+Capture also works inside lists with `*rest` to grab the leftovers.
+
+```python
+nums = [10, 20, 30, 40]
+
+match nums:
+    case [first, *rest]:
+        print(first, rest)
+```
+
+```text
+10 [20, 30, 40]
+```
+
+---
+
+### Sequence patterns — match the shape of a list/tuple
+
+Patterns can describe length and contents.
+`_` matches any single item without binding it.
+
+```python
+seq = [1, 2, 3]
+
+match seq:
+    case [1, 2, 3]:
+        print("exact match")
+    case [_, _, x]:
+        print(f"three items, last is {x}")
+    case [first, *rest]:
+        print(f"first={first}, rest={rest}")
+    case _:
+        print("something else")
+```
+
+```text
+exact match
+```
+
+Cases are tried top to bottom — the first match wins.
+
+---
+
+### Mapping (dict) patterns — match keys and capture values
+
+You can match on dict keys.
+Extra keys in the dict are ignored — the pattern only checks the keys it names.
+
+```python
+event = {"type": "user", "name": "Akshay", "age": 30}
+
+match event:
+    case {"type": "user", "name": name}:
+        print(f"user: {name}")
+    case {"type": "admin", "name": name}:
+        print(f"admin: {name}")
+    case _:
+        print("unknown event")
+```
+
+```text
+user: Akshay
+```
+
+`name` is captured from the dict and used in the body.
+
+---
+
+### Class patterns — match objects by attribute
+
+You can match instances of a class and pull out attributes.
+Works great with `dataclass`.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: int
+    y: int
+
+p = Point(0, 0)
+
+match p:
+    case Point(x=0, y=0):
+        print("origin")
+    case Point(x=0, y=y):
+        print(f"on Y axis at {y}")
+    case Point(x=x, y=0):
+        print(f"on X axis at {x}")
+    case Point(x=x, y=y):
+        print(f"somewhere else: ({x}, {y})")
+```
+
+```text
+origin
+```
+
+---
+
+### Quick recap
+
+```text
+case 200:                              # literal
+case "GET" | "POST":                   # OR pattern
+case x if x > 0:                       # guard
+case 1 | 2 | 3 | 4 | 5 if month == 4:  # OR + guard
+case (x, y):                           # capture from tuple
+case [first, *rest]:                   # sequence + rest
+case [1, 2, 3]:                        # exact sequence
+case [_, _, x]:                        # shape + capture
+case {"type": "user", "name": name}:   # mapping
+case Point(x=0, y=0):                  # class
+case _:                                # default
+```
+
+---
+
 ## Common pitfalls
 
 **1. Using `=` instead of `==`** — assignment vs comparison.
