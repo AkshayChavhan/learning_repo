@@ -21,12 +21,12 @@
 - [x] Scope basics (global vs local)
 
 ### 3. Data Types
-- [ ] Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`
-- [ ] Reference types: `object`, `array`, `function`
-- [ ] `typeof` operator
-- [ ] Dynamic typing
-- [ ] Type coercion (implicit vs explicit)
-- [ ] Truthy & falsy values
+- [x] Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`
+- [x] Reference types: `object`, `array`, `function`
+- [x] `typeof` operator
+- [x] Dynamic typing
+- [ ] Type coercion (implicit vs explicit)  <!-- deeper dive in §4 Operators -->
+- [x] Truthy & falsy values
 
 ### 4. Operators
 - [ ] Arithmetic operators (`+`, `-`, `*`, `/`, `%`, `**`)

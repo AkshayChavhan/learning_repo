@@ -15,19 +15,20 @@
 - [x] ★🔥 What's the difference between `var`, `let`, and `const`? (scope, hoisting, TDZ, re-assign/re-declare) <!-- tut02 -->
 - [x] Can you change a `const` object? (yes — locks binding, not contents) <!-- tut02 -->
 - [ ] ★🔥 Explain `==` vs `===`. When does coercion bite?
-- [ ] ★ What are the data types in JavaScript? (primitives vs reference)
-- [ ] ★ What's the difference between `null` and `undefined`?
-- [ ] Explain implicit type coercion with examples.
-- [ ] Is JavaScript statically or dynamically typed?
-- [ ] What is `NaN`? Why is `NaN === NaN` false? How to check for it?
-- [ ] ★🔥 Pass-by-value vs pass-by-reference — explain with an example.
-- [ ] What is `typeof null`? Why? (`"object"` — historical bug)
+- [x] ★ What are the data types in JavaScript? (primitives vs reference) <!-- tut03 -->
+- [x] ★ What's the difference between `null` and `undefined`? <!-- tut03 -->
+- [ ] Explain implicit type coercion with examples.  <!-- §4 -->
+- [x] Is JavaScript statically or dynamically typed? <!-- tut03 -->
+- [ ] What is `NaN`? Why is `NaN === NaN` false? How to check for it?  <!-- §6 -->
+- [x] ★🔥 Pass-by-value vs pass-by-reference — explain with an example. <!-- tut03 -->
+- [x] What is `typeof null`? Why? (`"object"` — historical bug) <!-- tut03 -->
 - [x] What is strict mode (`"use strict"`) and what does it change? <!-- tut01 -->
 - [x] ★ Is JavaScript single-threaded? <!-- tut01 -->
 - [x] ★ Is JavaScript compiled or interpreted? (trick: both — JIT) <!-- tut01 -->
 - [x] Which engines run JS? (V8, SpiderMonkey, JavaScriptCore) <!-- tut01 -->
 - [x] What are the ways to run JS? (console, &lt;script&gt;, Node, online) <!-- tut01 -->
-- [ ] What are truthy and falsy values? List all falsy values.
+- [x] What are truthy and falsy values? List all falsy values. <!-- tut03 -->
+- [x] Why is `[]` / `{}` truthy but `""` falsy? (objects always truthy) <!-- tut03 -->
 - [ ] 🧩 `1 + "2" + "2"`, `"5" - 2`, `[] + {}`, `[] + []`, `true + true` — predict the output.
 
 ---
