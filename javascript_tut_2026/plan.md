@@ -7,18 +7,18 @@
 ## 🟢 PART 1 — BASICS (Foundations)
 
 ### 1. Introduction & Setup
-- [ ] What is JavaScript? History & where it runs (browser, Node.js)
-- [ ] How to run JS: browser console, `<script>` tag, Node.js, online editors
-- [ ] JavaScript engines (V8, SpiderMonkey) — high-level overview
-- [ ] Statements, expressions & semicolons
-- [ ] Comments (single-line, multi-line)
-- [ ] `"use strict"` mode
+- [x] What is JavaScript? History & where it runs (browser, Node.js)
+- [x] How to run JS: browser console, `<script>` tag, Node.js, online editors
+- [x] JavaScript engines (V8, SpiderMonkey) — high-level overview
+- [x] Statements, expressions & semicolons
+- [x] Comments (single-line, multi-line)
+- [x] `"use strict"` mode
 
 ### 2. Variables & Constants
-- [ ] `var`, `let`, `const` — differences
-- [ ] Variable naming rules & conventions
-- [ ] Hoisting (intro level)
-- [ ] Scope basics (global vs local)
+- [x] `var`, `let`, `const` — differences
+- [x] Variable naming rules & conventions
+- [x] Hoisting (intro level)
+- [x] Scope basics (global vs local)
 
 ### 3. Data Types
 - [ ] Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`
