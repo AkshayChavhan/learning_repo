@@ -15,10 +15,10 @@
 - [x] `"use strict"` mode
 
 ### 2. Variables & Constants
-- [ ] `var`, `let`, `const` — differences
-- [ ] Variable naming rules & conventions
-- [ ] Hoisting (intro level)
-- [ ] Scope basics (global vs local)
+- [x] `var`, `let`, `const` — differences
+- [x] Variable naming rules & conventions
+- [x] Hoisting (intro level)
+- [x] Scope basics (global vs local)
 
 ### 3. Data Types
 - [ ] Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`

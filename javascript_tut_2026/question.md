@@ -12,7 +12,8 @@
 
 ## §2–3 Variables, Data Types & Coercion
 
-- [ ] ★🔥 What's the difference between `var`, `let`, and `const`? (scope, hoisting, TDZ, re-assign/re-declare)
+- [x] ★🔥 What's the difference between `var`, `let`, and `const`? (scope, hoisting, TDZ, re-assign/re-declare) <!-- tut02 -->
+- [x] Can you change a `const` object? (yes — locks binding, not contents) <!-- tut02 -->
 - [ ] ★🔥 Explain `==` vs `===`. When does coercion bite?
 - [ ] ★ What are the data types in JavaScript? (primitives vs reference)
 - [ ] ★ What's the difference between `null` and `undefined`?
