@@ -21,7 +21,11 @@
 - [ ] What is `NaN`? Why is `NaN === NaN` false? How to check for it?
 - [ ] ★🔥 Pass-by-value vs pass-by-reference — explain with an example.
 - [ ] What is `typeof null`? Why? (`"object"` — historical bug)
-- [ ] What is strict mode (`"use strict"`) and what does it change?
+- [x] What is strict mode (`"use strict"`) and what does it change? <!-- tut01 -->
+- [x] ★ Is JavaScript single-threaded? <!-- tut01 -->
+- [x] ★ Is JavaScript compiled or interpreted? (trick: both — JIT) <!-- tut01 -->
+- [x] Which engines run JS? (V8, SpiderMonkey, JavaScriptCore) <!-- tut01 -->
+- [x] What are the ways to run JS? (console, &lt;script&gt;, Node, online) <!-- tut01 -->
 - [ ] What are truthy and falsy values? List all falsy values.
 - [ ] 🧩 `1 + "2" + "2"`, `"5" - 2`, `[] + {}`, `[] + []`, `true + true` — predict the output.
 
