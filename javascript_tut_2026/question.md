@@ -14,10 +14,10 @@
 
 - [x] ★🔥 What's the difference between `var`, `let`, and `const`? (scope, hoisting, TDZ, re-assign/re-declare) <!-- tut02 -->
 - [x] Can you change a `const` object? (yes — locks binding, not contents) <!-- tut02 -->
-- [ ] ★🔥 Explain `==` vs `===`. When does coercion bite?
+- [x] ★🔥 Explain `==` vs `===`. When does coercion bite? <!-- tut04 -->
 - [x] ★ What are the data types in JavaScript? (primitives vs reference) <!-- tut03 -->
 - [x] ★ What's the difference between `null` and `undefined`? <!-- tut03 -->
-- [ ] Explain implicit type coercion with examples.  <!-- §4 -->
+- [x] Explain implicit type coercion with examples. <!-- tut04 -->
 - [x] Is JavaScript statically or dynamically typed? <!-- tut03 -->
 - [ ] What is `NaN`? Why is `NaN === NaN` false? How to check for it?  <!-- §6 -->
 - [x] ★🔥 Pass-by-value vs pass-by-reference — explain with an example. <!-- tut03 -->
@@ -29,16 +29,17 @@
 - [x] What are the ways to run JS? (console, &lt;script&gt;, Node, online) <!-- tut01 -->
 - [x] What are truthy and falsy values? List all falsy values. <!-- tut03 -->
 - [x] Why is `[]` / `{}` truthy but `""` falsy? (objects always truthy) <!-- tut03 -->
-- [ ] 🧩 `1 + "2" + "2"`, `"5" - 2`, `[] + {}`, `[] + []`, `true + true` — predict the output.
+- [x] 🧩 `1 + "2" + "2"`, `"5" - 2`, `true + true` — predict the output. <!-- tut04 (basic coercion); [] + {} edge cases later -->
+- [ ] 🧩 `[] + {}`, `[] + []`, `{}+[]` — deep coercion edge cases.  <!-- revisit after Objects §11 -->
 
 ---
 
 ## §7 Conditionals & Operators
 
-- [ ] What does optional chaining (`?.`) do and where does it short-circuit?
-- [ ] What is nullish coalescing (`??`) and how does it differ from `||`?
+- [x] What does optional chaining (`?.`) do and where does it short-circuit? <!-- tut04 -->
+- [x] What is nullish coalescing (`??`) and how does it differ from `||`? <!-- tut04 -->
 - [ ] What are logical assignment operators (`||=`, `&&=`, `??=`)?
-- [ ] Explain short-circuit evaluation.
+- [x] Explain short-circuit evaluation. <!-- tut04 -->
 - [ ] 🧩 Ternary / post-increment / operator precedence output puzzles.
 
 ---

@@ -25,18 +25,18 @@
 - [x] Reference types: `object`, `array`, `function`
 - [x] `typeof` operator
 - [x] Dynamic typing
-- [ ] Type coercion (implicit vs explicit)  <!-- deeper dive in §4 Operators -->
+- [x] Type coercion (implicit vs explicit)  <!-- covered in §4 Operators (tut04) -->
 - [x] Truthy & falsy values
 
 ### 4. Operators
-- [ ] Arithmetic operators (`+`, `-`, `*`, `/`, `%`, `**`)
-- [ ] Assignment operators (`=`, `+=`, `-=`, etc.)
-- [ ] Comparison operators (`==` vs `===`, `!=` vs `!==`, `<`, `>`)
-- [ ] Logical operators (`&&`, `||`, `!`)
-- [ ] Ternary operator (`? :`)
-- [ ] Nullish coalescing (`??`)
-- [ ] Optional chaining (`?.`)
-- [ ] Operator precedence
+- [x] Arithmetic operators (`+`, `-`, `*`, `/`, `%`, `**`)
+- [x] Assignment operators (`=`, `+=`, `-=`, etc.)
+- [x] Comparison operators (`==` vs `===`, `!=` vs `!==`, `<`, `>`)
+- [x] Logical operators (`&&`, `||`, `!`)
+- [x] Ternary operator (`? :`)
+- [x] Nullish coalescing (`??`)
+- [x] Optional chaining (`?.`)
+- [x] Operator precedence
 
 ### 5. Strings
 - [ ] String creation (quotes, template literals)
