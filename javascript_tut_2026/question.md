@@ -44,7 +44,8 @@
 - [x] What is nullish coalescing (`??`) and how does it differ from `||`? <!-- tut04 -->
 - [ ] What are logical assignment operators (`||=`, `&&=`, `??=`)?
 - [x] Explain short-circuit evaluation. <!-- tut04 -->
-- [ ] 🧩 Ternary / post-increment / operator precedence output puzzles.
+- [x] Ternary usage; `if-else` vs `switch`; switch fall-through & `===` matching. <!-- tut07 -->
+- [ ] 🧩 Post-increment / operator precedence output puzzles.
 
 ---
 

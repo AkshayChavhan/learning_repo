@@ -53,10 +53,10 @@
 - [x] Floating-point precision issues
 
 ### 7. Conditionals
-- [ ] `if`, `else if`, `else`
-- [ ] `switch` statement
-- [ ] Ternary operator usage
-- [ ] Short-circuit evaluation
+- [x] `if`, `else if`, `else`
+- [x] `switch` statement
+- [x] Ternary operator usage
+- [x] Short-circuit evaluation
 
 ### 8. Loops
 - [ ] `for` loop
