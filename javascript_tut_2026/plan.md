@@ -21,22 +21,22 @@
 - [x] Scope basics (global vs local)
 
 ### 3. Data Types
-- [ ] Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`
-- [ ] Reference types: `object`, `array`, `function`
-- [ ] `typeof` operator
-- [ ] Dynamic typing
-- [ ] Type coercion (implicit vs explicit)
-- [ ] Truthy & falsy values
+- [x] Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`
+- [x] Reference types: `object`, `array`, `function`
+- [x] `typeof` operator
+- [x] Dynamic typing
+- [x] Type coercion (implicit vs explicit)  <!-- covered in §4 Operators (tut04) -->
+- [x] Truthy & falsy values
 
 ### 4. Operators
-- [ ] Arithmetic operators (`+`, `-`, `*`, `/`, `%`, `**`)
-- [ ] Assignment operators (`=`, `+=`, `-=`, etc.)
-- [ ] Comparison operators (`==` vs `===`, `!=` vs `!==`, `<`, `>`)
-- [ ] Logical operators (`&&`, `||`, `!`)
-- [ ] Ternary operator (`? :`)
-- [ ] Nullish coalescing (`??`)
-- [ ] Optional chaining (`?.`)
-- [ ] Operator precedence
+- [x] Arithmetic operators (`+`, `-`, `*`, `/`, `%`, `**`)
+- [x] Assignment operators (`=`, `+=`, `-=`, etc.)
+- [x] Comparison operators (`==` vs `===`, `!=` vs `!==`, `<`, `>`)
+- [x] Logical operators (`&&`, `||`, `!`)
+- [x] Ternary operator (`? :`)
+- [x] Nullish coalescing (`??`)
+- [x] Optional chaining (`?.`)
+- [x] Operator precedence
 
 ### 5. Strings
 - [ ] String creation (quotes, template literals)
