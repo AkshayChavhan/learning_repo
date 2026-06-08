@@ -46,6 +46,10 @@
 - [x] Explain short-circuit evaluation. <!-- tut04 -->
 - [x] Ternary usage; `if-else` vs `switch`; switch fall-through & `===` matching. <!-- tut07 -->
 - [ ] 🧩 Post-increment / operator precedence output puzzles.
+- [x] ★ `for...of` vs `for...in`? (values vs keys; avoid for...in on arrays) <!-- tut08 -->
+- [x] `while` vs `do...while`? (do...while runs body at least once) <!-- tut08 -->
+- [x] Can you `break` out of `forEach`? (no — use for/for...of) <!-- tut08 -->
+- [x] What are loop labels? (`break/continue label` for nested loops) <!-- tut08 -->
 
 ---
 
