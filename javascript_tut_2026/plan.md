@@ -39,11 +39,11 @@
 - [x] Operator precedence
 
 ### 5. Strings
-- [ ] String creation (quotes, template literals)
-- [ ] String concatenation & interpolation
-- [ ] Common string methods (`length`, `slice`, `substring`, `split`, `replace`, `trim`, `toUpperCase`, etc.)
-- [ ] Escape characters
-- [ ] String immutability
+- [x] String creation (quotes, template literals)
+- [x] String concatenation & interpolation
+- [x] Common string methods (`length`, `slice`, `substring`, `split`, `replace`, `trim`, `toUpperCase`, etc.)
+- [x] Escape characters
+- [x] String immutability
 
 ### 6. Numbers & Math
 - [ ] Integers & floats
