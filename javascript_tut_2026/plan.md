@@ -39,24 +39,24 @@
 - [x] Operator precedence
 
 ### 5. Strings
-- [ ] String creation (quotes, template literals)
-- [ ] String concatenation & interpolation
-- [ ] Common string methods (`length`, `slice`, `substring`, `split`, `replace`, `trim`, `toUpperCase`, etc.)
-- [ ] Escape characters
-- [ ] String immutability
+- [x] String creation (quotes, template literals)
+- [x] String concatenation & interpolation
+- [x] Common string methods (`length`, `slice`, `substring`, `split`, `replace`, `trim`, `toUpperCase`, etc.)
+- [x] Escape characters
+- [x] String immutability
 
 ### 6. Numbers & Math
-- [ ] Integers & floats
-- [ ] `Number` methods & properties (`parseInt`, `parseFloat`, `toFixed`, `isNaN`)
-- [ ] `Math` object (`round`, `floor`, `ceil`, `random`, `max`, `min`, `pow`, etc.)
-- [ ] `NaN`, `Infinity`, `-Infinity`
-- [ ] Floating-point precision issues
+- [x] Integers & floats
+- [x] `Number` methods & properties (`parseInt`, `parseFloat`, `toFixed`, `isNaN`)
+- [x] `Math` object (`round`, `floor`, `ceil`, `random`, `max`, `min`, `pow`, etc.)
+- [x] `NaN`, `Infinity`, `-Infinity`
+- [x] Floating-point precision issues
 
 ### 7. Conditionals
-- [ ] `if`, `else if`, `else`
-- [ ] `switch` statement
-- [ ] Ternary operator usage
-- [ ] Short-circuit evaluation
+- [x] `if`, `else if`, `else`
+- [x] `switch` statement
+- [x] Ternary operator usage
+- [x] Short-circuit evaluation
 
 ### 8. Loops
 - [ ] `for` loop

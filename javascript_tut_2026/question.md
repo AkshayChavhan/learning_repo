@@ -19,7 +19,11 @@
 - [x] ★ What's the difference between `null` and `undefined`? <!-- tut03 -->
 - [x] Explain implicit type coercion with examples. <!-- tut04 -->
 - [x] Is JavaScript statically or dynamically typed? <!-- tut03 -->
-- [ ] What is `NaN`? Why is `NaN === NaN` false? How to check for it?  <!-- §6 -->
+- [x] What is `NaN`? Why is `NaN === NaN` false? How to check for it? <!-- tut06 -->
+- [x] ★🔥 Why is `0.1 + 0.2 !== 0.3`? How to compare safely? <!-- tut06 -->
+- [x] `parseInt` vs `parseFloat` vs `Number()` — differences? Why pass radix? <!-- tut06 -->
+- [x] Coercing vs non-coercing checks (`isNaN` vs `Number.isNaN`)? <!-- tut06 -->
+- [x] When would you use `BigInt`? (ints beyond 2^53) <!-- tut06 -->
 - [x] ★🔥 Pass-by-value vs pass-by-reference — explain with an example. <!-- tut03 -->
 - [x] What is `typeof null`? Why? (`"object"` — historical bug) <!-- tut03 -->
 - [x] What is strict mode (`"use strict"`) and what does it change? <!-- tut01 -->
@@ -40,7 +44,8 @@
 - [x] What is nullish coalescing (`??`) and how does it differ from `||`? <!-- tut04 -->
 - [ ] What are logical assignment operators (`||=`, `&&=`, `??=`)?
 - [x] Explain short-circuit evaluation. <!-- tut04 -->
-- [ ] 🧩 Ternary / post-increment / operator precedence output puzzles.
+- [x] Ternary usage; `if-else` vs `switch`; switch fall-through & `===` matching. <!-- tut07 -->
+- [ ] 🧩 Post-increment / operator precedence output puzzles.
 
 ---
 
