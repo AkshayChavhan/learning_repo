@@ -46,11 +46,11 @@
 - [x] String immutability
 
 ### 6. Numbers & Math
-- [ ] Integers & floats
-- [ ] `Number` methods & properties (`parseInt`, `parseFloat`, `toFixed`, `isNaN`)
-- [ ] `Math` object (`round`, `floor`, `ceil`, `random`, `max`, `min`, `pow`, etc.)
-- [ ] `NaN`, `Infinity`, `-Infinity`
-- [ ] Floating-point precision issues
+- [x] Integers & floats
+- [x] `Number` methods & properties (`parseInt`, `parseFloat`, `toFixed`, `isNaN`)
+- [x] `Math` object (`round`, `floor`, `ceil`, `random`, `max`, `min`, `pow`, etc.)
+- [x] `NaN`, `Infinity`, `-Infinity`
+- [x] Floating-point precision issues
 
 ### 7. Conditionals
 - [ ] `if`, `else if`, `else`
