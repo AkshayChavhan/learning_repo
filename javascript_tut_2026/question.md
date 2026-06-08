@@ -90,8 +90,11 @@
 - [ ] What is an IIFE (Immediately Invoked Function Expression)?
 - [ ] What are callbacks? Why use them? What is callback hell?
 - [ ] What is recursion? What is memoization? (implement memoize)
-- [ ] Function declaration vs function expression (and hoisting difference)?
-- [ ] What are arrow functions? How does `this` differ in them?
+- [x] Function declaration vs function expression (and hoisting difference)? <!-- tut09 -->
+- [x] Parameter vs argument? (definition placeholder vs value passed) <!-- tut09 -->
+- [x] What does a function return with no `return`? (undefined) <!-- tut09 -->
+- [x] Default parameters — what & when? <!-- tut09 -->
+- [ ] What are arrow functions? How does `this` differ in them?  <!-- syntax: tut09 | this-difference: §12 -->
 - [ ] Rest parameters vs spread operator?
 - [ ] 🧩 Closures-in-loops: `var` + `setTimeout` in a `for` loop — predict output.
 - [ ] 🧩 `this` puzzle: method extracted into a variable, then called.

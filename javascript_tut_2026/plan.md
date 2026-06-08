@@ -68,12 +68,12 @@
 - [x] Nested loops & labels
 
 ### 9. Functions (Basics)
-- [ ] Function declaration vs expression
-- [ ] Parameters & arguments
-- [ ] Return values
-- [ ] Default parameters
-- [ ] Arrow functions
-- [ ] Function scope & block scope
+- [x] Function declaration vs expression
+- [x] Parameters & arguments
+- [x] Return values
+- [x] Default parameters
+- [x] Arrow functions
+- [x] Function scope & block scope
 
 ---
 
