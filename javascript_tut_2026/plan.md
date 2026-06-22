@@ -59,21 +59,21 @@
 - [x] Short-circuit evaluation
 
 ### 8. Loops
-- [ ] `for` loop
-- [ ] `while` loop
-- [ ] `do...while` loop
-- [ ] `for...of` (iterables)
-- [ ] `for...in` (object keys)
-- [ ] `break` & `continue`
-- [ ] Nested loops & labels
+- [x] `for` loop
+- [x] `while` loop
+- [x] `do...while` loop
+- [x] `for...of` (iterables)
+- [x] `for...in` (object keys)
+- [x] `break` & `continue`
+- [x] Nested loops & labels
 
 ### 9. Functions (Basics)
-- [ ] Function declaration vs expression
-- [ ] Parameters & arguments
-- [ ] Return values
-- [ ] Default parameters
-- [ ] Arrow functions
-- [ ] Function scope & block scope
+- [x] Function declaration vs expression
+- [x] Parameters & arguments
+- [x] Return values
+- [x] Default parameters
+- [x] Arrow functions
+- [x] Function scope & block scope
 
 ---
 
