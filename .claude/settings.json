@@ -2,8 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(which python *)",
-      "Read(//usr/bin/**)",
-      "Bash(awk '{print $5}')"
+      "Read(//usr/bin/**)"
     ]
   }
 }
