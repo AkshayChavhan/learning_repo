@@ -39,8 +39,16 @@ You are in the venv when your prompt starts with `(venv)`. Leave it with `deacti
 ## 3. Install dependencies
 
 ```bash
-pip install -qU langchain-community pypdf
+pip install -qU langchain-community pypdf langchain-openai langchain-qdrant
 ```
+
+| Package | Gives you |
+|---|---|
+| `langchain-community` + `pypdf` | `PyPDFLoader` — read the PDF |
+| `langchain-openai` | `OpenAIEmbeddings` — turn chunks into vectors |
+| `langchain-qdrant` | `QdrantVectorStore` — store and search them |
+
+`RecursiveCharacterTextSplitter` needs nothing extra — it ships inside `langchain-core`.
 
 | Flag | Means |
 |---|---|
@@ -61,11 +69,24 @@ pip install -r requirements.txt
 
 > Run `pip freeze` **inside the activated venv**. Against system python it dumps every
 > package on the machine. It also writes every transitive dependency you never asked for —
-> **45 lines here, not 2** — each pinned with `==`.
+> **61 lines here, not 4** — each pinned with `==`.
 
 ---
 
-## 4. Run
+## 4. Set your OpenAI key
+
+Embedding calls OpenAI, so this step costs money — a fraction of a cent for these 24 chunks,
+but a real bill.
+
+```bash
+export OPENAI_API_KEY="sk-..."
+```
+
+Without it `index.py` stops after chunking and tells you so.
+
+---
+
+## 5. Run
 
 ```bash
 python3 index.py
@@ -73,11 +94,37 @@ python3 index.py
 
 ```text
 loaded 12 pages from sample.pdf
+split into 24 chunks (size 1000, overlap 200)
+chunk sizes: smallest 78, largest 1000, average 833
 
-metadata: {'source': '/.../rag/sample.pdf', 'page': 0}
-first 300 characters:
-Topic 42 — RAG: Retrieval Augmented Generation
-...
+stored 24 chunks in Qdrant collection 'rag_sample'
+  browse them at http://localhost:6333/dashboard
+
+search: 'What problem does RAG solve?'
+  1. page 0 - The problem RAG solves. Ask your local model something about...
+```
+
+> **Running it twice stores everything twice.** Qdrant does not deduplicate — 24 chunks
+> becomes 48 points. Pass `force_recreate=True` to `from_documents` to wipe first.
+
+---
+
+## The pipeline
+
+```text
+   sample.pdf
+       |  PyPDFLoader                    read_pdf()
+       v
+   12 page Documents
+       |  RecursiveCharacterTextSplitter split_documents()
+       v
+   24 chunks  (1000 chars, 200 overlap)
+       |  OpenAIEmbeddings               get_embeddings()
+       v
+   24 vectors (1536 numbers each)
+       |  QdrantVectorStore              store_in_qdrant()
+       v
+   collection 'rag_sample'  ->  similarity_search()
 ```
 
 ---
@@ -92,10 +139,14 @@ quietly resolved older versions instead of failing:
 | langchain-community | 0.2.19 | 0.4.2 |
 | langchain-core | 0.2.43 | 1.5.4 |
 | langchain | 0.2.17 | 1.3.15 |
+| langchain-openai | 0.1.25 | 1.5.1 |
+| langchain-qdrant | 0.1.4 | 1.1.0 |
+| qdrant-client | 1.12.1 | 1.19.0 |
+| openai | 1.109.1 | 3.1.0 |
 | pypdf | 5.9.0 | 6.15.0 |
 
-`PyPDFLoader` works fine on these. But newer LangChain moved a lot of imports around, so a
-current tutorial may not match what's installed. Python 3.11+ would fix that.
+Everything here works on these versions. But newer LangChain moved a lot of imports around,
+so a current tutorial may not match what's installed. Python 3.11+ would fix that.
 
 ---
 
@@ -105,8 +156,9 @@ current tutorial may not match what's installed. Python 3.11+ would fix that.
 |---|---|
 | `docker-composer.yml` | Qdrant vector database |
 | `sample.pdf` | 12-page test document (Topic 42 — RAG) |
-| `index.py` | `read_pdf()` — loads the PDF into one Document per page |
+| `index.py` | the whole pipeline — `read_pdf`, `split_documents`, `get_embeddings`, `store_in_qdrant` |
 | `requirements.txt` | pinned output of `pip freeze` |
 | `venv/` | virtual environment (git-ignored) |
 
-Next in the pipeline: split the pages into chunks, embed them, and write them into Qdrant.
+Indexing is done. Next is the query side: embed the user's question, `similarity_search` for
+the closest chunks, paste them into a prompt, and let the LLM answer from them.
