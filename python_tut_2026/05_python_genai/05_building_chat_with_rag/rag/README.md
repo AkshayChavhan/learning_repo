@@ -156,9 +156,44 @@ so a current tutorial may not match what's installed. Python 3.11+ would fix tha
 |---|---|
 | `docker-composer.yml` | Qdrant vector database |
 | `sample.pdf` | 12-page test document (Topic 42 — RAG) |
-| `index.py` | the whole pipeline — `read_pdf`, `split_documents`, `get_embeddings`, `store_in_qdrant` |
+| `index.py` | indexing — `read_pdf`, `split_documents`, `get_embeddings`, `store_in_qdrant` |
+| `02_chat.py` | querying — `search`, `build_context`, `build_messages`, `answer` |
 | `requirements.txt` | pinned output of `pip freeze` |
 | `venv/` | virtual environment (git-ignored) |
 
-Indexing is done. Next is the query side: embed the user's question, `similarity_search` for
-the closest chunks, paste them into a prompt, and let the LLM answer from them.
+---
+
+## 6. Ask it a question
+
+`index.py` is the expensive half — it embeds all 24 chunks. Run it **once**. After that
+every question only embeds the question itself.
+
+```bash
+python3 02_chat.py "what problem does RAG solve?"
+```
+
+```text
+question: what problem does RAG solve?
+
+retrieved 4 chunks from pages [0, 1, 0, 7]
+
+--- answer ---
+RAG solves the problem of a model not knowing anything about your own
+documents [page 0]. ...
+```
+
+### How the prompt is built
+
+```text
+  system  ->  the rules  +  the retrieved chunks   <- your document, as data
+  user    ->  the question, on its own
+```
+
+Keeping the document in the **system** message and the question in the **user** message is
+deliberate. Retrieved text is data to be read, never instructions to obey. Concatenate them
+into one message and a PDF containing *"ignore previous instructions"* becomes a live prompt
+injection.
+
+The system prompt also tells the model to answer **only** from the context and to say
+*"That is not in the document."* otherwise. Without that rule it quietly blends your document
+with its training data, and you cannot tell which sentence came from where.
