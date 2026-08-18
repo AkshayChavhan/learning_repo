@@ -22,3 +22,7 @@ dist/
 .DS_Store
 .idea/
 *.swp
+
+# Local API keys - never commit
+env.ps1
+.certs/
