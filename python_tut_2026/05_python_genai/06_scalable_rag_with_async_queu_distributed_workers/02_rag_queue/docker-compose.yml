@@ -1,0 +1,44 @@
+services:
+    # 1. The QUEUE - holds jobs until a worker picks them up.
+    #    Valkey is a drop-in Redis fork, so the `redis` python client talks to it.
+    valkey:
+        image: valkey/valkey:8-alpine
+        container_name: rag-valkey
+        ports:
+            - 6379:6379
+
+    # 2. The VECTOR DB - holds the embedded PDF chunks the worker searches.
+    #    Without this, process_query() fails at similarity_search().
+    vector-db:
+        image: qdrant/qdrant
+        container_name: rag-qdrant
+        ports:
+            - 6333:6333          # REST API + web dashboard
+            - 6334:6334          # gRPC
+        volumes:
+            - qdrant-data:/qdrant/storage   # keep embeddings across restarts
+        restart: unless-stopped
+
+volumes:
+    qdrant-data:
+
+
+
+# to run compose
+# >> docker compose up -d
+
+# to check it is alive (should print PONG)
+# >> docker exec -it rag-valkey valkey-cli ping
+
+# to open the CLI and poke at the queue
+# >> docker exec -it rag-valkey valkey-cli
+#    127.0.0.1:6379> LPUSH myqueue "job-1"
+#    127.0.0.1:6379> RPOP myqueue
+
+# to stop (keeps data)   >> docker compose down
+# to stop + wipe data    >> docker compose down -v
+
+# Python client (Valkey speaks the Redis protocol):
+#  >> pip install redis        # url: redis://localhost:6379/0
+#  or the official one:
+#  >> pip install valkey
