@@ -13,7 +13,7 @@ import sys
 from langchain_openai import ChatOpenAI
 from langchain_qdrant import QdrantVectorStore
 
-from index import COLLECTION, QDRANT_URL, get_embeddings
+from 01_index import COLLECTION, QDRANT_URL, get_embeddings  # pyright: ignore[reportMissingImports]
 
 TOP_K = 4
 CHAT_MODEL = "gpt-4o-mini"
