@@ -1,6 +1,27 @@
 """Ask questions about the PDF that index.py stored in Qdrant.
 
-    python3 index.py                                    # once, to fill the collection
+Setup, once:
+
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -qU langchain-community pypdf langchain-openai langchain-qdrant
+
+Pin what you installed, so the setup is repeatable:
+
+    pip freeze > requirements.txt       # run this INSIDE the venv
+    pip install -r requirements.txt     # rebuild it later
+
+Run `freeze` inside the venv. Outside it, you capture every package on the
+machine - dbus-python, python-apt and all.
+
+Start the vector database and set your key:
+
+    docker compose -f docker-composer.yml up -d
+    export OPENAI_API_KEY="sk-..."
+
+Run it:
+
+    python3 index.py                                 # once, to fill the collection
     python3 02_chat.py "what problem does RAG solve?"
 
 Retrieve the closest chunks, put them in a system prompt, let the model
