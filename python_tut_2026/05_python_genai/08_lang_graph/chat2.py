@@ -4,10 +4,10 @@ chat.py ran a fixed line of nodes, every time. This one adds a *conditional
 edge*: a function inspects the state and decides which node runs next. That
 branching is the main reason to use LangGraph instead of a plain loop.
 
-    START -> chatbot -> evaluate_response  (picks one)
-                              |
-                              +--> endnode                     -> END
-                              +--> chatbot_gemini -> endnode   -> END
+    START -> chatbot -> evaluate -> evaluate_response  (picks one)
+                                           |
+                            is_good True   +--> endnode                   -> END
+                            is_good False  +--> chatbot_gemini -> endnode -> END
 
 Setup, once:
 
@@ -79,8 +79,51 @@ def chatbot(state: State):
     return state
 
 
+# Sent to the model when it grades an answer. Demanding one word makes the
+# reply trivial to parse - ask for a sentence and you have to interpret prose.
+JUDGE_PROMPT = """You grade answers to questions. Reply with exactly one word:
+
+GOOD - the answer is correct, on topic, and actually answers the question
+BAD  - it is wrong, empty, off topic, or refuses to answer
+
+One word. No explanation."""
+
+
+def evaluate(state: State):
+    """Judge the answer and record the verdict in the state.
+
+    This must be a NODE, not the router. LangGraph only keeps changes that a
+    node RETURNS - anything a router writes into state is thrown away, so
+    is_good would silently stay None if this lived in evaluate_response.
+    """
+    print("evaluate node", state)
+    answer = (state.get("llm_output") or "").strip()
+
+    # Cheap check first. An empty answer is bad without asking anyone,
+    # and skipping the call saves money on the obvious cases.
+    if not answer:
+        return {"is_good": False}
+
+    # LLM-as-judge: ask the model to grade the answer it just produced.
+    verdict = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        temperature=0,          # grading should be repeatable, not creative
+        messages=[
+            {"role": "system", "content": JUDGE_PROMPT},
+            {"role": "user",
+             "content": f"Question: {state.get('user_query')}\n\nAnswer: {answer}"},
+        ],
+    ).choices[0].message.content
+
+    # Anything other than a clear GOOD counts as bad. Better to retry a fine
+    # answer than to wave a broken one through.
+    is_good = verdict.strip().upper().startswith("GOOD")
+    print(f"  judge said {verdict.strip()!r} -> is_good={is_good}")
+    return {"is_good": is_good}
+
+
 def evaluate_response(state:State) -> Literal["chatbot_gemini" , "endnode"]:
-    """The ROUTER. This one decides where the graph goes next.
+    """The ROUTER. Decides where the graph goes next.
 
     A router is not a normal node - it does no work and changes nothing.
     It just returns the NAME of the node to run next, as a string. The name
@@ -89,15 +132,8 @@ def evaluate_response(state:State) -> Literal["chatbot_gemini" , "endnode"]:
     The Literal[...] return type lists the only destinations it can pick.
     LangGraph reads that to draw the graph and to catch typos early.
     """
-    print("evaluate_response node", state)
-
-    # Hardcoded for now, so this always ends immediately and chatbot_gemini
-    # never runs. Replace `True` with a real check - for example, whether
-    # llm_output is empty or too short - to make the other branch fire.
-    if True:
-        return "endnode"
-
-    return "chatbot_gemini"
+    print("evaluate_response router", state)
+    return "endnode" if state.get("is_good") else "chatbot_gemini"
 
 
 def chatbot_gemini(state: State):
@@ -130,16 +166,18 @@ graph_builder = StateGraph(State)
 
 # add_node(name, function) - the name is the label edges and routers use.
 graph_builder.add_node("chatbot",chatbot)
+graph_builder.add_node("evaluate",evaluate)
 graph_builder.add_node("chatbot_gemini",chatbot_gemini)
 graph_builder.add_node("endnode",endnode)
 
 
 # A normal edge is unconditional: always go from A to B.
 graph_builder.add_edge(START , "chatbot")
+graph_builder.add_edge("chatbot" , "evaluate")
 
 # A conditional edge hands control to the router. Whatever string
 # evaluate_response returns becomes the next node.
-graph_builder.add_conditional_edges("chatbot", evaluate_response)
+graph_builder.add_conditional_edges("evaluate", evaluate_response)
 
 
 graph_builder.add_edge("chatbot_gemini" , "endnode")
