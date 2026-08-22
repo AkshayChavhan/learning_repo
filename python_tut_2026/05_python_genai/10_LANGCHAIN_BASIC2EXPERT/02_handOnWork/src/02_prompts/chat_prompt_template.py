@@ -48,9 +48,7 @@ def main():
 
     print_seperator()
      
-    response = llm.invole
+    response = llm.invole(messages)
 
 if __name__ == "__main__":
     main()
-
-    # 38.55
