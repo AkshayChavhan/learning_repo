@@ -1,0 +1,3 @@
+RAG stands for Retrieval Augmented Generation.
+It combines a retriever with an LLM so the model can answer
+questions using your own documents instead of only its training data.
