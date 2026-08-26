@@ -39,7 +39,7 @@ You are in the venv when your prompt starts with `(venv)`. Leave it with `deacti
 ## 3. Install dependencies
 
 ```bash
-pip install -qU langchain-community pypdf langchain-openai langchain-qdrant
+pip install -qU langchain-community pypdf langchain-openai langchain-qdrant python-dotenv
 ```
 
 | Package | Gives you |
@@ -47,6 +47,11 @@ pip install -qU langchain-community pypdf langchain-openai langchain-qdrant
 | `langchain-community` + `pypdf` | `PyPDFLoader` — read the PDF |
 | `langchain-openai` | `OpenAIEmbeddings` — turn chunks into vectors |
 | `langchain-qdrant` | `QdrantVectorStore` — store and search them |
+| `python-dotenv` | `load_dotenv()` — read the key from `.env` |
+
+> The package is **`python-dotenv`**, not `dotenv`. `pip install dotenv` pulls a deprecated
+> stub. Both are imported as `from dotenv import load_dotenv`, which is why picking the
+> wrong one is easy to miss.
 
 `RecursiveCharacterTextSplitter` needs nothing extra — it ships inside `langchain-core`.
 
@@ -78,11 +83,33 @@ pip install -r requirements.txt
 Embedding calls OpenAI, so this step costs money — a fraction of a cent for these 24 chunks,
 but a real bill.
 
-```bash
-export OPENAI_API_KEY="sk-..."
+Put it in a `.env` file next to `index.py`:
+
+```env
+OPENAI_API_KEY=sk-proj-...
 ```
 
-Without it `index.py` stops after chunking and tells you so.
+Or generate every `.env` in this repo at once — run this **from the repo root**:
+
+```bash
+export OPENAI_API_KEY='sk-proj-...'
+./scripts/setup_env.sh
+```
+
+From this folder instead, the same script is `../../../../scripts/setup_env.sh`.
+
+Both `index.py` and `02_chat.py` call `load_dotenv()`, so the file is read automatically.
+An exported variable still wins if you set one — `load_dotenv()` does not overwrite what is
+already in the environment.
+
+> **No space after `=`.** `OPENAI_API_KEY= sk-...` is the classic bug here. `python-dotenv`
+> strips it, but `docker --env-file` and `set -a; source .env` keep the space and the key
+> fails with a confusing auth error.
+
+Without the key `index.py` stops after chunking and tells you so.
+
+`.env` is gitignored — and this repo is public, so keep it that way. See
+[ENVIRONMENT.md](../../../../ENVIRONMENT.md) for every variable in the repo.
 
 ---
 
@@ -159,6 +186,7 @@ so a current tutorial may not match what's installed. Python 3.11+ would fix tha
 | `index.py` | indexing — `read_pdf`, `split_documents`, `get_embeddings`, `store_in_qdrant` |
 | `02_chat.py` | querying — `search`, `build_context`, `build_messages`, `answer` |
 | `requirements.txt` | pinned output of `pip freeze` |
+| `.env` | `OPENAI_API_KEY` (git-ignored) |
 | `venv/` | virtual environment (git-ignored) |
 
 ---

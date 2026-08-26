@@ -1,0 +1,5 @@
+# Notebook scratch
+.ipynb_checkpoints/
+
+# Local venv (also covered by the repo-root .gitignore)
+.venv/

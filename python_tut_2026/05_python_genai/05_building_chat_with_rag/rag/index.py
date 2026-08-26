@@ -14,10 +14,20 @@ Pin what you installed, so the setup is repeatable:
 Run `freeze` inside the venv. Outside it, you capture every package on the
 machine - dbus-python, python-apt and all.
 
-Start the vector database and set your key:
+Start the vector database:
 
     docker compose -f docker-composer.yml up -d
-    export OPENAI_API_KEY="sk-..."
+
+    Note the filename: docker-composer.yml, with an r. Docker does not look
+    for that name on its own, so the -f flag is required here. (The
+    langgraph folder's file is named docker-compose.yml and needs no flag.)
+
+Put your key in .env next to this file:
+
+    OPENAI_API_KEY=sk-...
+
+    Or export it - an exported value takes precedence over the .env.
+    Generate every .env in this repo at once with ../../../../scripts/setup_env.sh
 
 Run it:
 
@@ -26,10 +36,17 @@ Run it:
 
 import os
 
+from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
+
+# Read .env into environment variables, so the key can live in a file next to
+# this script instead of being exported by hand in every new shell. An export
+# still wins if you set one - load_dotenv does not overwrite what is already
+# in the environment.
+load_dotenv()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SAMPLE_PDF = os.path.join(HERE, "sample.pdf")

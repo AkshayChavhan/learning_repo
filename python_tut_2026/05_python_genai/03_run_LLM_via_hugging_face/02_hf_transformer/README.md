@@ -28,6 +28,16 @@ Two-line summary:
 
 ---
 
+> **Environment:** this project needs **no `.env` and no environment variable.**
+> `huggingface-cli login` stores a token at `~/.cache/huggingface/token`, and the
+> library reads it from there — so nothing to set up when you clone onto a new
+> machine except running `login` again. Only *gated* models need it at all;
+> everything in Part 1 downloads anonymously.
+>
+> See [ENVIRONMENT.md](../../../../ENVIRONMENT.md) for the projects that do use keys.
+
+---
+
 ## Part 0 — Setup (step by step)
 
 ### Step 1: Create a HuggingFace account
