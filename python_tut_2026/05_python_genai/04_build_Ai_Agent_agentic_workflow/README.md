@@ -35,6 +35,16 @@ Config is two environment variables:
 | `MODEL` | `qwen2.5-coder:7b` | `llama3.2` works but codes badly. `gemma:2b` **cannot** tool-call at all |
 | `OLLAMA_HOST` | `http://localhost:11434` | Point it anywhere that speaks the Ollama API |
 
+**No `.env` and no API key.** Both variables have working defaults and the model runs
+locally through Ollama — nothing leaves the machine. Override them inline when you want
+something different:
+
+```bash
+MODEL=llama3.2 python3 coding_agent.py "..."
+```
+
+See [ENVIRONMENT.md](../../../ENVIRONMENT.md) for the projects that *do* need keys.
+
 ---
 
 ## The idea

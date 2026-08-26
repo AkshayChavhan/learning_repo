@@ -1,0 +1,41 @@
+# Direct dependencies for notebook/document.ipynb (RAG data ingestion).
+#
+# Versions match what this project was developed against. Only DIRECT imports
+# are pinned - pip resolves the rest, so this file stays readable.
+#
+# Rebuild:
+#     python3 -m venv .venv && source .venv/bin/activate
+#     pip install -r requirements.txt
+#
+# WARNING: do not regenerate this with a bare `pip freeze` from outside the
+# venv. The previous version of this file was captured that way: 151 lines
+# pinning the whole machine, including Ubuntu system packages (apturl,
+# python-apt, dell-recovery, ubuntu-drivers-common, xkit). Those ship via apt,
+# not PyPI, so `pip install -r` failed on every machine but the one that wrote
+# it - "Could not find a version that satisfies the requirement apturl==0.5.2".
+
+# ── notebook kernel ──────────────────────────────────────────────────────────
+ipykernel==6.29.5
+
+# ── langchain core + loaders ─────────────────────────────────────────────────
+langchain==0.2.17
+langchain-core==0.2.43
+langchain-community==0.2.19
+langchain-text-splitters==0.2.4
+
+# ── document parsing ─────────────────────────────────────────────────────────
+pypdf==5.9.0             # PyPDFLoader
+PyMuPDF==1.24.11         # PyMuPDFLoader - faster, keeps layout better
+tqdm==4.70.0             # DirectoryLoader(show_progress=True)
+
+# ── embeddings / LLM calls (needs OPENAI_API_KEY once the notebook gets there)
+langchain-openai==0.1.25
+openai==1.109.1
+tiktoken==0.7.0
+
+# ── next section: "embedding and Vectorstore DB" ─────────────────────────────
+# Not imported by any cell yet. Uncomment when you reach that part of the
+# notebook - sentence-transformers pulls torch, which is a ~2GB download.
+# sentence-transformers==3.0.1
+# faiss-cpu==1.8.0
+# chromadb==0.5.3

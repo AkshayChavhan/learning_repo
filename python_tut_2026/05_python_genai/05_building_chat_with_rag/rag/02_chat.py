@@ -31,10 +31,16 @@ answer from them.
 import os
 import sys
 
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_qdrant import QdrantVectorStore
 
 from index import COLLECTION, QDRANT_URL, get_embeddings
+
+# Importing index already triggers its load_dotenv(), but relying on an import
+# side effect for your credentials is the kind of thing that breaks the day
+# someone reorders the imports. Load it here too - it is idempotent.
+load_dotenv()
 
 TOP_K = 4
 CHAT_MODEL = "gpt-4o-mini"

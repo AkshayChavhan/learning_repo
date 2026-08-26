@@ -45,6 +45,7 @@ protobuf==5.29.6
 pydantic==2.10.6
 pydantic_core==2.27.2
 pypdf==5.9.0
+python-dotenv==1.0.1
 PyYAML==6.0.3
 qdrant-client==1.12.1
 regex==2024.11.6
