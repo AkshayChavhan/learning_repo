@@ -26,7 +26,7 @@ def chat_with_model() -> None:
 
     print("-" * 80)
     print("AI RESPONSE: \n")
-    print(response.content)
+    print(response.text)
     print("-" * 80)
 
     print("-" * 80)

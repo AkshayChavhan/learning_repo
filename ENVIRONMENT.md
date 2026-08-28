@@ -21,8 +21,8 @@ export OPENAI_API_KEY='sk-proj-...'      # paste once
 Add the optional keys before running the script if you want those projects too:
 
 ```bash
-export GEMINI_API_KEY='AIza...'          # 01_prompt_serialization
-export GOOGLE_API_KEY='AIza...'          # 02_handOnWork
+export GEMINI_API_KEY='AIza... or AQ....'          # 01_prompt_serialization
+export GOOGLE_API_KEY='AIza... or AQ....'          # 02_handOnWork
 export ANTHROPIC_API_KEY='sk-ant-...'    # 02_handOnWork
 ```
 

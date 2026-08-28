@@ -71,7 +71,7 @@ def main() -> None:
         response = llm.bind(**demo["params"]).invoke(demo["prompt"])
 
         print("\nResponse:\n")
-        print(response.content)
+        print(response.text)
         print_seperator()
 
 if __name__ == "__main__":

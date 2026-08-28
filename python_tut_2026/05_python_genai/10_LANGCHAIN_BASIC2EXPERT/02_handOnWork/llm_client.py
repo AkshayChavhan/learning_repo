@@ -20,21 +20,21 @@ def get_llm():
         return ChatOpenAI(
             model = config["openai"]["model"],
             temperature = config["openai"]["temperature"],
-            max_token = config["openai"]["max_token"],
+            max_tokens = config["openai"]["max_token"],
             api_key = os.getenv("OPENAI_API_KEY")
         )
     elif provider == "gemini":
         return ChatGoogleGenerativeAI(
             model = config["gemini"]["model"],
             temperature = config["gemini"]["temperature"],
-            max_token = config["gemini"]["max_token"],
+            max_tokens = config["gemini"]["max_token"],
             api_key = os.getenv("GOOGLE_API_KEY")
         )
     elif provider == "anthropic":
         return ChatAnthropic(
             model = config["gemini"]["model"],
             temperature = config["gemini"]["temperature"],
-            max_token = config["gemini"]["max_token"],
+            max_tokens = config["gemini"]["max_token"],
             api_key = os.getenv("ANTHROPIC_API_KEY")
         )
     else:

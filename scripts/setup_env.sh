@@ -8,8 +8,8 @@
 #
 # Usage:
 #     export OPENAI_API_KEY='sk-proj-...'        # required
-#     export GEMINI_API_KEY='AIza...'            # optional (01_prompt_serialization)
-#     export GOOGLE_API_KEY='AIza...'            # optional (02_handOnWork)
+#     export GEMINI_API_KEY='AIza... or AQ....'            # optional (01_prompt_serialization)
+#     export GOOGLE_API_KEY='AIza... or AQ....'            # optional (02_handOnWork)
 #     export ANTHROPIC_API_KEY='sk-ant-...'      # optional (02_handOnWork)
 #     ./scripts/setup_env.sh
 #

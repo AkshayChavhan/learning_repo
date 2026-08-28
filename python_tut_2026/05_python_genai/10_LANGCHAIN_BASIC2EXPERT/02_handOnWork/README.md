@@ -44,7 +44,7 @@ Or generate it — plus every other `.env` in this repo — from the repo root:
 
 ```bash
 export OPENAI_API_KEY='sk-proj-...'
-export GOOGLE_API_KEY='AIza...'
+export GOOGLE_API_KEY='AIza... or AQ....'
 export ANTHROPIC_API_KEY='sk-ant-...'
 ./scripts/setup_env.sh
 ```
@@ -86,4 +86,8 @@ Happy Learning 🚀
 |---|---|
 | **`config.json` is read from the cwd** | `load_config()` defaults to the relative path `config.json`, so run scripts from this folder or the open fails |
 | **The `anthropic` branch reads `config["gemini"]`** | `llm_client.py:34-37` — a copy-paste slip. Selecting `anthropic` picks up the Gemini model name and will fail until that block is fixed |
-| **`max_token` is not a real parameter** | LangChain's chat models use `max_tokens`. The current spelling is silently ignored rather than erroring |
+| **JSON key is `max_token`, kwarg is `max_tokens`** | The code passes `max_tokens=config[...]["max_token"]`. The singular spelling survives only as the config key — as a kwarg LangChain ignores it and warns *"Did you mean: 'max_tokens'?"* |
+| **`response.content` is not a string on Gemini** | It returns content blocks — `[{'type':'text','text':'…','extras':{'signature':'…'}}]`. Use `response.text`, which is a `langchain_core` property and works for every provider |
+| **`gemini-2.5-flash` is retired** | New accounts get `404 … no longer available to new users`. Use `gemini-3.6-flash` |
+| **`gemini-3.6-flash` ignores `temperature`** | It uses fixed sampling defaults and warns as much. The `temperature` in `config.json` is a no-op on this model |
+| **The `src/02_prompts/` scripts crash** | Pre-existing: the prompt literals are Python f-strings (`f"…{profession}…"`), so Python interpolates at import time and raises `NameError`. Drop the `f` prefix — those braces belong to LangChain, not Python |

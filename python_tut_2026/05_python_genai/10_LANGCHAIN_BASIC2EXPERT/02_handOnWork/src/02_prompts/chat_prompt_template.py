@@ -48,7 +48,7 @@ def main():
 
     print_seperator()
      
-    response = llm.invole(messages)
+    response = llm.invoke(messages)
 
 if __name__ == "__main__":
     main()

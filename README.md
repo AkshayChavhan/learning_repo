@@ -101,14 +101,24 @@ This repo is **public**. Secrets stay in gitignored `.env` files and never in
 tracked source. Before pushing:
 
 ```bash
-git ls-files -z | xargs -0 grep -InE 'sk-(proj|ant)-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{30,}'
+git ls-files -z | xargs -0 grep -InE -e 'sk-(proj|ant)-[A-Za-z0-9_-]{20,}' \
+  -e 'AIza[A-Za-z0-9_-]{30,}' -e 'AQ\.[A-Za-z0-9_-]{30,}' \
+  -e 'gsk_[A-Za-z0-9]{40,}' -e 'hf_[A-Za-z0-9]{30,}'
 # must print nothing
 ```
 
-The pattern is deliberately entropy-gated — it requires 20+ key characters, so
-the `sk-proj-...` placeholders in these docs do **not** trip it while a real key
-does. `-z`/`-0` keeps it correct for the four tracked filenames containing
+Every pattern needs its own `-e`. Mixing one bare pattern with `-e` flags makes
+grep read the bare one as a **filename**, and the scan silently checks the wrong
+thing.
+
+The patterns are deliberately entropy-gated — each requires 20+ key characters,
+so the `sk-proj-...` placeholders in these docs do **not** trip them while a real
+key does. `-z`/`-0` keeps it correct for the four tracked filenames containing
 spaces, which a bare `$(git ls-files)` would silently skip.
+
+Covered: OpenAI/Anthropic `sk-`, Google in **both** shapes (classic `AIza…` and
+the newer `AQ.…`), Groq `gsk_`, HuggingFace `hf_`. A scan that only knows `AIza`
+waves a real Google key straight through.
 
 If a key ever lands in a commit, revoke it at the provider first — rewriting
 history afterwards does not un-leak it.

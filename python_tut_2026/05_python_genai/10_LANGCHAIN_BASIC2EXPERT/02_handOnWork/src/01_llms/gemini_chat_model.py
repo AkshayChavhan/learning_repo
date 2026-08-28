@@ -28,7 +28,7 @@ def main():
 
     print("-" * 80)
     print("Gemini RESPONSE: \n")
-    print(response.content)
+    print(response.text)
     print("-" * 80)
 
     print("-" * 80)

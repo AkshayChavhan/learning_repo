@@ -38,7 +38,7 @@ def main():
     response = llm.invoke(prompt)
 
     print("LLM Response:\n")
-    print(response.content)
+    print(response.text)
 
 if __name__ == "__main__":
     main()
