@@ -57,6 +57,7 @@ reads all three (lines 24, 31, 38), but only the selected branch runs.
 | `OPENAI_API_KEY` | `openai` | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
 | `GOOGLE_API_KEY` | `gemini` | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
 | `ANTHROPIC_API_KEY` | `anthropic` | [console.anthropic.com](https://console.anthropic.com/settings/keys) |
+| `GROQ_API_KEY` | `groq` | [console.groq.com/keys](https://console.groq.com/keys) — free tier, starts `gsk_` |
 
 > **`GOOGLE_API_KEY` here, `GEMINI_API_KEY` in project 01.** Same Google key, two
 > different variable names. Set both if you use both projects.
@@ -72,9 +73,34 @@ Edit `config.json` and choose the provider and model:
 { "provider": "openai", "openai": { "model": "...", "temperature": 0, "max_token": 1000 } }
 ```
 
-`provider` must be one of `openai`, `gemini`, `anthropic` — anything else raises
-`Unsupported provider`. The file is tracked in git, so it is safe to edit and commit;
-it holds no secrets.
+`provider` must be one of `openai`, `gemini`, `anthropic`, `groq` — anything else
+raises `Unsupported provider`. The file is tracked in git, so it is safe to edit and
+commit; it holds no secrets.
+
+### When Gemini's free daily quota runs out
+
+Switch one line to fall back to Groq (also a free tier, different daily budget):
+
+```json
+"provider":"groq"
+```
+
+| Provider | Default model | Notes |
+|---|---|---|
+| `gemini` | `gemini-3.6-flash` | free daily quota; ignores `temperature` |
+| `groq` | `openai/gpt-oss-120b` | free tier, 131k context, very fast |
+| `openai` | `gpt-4.1-mini` | paid — needs a funded account |
+| `anthropic` | `claude-sonnet-4-5` | paid |
+
+Groq is OpenAI-API-compatible, so only the class, key and model id change —
+everything downstream (`response.text`, prompts, chains) is identical.
+
+Your Groq account's model list is not fixed. Check what you can actually call:
+
+```bash
+curl -s -H "Authorization: Bearer $GROQ_API_KEY" \
+  https://api.groq.com/openai/v1/models | python3 -m json.tool | grep '"id"'
+```
 
 Happy Learning 🚀
 
@@ -85,7 +111,7 @@ Happy Learning 🚀
 | Gotcha | Detail |
 |---|---|
 | **`config.json` is read from the cwd** | `load_config()` defaults to the relative path `config.json`, so run scripts from this folder or the open fails |
-| **The `anthropic` branch reads `config["gemini"]`** | `llm_client.py:34-37` — a copy-paste slip. Selecting `anthropic` picks up the Gemini model name and will fail until that block is fixed |
+| **Every provider needs its own `config.json` section** | The `anthropic` branch used to read `config["gemini"]` (a copy-paste slip) while no `"anthropic"` section existed at all — so selecting it raised `KeyError`. Both are fixed; keep the section name and the branch lookup in step |
 | **JSON key is `max_token`, kwarg is `max_tokens`** | The code passes `max_tokens=config[...]["max_token"]`. The singular spelling survives only as the config key — as a kwarg LangChain ignores it and warns *"Did you mean: 'max_tokens'?"* |
 | **`response.content` is not a string on Gemini** | It returns content blocks — `[{'type':'text','text':'…','extras':{'signature':'…'}}]`. Use `response.text`, which is a `langchain_core` property and works for every provider |
 | **`gemini-2.5-flash` is retired** | New accounts get `404 … no longer available to new users`. Use `gemini-3.6-flash` |
