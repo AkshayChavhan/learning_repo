@@ -6,23 +6,38 @@ This repository contains all the source code used throughout the LangChain YouTu
 
 ### 1. Create Virtual Environment
 
+This project's venv is called **`myenv`**, not `.venv`. Keep the name — the
+VS Code interpreter path in `.vscode/settings.json` points at it.
+
 ```bash
-python -m venv .venv
+python3 -m venv myenv
 ```
+
+> Using `uv` instead? Pass `--seed`, or the venv ships **without `pip`**:
+> `uv venv --seed myenv`. The existing `myenv` was built without it, which is
+> why extra packages there have to go in via `uv pip install`.
 
 ### 2. Activate Virtual Environment
 
 **Windows**
 
 ```bash
-.venv\Scripts\activate
+myenv\Scripts\activate
 ```
 
 **Mac/Linux**
 
 ```bash
-source .venv/bin/activate
+source myenv/bin/activate
 ```
+
+Or skip activation entirely and call the interpreter directly —
+`./myenv/bin/python src/01_llms/gemini_chat_model.py`.
+
+> **`ModuleNotFoundError: No module named 'langchain_google_genai'`** (or
+> `langgraph`, `langchain_groq`, …) means the file ran under system Python
+> rather than this venv. The package is fine; the interpreter is wrong. Check
+> with `which python` — it must print a path inside `myenv/`.
 
 ### 3. Install Dependencies
 
