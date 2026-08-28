@@ -1,5 +1,5 @@
 {
-    "provider":"gemini",
+    "provider":"groq",
     "openai": {
         "model":"gpt-4.1-mini",
         "temperature": 0.7,
