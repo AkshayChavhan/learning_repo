@@ -95,6 +95,29 @@ Switch one line to fall back to Groq (also a free tier, different daily budget):
 Groq is OpenAI-API-compatible, so only the class, key and model id change —
 everything downstream (`response.text`, prompts, chains) is identical.
 
+### Reasoning models eat your token budget
+
+`gemini-3.6-flash` and `gpt-oss-120b` both *think* before answering, and
+`max_token` caps **reasoning + answer together**. Measured on a 3-token prompt:
+
+| Setting | in | out | *of which thinking* | total |
+|---|---|---|---|---|
+| gemini, default | 4 | 60 | 57 | **64** |
+| groq, default | 74 | 62 | 52 | **136** |
+| groq, `reasoning_effort: "low"` | 74 | 24 | 14 | **98** |
+
+Two consequences:
+
+- **Never set `max_token` below ~50.** There is nothing left after thinking, so
+  `response.text` comes back as `''` — an empty string, with no error raised.
+- `reasoning_effort` is set to `"low"` for Groq in `config.json`, worth roughly
+  25% per call. Raise it to `"medium"`/`"high"` for work that needs the thinking.
+
+Gemini has no equivalent escape: `thinking_budget=0` is rejected with
+`400 INVALID_ARGUMENT` on `3.6-flash`, so its ~64-token floor is fixed. Even so
+Gemini is the cheaper of the two per call, because Groq's `gpt-oss` prepends a
+~74-token system prompt of its own before your text.
+
 Your Groq account's model list is not fixed. Check what you can actually call:
 
 ```bash

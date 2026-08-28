@@ -42,10 +42,20 @@ def get_llm():
         # Groq is the fallback when Gemini's free daily quota runs out. It is
         # OpenAI-API-compatible, so the only thing that changes is the class,
         # the key and the model id.
+        #
+        # gpt-oss is a reasoning model, and max_tokens caps reasoning + answer
+        # together - so thinking eats the budget before any visible text is
+        # produced. Measured on a 3-token prompt: "low" spends ~17 reasoning
+        # tokens where the default spends ~52. Raise it to "medium"/"high" for
+        # work that genuinely needs the extra thinking.
+        #
+        # .get() rather than [...] so a config.json written before this option
+        # existed still loads instead of raising KeyError.
         return ChatGroq(
             model = config["groq"]["model"],
             temperature = config["groq"]["temperature"],
             max_tokens = config["groq"]["max_token"],
+            reasoning_effort = config["groq"].get("reasoning_effort", "low"),
             api_key = os.getenv("GROQ_API_KEY")
         )
     else:
