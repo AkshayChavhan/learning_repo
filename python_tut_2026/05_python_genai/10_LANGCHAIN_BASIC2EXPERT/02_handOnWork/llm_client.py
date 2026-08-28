@@ -1,5 +1,13 @@
 import json
 import os
+import sys
+
+# Re-launch under myenv/ if this is the wrong interpreter. It has to run BEFORE
+# the provider imports below, which are what actually blow up on system python.
+# Doing it here rather than only in each script means any NEW file you write
+# gets the guard for free, just by importing this module.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _bootstrap  # noqa: E402,F401
 
 from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
