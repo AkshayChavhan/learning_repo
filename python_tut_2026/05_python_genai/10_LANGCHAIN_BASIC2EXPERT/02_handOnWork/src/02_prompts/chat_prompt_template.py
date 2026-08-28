@@ -50,5 +50,8 @@ def main():
      
     response = llm.invoke(messages)
 
+    print("LLM Responses:\n")
+    print(response.text)
+
 if __name__ == "__main__":
     main()
