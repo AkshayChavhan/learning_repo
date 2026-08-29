@@ -8,9 +8,10 @@
 #
 # Usage:
 #     export OPENAI_API_KEY='sk-proj-...'        # required
-#     export GEMINI_API_KEY='AIza...'            # optional (01_prompt_serialization)
-#     export GOOGLE_API_KEY='AIza...'            # optional (02_handOnWork)
+#     export GEMINI_API_KEY='AIza... or AQ....'            # optional (01_prompt_serialization)
+#     export GOOGLE_API_KEY='AIza... or AQ....'            # optional (02_handOnWork)
 #     export ANTHROPIC_API_KEY='sk-ant-...'      # optional (02_handOnWork)
+#     export GROQ_API_KEY='gsk_...'              # optional (02_handOnWork fallback)
 #     ./scripts/setup_env.sh
 #
 #     ./scripts/setup_env.sh --force             # overwrite .env files that already have content
@@ -43,6 +44,7 @@ OPENAI_API_KEY="${OPENAI_API_KEY:-}"
 GEMINI_API_KEY="${GEMINI_API_KEY:-}"
 GOOGLE_API_KEY="${GOOGLE_API_KEY:-}"
 ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}"
+GROQ_API_KEY="${GROQ_API_KEY:-}"
 
 if [[ -z "$OPENAI_API_KEY" && -t 0 ]]; then
     # `read` returns non-zero on EOF (Ctrl-D), which would abort under `set -e`
@@ -70,7 +72,7 @@ reject_multiline() {
         exit 1
     fi
 }
-for _v in OPENAI_API_KEY GEMINI_API_KEY GOOGLE_API_KEY ANTHROPIC_API_KEY; do
+for _v in OPENAI_API_KEY GEMINI_API_KEY GOOGLE_API_KEY ANTHROPIC_API_KEY GROQ_API_KEY; do
     reject_multiline "$_v"
     printf -v "$_v" '%s' "$(trim "${!_v}")"
 done
@@ -152,7 +154,7 @@ write_env "06_scalable_rag_with_async_queu_distributed_workers/02_rag_queue" OPE
 write_env "07_sending_media_to_llm"                                  OPENAI_API_KEY
 write_env "08_lang_graph"                                            OPENAI_API_KEY
 write_env "09_langgraph_checkpoints"                                 OPENAI_API_KEY
-write_env "10_LANGCHAIN_BASIC2EXPERT/02_handOnWork"                  OPENAI_API_KEY GOOGLE_API_KEY ANTHROPIC_API_KEY
+write_env "10_LANGCHAIN_BASIC2EXPERT/02_handOnWork"                  OPENAI_API_KEY GOOGLE_API_KEY ANTHROPIC_API_KEY GROQ_API_KEY
 
 echo
 echo "done: $written written, $skipped skipped, $missing_dir missing"

@@ -16,7 +16,7 @@ def main():
             break
 
         response = llm.invoke(user_input)
-        print(f"\nAI: {response.content}\n\n")
+        print(f"\nAI: {response.text}\n\n")
 
 if __name__ == "__main__":
     main()

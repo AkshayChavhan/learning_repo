@@ -6,6 +6,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+import _bootstrap  # noqa: F401  re-launches under myenv/ if python3 is the wrong one
+
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from llm_client import get_llm
 from utils.helpers import print_seperator, print_title
@@ -22,7 +24,7 @@ def main():
             ),
             (
                 "human",
-                f"""
+                """
                 Classify the sentiment as Positive, Negetive or Neutral.
                 
                 Example:
@@ -52,10 +54,10 @@ def main():
 
     print_seperator()
      
-    response = llm.invole(messages)
+    response = llm.invoke(messages)
 
     print("LLM Response:\n")
-    print(response.content)
+    print(response.text)
 
 if __name__ == "__main__":
     main()

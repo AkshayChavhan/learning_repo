@@ -1,0 +1,58 @@
+{
+  // This repo has one venv PER PROJECT, not one at the root, and they are not
+  // even named consistently (venv / .venv / myenv). VS Code only holds one
+  // "default" interpreter, so it is pointed at the project being worked on.
+  //
+  // Symptom when this is wrong: ModuleNotFoundError for a package you know is
+  // installed (langchain_google_genai, langgraph, ...) because the file ran
+  // under /usr/bin/python3 instead of the project venv.
+  //
+  // To switch projects: Ctrl+Shift+P -> "Python: Select Interpreter" -> pick the
+  // venv sitting next to the code you are running, or edit the path below.
+  "python.defaultInterpreterPath": "${workspaceFolder}/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork/myenv/bin/python",
+
+  // Pylance resolves imports from the SELECTED interpreter, and
+  // defaultInterpreterPath above only applies until you pick one — after that
+  // VS Code remembers your choice and the default is ignored. These paths make
+  // "Import could not be resolved" go away regardless of what is selected.
+  // First entry is the venv's packages; second lets Pylance follow the
+  // `from llm_client import get_llm` in src/**, which resolves at runtime only
+  // because each script inserts PROJECT_ROOT into sys.path.
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork/myenv/lib/python3.12/site-packages",
+    "${workspaceFolder}/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork"
+  ],
+
+  // Where the Python extension looks when listing interpreters, so every
+  // project venv shows up in the Select Interpreter list.
+  "python.venvFolders": [
+    "python_tut_2026/05_python_genai/01_prompt_serialization",
+    "python_tut_2026/05_python_genai/04_build_Ai_Agent_agentic_workflow",
+    "python_tut_2026/05_python_genai/05_building_chat_with_rag/rag",
+    "python_tut_2026/05_python_genai/06_scalable_rag_with_async_queu_distributed_workers/02_rag_queue",
+    "python_tut_2026/05_python_genai/07_sending_media_to_llm",
+    "python_tut_2026/05_python_genai/08_lang_graph",
+    "python_tut_2026/05_python_genai/09_langgraph_checkpoints",
+    "python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork",
+    "python_tut_2026/05_python_genai/11_RAG_BASICS/02"
+  ],
+
+  // load_config() in llm_client.py opens "config.json" by RELATIVE path, so a
+  // script run from src/01_llms/ would fail with FileNotFoundError. Running
+  // from the project root keeps that working.
+  "python.terminal.executeInFileDir": false,
+
+  // Keep venvs and caches out of search results and the file tree.
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/venv": true,
+    "**/.venv": true,
+    "**/myenv": true
+  },
+  "search.exclude": {
+    "**/__pycache__": true,
+    "**/venv": true,
+    "**/.venv": true,
+    "**/myenv": true
+  }
+}

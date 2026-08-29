@@ -21,9 +21,10 @@ export OPENAI_API_KEY='sk-proj-...'      # paste once
 Add the optional keys before running the script if you want those projects too:
 
 ```bash
-export GEMINI_API_KEY='AIza...'          # 01_prompt_serialization
-export GOOGLE_API_KEY='AIza...'          # 02_handOnWork
+export GEMINI_API_KEY='AIza... or AQ....'          # 01_prompt_serialization
+export GOOGLE_API_KEY='AIza... or AQ....'          # 02_handOnWork
 export ANTHROPIC_API_KEY='sk-ant-...'    # 02_handOnWork
+export GROQ_API_KEY='gsk_...'            # 02_handOnWork (Gemini quota fallback)
 ```
 
 Useful flags: `--dry-run` (show, write nothing), `--force` (overwrite existing).
@@ -48,6 +49,7 @@ Useful flags: `--dry-run` (show, write nothing), `--force` (overwrite existing).
 | `GEMINI_API_KEY` | `01_prompt_serialization` | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) (free tier) |
 | `GOOGLE_API_KEY` | `02_handOnWork` (same key as above, different name) | as above |
 | `ANTHROPIC_API_KEY` | `02_handOnWork` (only when `provider: anthropic`) | [console.anthropic.com](https://console.anthropic.com/settings/keys) |
+| `GROQ_API_KEY` | `02_handOnWork` (only when `provider: groq`) | [console.groq.com/keys](https://console.groq.com/keys) — free tier, key starts `gsk_` |
 | `MODEL` | `04_build_Ai_Agent...` — **optional** | defaults to `qwen2.5-coder:7b` |
 | `OLLAMA_HOST` | `04_build_Ai_Agent...` — **optional** | defaults to `http://localhost:11434` |
 
@@ -63,7 +65,7 @@ All paths are under `python_tut_2026/05_python_genai/`.
 | `07_sending_media_to_llm/` | `OPENAI_API_KEY` | `load_dotenv()` |
 | `08_lang_graph/` | `OPENAI_API_KEY` | `load_dotenv()` |
 | `09_langgraph_checkpoints/` | `OPENAI_API_KEY` | `load_dotenv()` |
-| `10_LANGCHAIN_BASIC2EXPERT/02_handOnWork/` | `OPENAI_API_KEY`, `GOOGLE_API_KEY`, `ANTHROPIC_API_KEY` | `load_dotenv()` |
+| `10_LANGCHAIN_BASIC2EXPERT/02_handOnWork/` | `OPENAI_API_KEY`, `GOOGLE_API_KEY`, `ANTHROPIC_API_KEY`, `GROQ_API_KEY` | `load_dotenv()` |
 | `04_build_Ai_Agent_agentic_workflow/` | *none* | defaults in code |
 | `11_RAG_BASICS/02/` | *none yet* | local loaders only — needed once the notebook reaches embeddings |
 
