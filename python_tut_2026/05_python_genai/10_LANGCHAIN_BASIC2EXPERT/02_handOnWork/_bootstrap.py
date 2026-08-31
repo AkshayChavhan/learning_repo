@@ -35,16 +35,27 @@ import sys
 from pathlib import Path
 
 # The venv lives next to this file, at the project root.
-VENV_PYTHON = Path(__file__).resolve().parent / "myenv" / "bin" / "python"
+VENV_DIR = Path(__file__).resolve().parent / "myenv"
+VENV_PYTHON = VENV_DIR / "bin" / "python"
 
 # Set once before re-exec so a failed switch cannot loop forever.
 _GUARD = "_HANDONWORK_BOOTSTRAPPED"
 
 
 def _already_correct() -> bool:
-    """True if the running interpreter IS the venv one."""
+    """True if the running interpreter IS the venv one.
+
+    Compare sys.prefix - the root of whatever venv we are in - and NOT the
+    resolved path of sys.executable. A venv's bin/python is only a symlink to
+    the interpreter it was built from, so .resolve() follows it all the way
+    back to the shared base binary. Two different venvs built on the same
+    python then resolve to the identical path and compare equal: with the
+    repo-root .venv active, this returned True and the re-exec never fired,
+    which is exactly the "No module named 'dotenv'" case this file exists to
+    prevent. sys.prefix stays distinct per venv, so it is the honest question.
+    """
     try:
-        return Path(sys.executable).resolve() == VENV_PYTHON.resolve()
+        return Path(sys.prefix).resolve() == VENV_DIR.resolve()
     except OSError:
         return True  # cannot tell - do not risk an exec loop
 
