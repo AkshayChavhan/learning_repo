@@ -1,0 +1,1 @@
+/Users/rtlecl910010/Desktop/Projects/Project/learning_repo/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/03_short_project_ticket_analyser
