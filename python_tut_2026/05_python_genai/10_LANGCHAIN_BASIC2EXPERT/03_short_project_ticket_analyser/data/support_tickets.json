@@ -1,0 +1,87 @@
+[
+    {
+        "ticket_id": "TKT-1001",
+        "customer_name": "Rahul Sharma",
+        "ticket": "I was charged twice."
+    },
+    {
+        "ticket_id": "TKT-1002",
+        "customer_name": "John Doe",
+        "ticket": "I didn't receive my order."
+    },
+    {
+        "ticket_id": "TKT-1003",
+        "customer_name": "Jane Smith",
+        "ticket": "I have a technical issue."
+    },
+    {
+        "ticket_id": "TKT-1004",
+        "customer_name": "Emily Johnson",
+        "ticket": "I need to cancel my subscription."
+    },
+    {
+        "ticket_id": "TKT-1005",
+        "customer_name": "Michael Brown",
+        "ticket": "I have a billing issue."
+    },
+    {
+        "ticket_id": "TKT-1006",
+        "customer_name": "David Wilson",
+        "ticket": "I need to change my delivery address."
+    },
+    {
+        "ticket_id": "TKT-1007",
+        "customer_name": "Sarah Davis",
+        "ticket": "I have a cancellation issue."
+    },
+    {
+        "ticket_id": "TKT-1008",
+        "customer_name": "James Anderson",
+        "ticket": "I have a refund issue."
+    },
+    {
+        "ticket_id": "TKT-1009",
+        "customer_name": "William Martinez",
+        "ticket": "I have a delivery issue."
+    },
+    {
+        "ticket_id": "TKT-1010",
+        "customer_name": "Robert Taylor",
+        "ticket": "I have a billing issue."
+    },
+    {
+        "ticket_id": "TKT-1011",
+        "customer_name": "David Wilson",
+        "ticket": "I need to change my delivery address."
+    },
+    {
+        "ticket_id": "TKT-1012",
+        "customer_name": "Sarah Davis",
+        "ticket": "I have a cancellation issue."
+    },
+    {
+        "ticket_id": "TKT-1013",
+        "customer_name": "James Anderson",
+        "ticket": "I have a refund issue."
+    }, 
+    {
+        "ticket_id": "TKT-1014",
+        "customer_name": "William Martinez",
+        "ticket": "I have a delivery issue."
+    },
+    {
+        "ticket_id": "TKT-1015",
+        "customer_name": "Robert Taylor",
+        "ticket": "I have a billing issue."
+    },
+    {
+        "ticket_id": "TKT-1016",
+        "customer_name": "David Wilson",
+        "ticket": "I need to change my delivery address."
+    },
+    {
+        "ticket_id": "TKT-1017",
+        "customer_name": "Sarah Davis",
+        "ticket": "I have a cancellation issue."
+    }
+]
