@@ -154,3 +154,17 @@ if __name__ == "__main__":
 
 # if __name__ == "__main__":
 #     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  Chroma is a vector database that stores embeddings and finds the nearest ones
+#  to a query. from_documents() embeds and indexes in a single call.
+
+#  Passing persist_directory writes the index to disk so it survives the
+#  process, which is the difference from an in-memory store - and the reason
+#  this script wipes the directory first. An index is only valid for the
+#  embedding model that built it; reusing one after switching models produces
+#  meaningless scores rather than an error.
+
+# ======================================================================

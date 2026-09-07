@@ -38,3 +38,16 @@ def main():
 if __name__ == "__main__":
     main()
 
+# ======================================================================
+#  Concept Summary
+ 
+#  An embedding turns text into a list of numbers positioned so that texts with
+#  similar MEANING sit close together in vector space.
+
+#  That is what makes semantic search possible: closeness is computed between
+#  vectors, not words, so a query can match a passage sharing none of its terms.
+#  The model choice is not cosmetic - it fixes the dimension count (Gemini's
+#  gemini-embedding-001 gives 3072, OpenAI's text-embedding-3-small 1536) and
+#  vectors from different models are not comparable.
+
+# ======================================================================

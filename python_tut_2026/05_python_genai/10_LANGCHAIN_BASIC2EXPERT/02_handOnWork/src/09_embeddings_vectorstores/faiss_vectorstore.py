@@ -121,3 +121,17 @@ if __name__ == "__main__":
 #     main()
 
    
+
+# ======================================================================
+#  Concept Summary
+ 
+#  FAISS is an in-memory similarity-search library from Meta. Same from_documents
+#  interface as Chroma, so the surrounding code is identical.
+
+#  The difference is persistence: FAISS holds the index in RAM and disappears
+#  when the process exits unless you call save_local() / load_local(), whereas
+#  Chroma persists to a directory. FAISS is the faster choice for a large index
+#  that fits in memory; Chroma is easier when you want durability and metadata
+#  filtering for free.
+
+# ======================================================================
