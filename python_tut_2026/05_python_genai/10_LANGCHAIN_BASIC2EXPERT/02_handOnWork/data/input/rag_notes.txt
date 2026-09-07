@@ -1,0 +1,52 @@
+Retrieval-Augmented Generation (RAG) - Notes
+
+The problem RAG solves
+
+A language model only knows what was in its training data. It cannot answer
+questions about your private documents, and it knows nothing that happened
+after training finished. Asked anyway, it will often invent a fluent, confident,
+wrong answer rather than admit ignorance.
+
+RAG fixes this by fetching relevant text first and passing it to the model as
+context. The model stops recalling and starts reading.
+
+The pipeline
+
+  1. Load       Read source documents - text, PDF, CSV, web pages.
+  2. Split      Cut them into chunks small enough to fit a context window.
+  3. Embed      Turn each chunk into a vector capturing its meaning.
+  4. Store      Put the vectors in a vector database.
+  5. Retrieve   Embed the user question, find the nearest chunks.
+  6. Generate   Hand those chunks plus the question to the model.
+
+Why chunking matters
+
+Chunks that are too large waste context and dilute the signal - the useful
+sentence is buried among irrelevant ones. Chunks that are too small lose the
+context needed to make sense of them. Overlap between adjacent chunks keeps a
+sentence that straddles a boundary from being cut in half.
+
+A common starting point is 1000 characters with 200 characters of overlap, then
+tune based on what retrieval actually returns.
+
+Embeddings and similarity
+
+An embedding maps text to a list of numbers, positioned so that texts with
+similar meaning sit close together. Similarity is usually measured as cosine
+distance between vectors. This is why RAG can match a question to a passage
+that shares no words with it - "how do I get my money back" retrieves a chunk
+about refund policy.
+
+Where RAG goes wrong
+
+  Retrieval returns nothing relevant   The model answers from memory anyway,
+                                       and the citation looks legitimate.
+  Chunks are too small                 Retrieved text lacks the surrounding
+                                       context needed to interpret it.
+  Stale index                          Documents changed, embeddings did not.
+  Too many chunks retrieved            Signal drowns in noise; the model
+                                       latches onto the wrong passage.
+
+The failure mode worth remembering: retrieval failing silently. The model still
+produces an answer, and nothing in the output signals that the context was
+empty or irrelevant.
