@@ -18,8 +18,14 @@
   // First entry is the venv's packages; second lets Pylance follow the
   // `from llm_client import get_llm` in src/**, which resolves at runtime only
   // because each script inserts PROJECT_ROOT into sys.path.
+  // NOTE the python3.11 in the first path. It must match the venv's actual
+  // Python version — `myenv/bin/python -V` says 3.11.5, so site-packages lives
+  // under lib/python3.11/. This said python3.12, a directory that does not
+  // exist, which is why Pylance reported "Import could not be resolved" for
+  // dotenv, bs4, langchain_groq and friends even though they are all installed.
+  // Recreating the venv on a different Python means updating this path too.
   "python.analysis.extraPaths": [
-    "${workspaceFolder}/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork/myenv/lib/python3.12/site-packages",
+    "${workspaceFolder}/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork/myenv/lib/python3.11/site-packages",
     "${workspaceFolder}/python_tut_2026/05_python_genai/10_LANGCHAIN_BASIC2EXPERT/02_handOnWork"
   ],
 
