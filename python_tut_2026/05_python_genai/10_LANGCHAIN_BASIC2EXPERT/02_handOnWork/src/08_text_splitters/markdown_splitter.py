@@ -42,3 +42,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  MarkdownHeaderTextSplitter splits on header levels (#, ##, ###) rather than
+#  on size, and keeps the full header trail as chunk metadata.
+
+#  The other splitters cut on length and discard structure. This one preserves
+#  it, so a retrieved chunk still knows which section it came from - context a
+#  RAG answer needs to stay grounded. strip_headers defaults to True, which
+#  removes the heading line itself from page_content.
+
+# ======================================================================

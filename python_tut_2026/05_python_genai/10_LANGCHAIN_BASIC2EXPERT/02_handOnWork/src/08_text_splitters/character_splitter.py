@@ -41,3 +41,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  CharacterTextSplitter splits on ONE fixed separator and accepts whatever
+#  chunk sizes fall out of it.
+
+#  It is the simplest splitter, but it cannot break text that does not contain
+#  the separator - a single long line exceeds chunk_size and is emitted whole
+#  with a warning. Use it when the input has reliable structure to split on.
+
+# ======================================================================

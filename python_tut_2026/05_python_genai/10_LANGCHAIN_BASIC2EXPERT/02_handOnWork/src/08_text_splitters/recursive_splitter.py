@@ -40,3 +40,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  RecursiveCharacterTextSplitter splits text by trying a list of separators in
+#  order - paragraph, then line, then word, then character.
+
+#  It only falls back to the next separator when a chunk is still too large, so
+#  it keeps related text together wherever it can. This is the default choice
+#  for most RAG pipelines and the one to reach for when unsure.
+
+# ======================================================================

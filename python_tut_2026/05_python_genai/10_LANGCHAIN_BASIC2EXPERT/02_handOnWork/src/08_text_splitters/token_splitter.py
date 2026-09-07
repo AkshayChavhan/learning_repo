@@ -44,10 +44,10 @@ if __name__ == "__main__":
 # ======================================================================
 #  Concept Summary
  
-#  TokenTextSplitter create chunks based on token count instead of character count.
+#  TokenTextSplitter creates chunks based on token count instead of character count.
 
-#  Since LLMs have token-based context windows, token-aware chunnking
-#  often provides more consistent chunk sizes for RAG applications.and
+#  Since LLMs have token-based context windows, token-aware chunking
+#  often provides more consistent chunk sizes for RAG applications.
 #  It is especially useful when working with models that have strict token limits
 
 # ======================================================================
