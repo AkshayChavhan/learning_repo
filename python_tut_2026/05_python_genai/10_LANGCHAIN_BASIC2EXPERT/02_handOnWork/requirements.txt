@@ -32,6 +32,12 @@ tiktoken>=0.9,<1.0
 # ============================
 # Document Loaders
 # ============================
+# TextLoader, PyPDFLoader, CSVLoader, WebBaseLoader and DirectoryLoader all
+# live in langchain-community - they are NOT in langchain or langchain-core,
+# so without this every script in src/07_document_loaders/ dies on import.
+# It warns that it is being sunset; the loaders still work, and the successor
+# packages are per-integration rather than one bundle.
+langchain-community>=0.3,<1.0
 pypdf>=5.0,<6.0
 beautifulsoup4>=4.13,<5.0
 lxml>=6.0,<7.0
