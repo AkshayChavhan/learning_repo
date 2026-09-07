@@ -1,0 +1,44 @@
+What is AI?
+
+Artificial Intelligence is the field of building systems that perform tasks
+which normally require human intelligence - recognising speech, understanding
+language, spotting patterns, making decisions, generating images or code.
+
+The useful mental model: traditional software is rules written by a person. You
+tell the computer exactly what to do, step by step. AI flips this. You show the
+system many examples, and it derives the rules itself. Nobody writes "a cat has
+pointed ears and whiskers" - you show it a million labelled photos and it learns
+what separates cats from everything else.
+
+
+The layers
+
+AI is an umbrella term, and the words nest inside each other:
+
+  AI                - The broad goal: machines doing intelligent-seeming things
+  Machine Learning  - Systems that improve from data rather than hand-written rules
+  Deep Learning     - Machine learning using many-layered neural networks
+  Generative AI     - Deep learning that produces new text, images, audio, code
+
+Each is a subset of the one above it. Every large language model is generative
+AI, which is deep learning, which is machine learning, which is AI.
+
+
+How learning actually happens
+
+A model holds millions or billions of internal numbers called parameters (or
+weights). Training works like a feedback loop: the model makes a prediction, its
+answer is compared against the correct one, the gap is measured as an error, and
+the parameters nudge slightly to shrink that error. Repeat this billions of
+times and the weights settle into something that generalises to examples the
+model has never seen.
+
+
+Two things worth knowing
+
+AI is statistical, not certain. It predicts what is likely, not what is
+guaranteed true - which is exactly why a language model can produce a confident,
+fluent, completely wrong answer.
+
+Data quality decides everything. A model trained on biased or thin data learns
+those flaws faithfully. Garbage in, garbage out - at scale.
