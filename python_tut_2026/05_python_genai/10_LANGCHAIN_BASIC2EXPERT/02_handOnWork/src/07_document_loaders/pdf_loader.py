@@ -30,3 +30,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  PyPDFLoader reads a PDF and returns ONE Document PER PAGE, not one per file.
+
+#  Each page carries 'page' and 'total_pages' in its metadata, so a retrieved
+#  chunk can cite where it came from. Extraction depends on the PDF holding a
+#  real text layer - a scanned image yields empty page_content and needs OCR.
+
+# ======================================================================

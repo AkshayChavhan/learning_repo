@@ -45,3 +45,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  WebBaseLoader fetches a URL and parses the HTML into a Document.
+
+#  It does NOT raise on an error status - a 404 comes back as a Document with
+#  empty page_content, so a dead link looks exactly like a successful load until
+#  you check. Set USER_AGENT before importing it; that is when it is read.
+
+# ======================================================================

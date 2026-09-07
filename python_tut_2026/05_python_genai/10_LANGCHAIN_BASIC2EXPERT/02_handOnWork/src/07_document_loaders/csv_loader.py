@@ -28,3 +28,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  CSVLoader returns ONE Document PER ROW, with a 'row' index in the metadata.
+
+#  Each Document's page_content is the row rendered as "column: value" lines,
+#  which is why quoted fields matter: a value containing commas stays one field
+#  rather than being shredded across columns.
+
+# ======================================================================

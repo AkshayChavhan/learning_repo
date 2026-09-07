@@ -42,3 +42,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  DirectoryLoader walks a folder, matches files by glob, and delegates each one
+#  to a per-file loader passed as loader_cls.
+
+#  It is a fan-out over the other loaders rather than a loader itself. Because
+#  it reports files loaded rather than content found, empty files count as
+#  successes - check character counts, not just the document total.
+
+# ======================================================================

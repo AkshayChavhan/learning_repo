@@ -32,4 +32,13 @@ def main():
 if __name__ == "__main__":
       main()
 
+# ======================================================================
+#  Concept Summary
+ 
+#  TextLoader reads a single plain-text file into one Document.
 
+#  It is the simplest loader and the baseline for the rest: every loader returns
+#  the same Document shape - page_content plus a metadata dict - so whatever
+#  comes next in the pipeline does not care where the text came from.
+
+# ======================================================================
