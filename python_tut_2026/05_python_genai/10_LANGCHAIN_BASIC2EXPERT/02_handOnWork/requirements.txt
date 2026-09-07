@@ -51,7 +51,9 @@ langchain-text-splitters>=1.0.0,<2.0.0
 # Vector Databases
 # ============================
 langchain-chroma>=1.0.0,<2.0.0
-faiss-cpu>=1.11,<2.0
+# Pinned exactly: 1.11+ ships no arm64 wheel for Python 3.11 and the source
+# build fails (needs swig/cmake). 1.10.0 has a working wheel.
+faiss-cpu==1.10.0
 
 # ============================
 # Utilities
