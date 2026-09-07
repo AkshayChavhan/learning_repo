@@ -1,0 +1,19 @@
+employee_id,name,department,role,experience_years,skills,location
+E001,Rahul Sharma,Data Science,Senior Data Scientist,7,"Python, Machine Learning, SQL, LangChain",Pune
+E002,Priya Menon,Engineering,Backend Engineer,4,"Python, FastAPI, PostgreSQL, Docker",Bengaluru
+E003,Arjun Nair,Engineering,Frontend Engineer,3,"JavaScript, React, TypeScript, CSS",Kochi
+E004,Sneha Kulkarni,Data Science,ML Engineer,5,"Python, PyTorch, MLflow, Kubernetes",Pune
+E005,Vikram Desai,Platform,DevOps Engineer,6,"Docker, Kubernetes, Terraform, AWS",Mumbai
+E006,Ananya Iyer,Product,Product Manager,8,"Roadmapping, User Research, SQL, Analytics",Bengaluru
+E007,Karan Malhotra,Engineering,Backend Engineer,2,"Java, Spring Boot, MySQL",Delhi
+E008,Meera Pillai,Data Science,Data Analyst,3,"SQL, Excel, Tableau, Python",Chennai
+E009,Rohit Verma,Platform,Site Reliability Engineer,9,"Linux, Prometheus, Go, Kubernetes",Hyderabad
+E010,Divya Rao,Engineering,Full Stack Engineer,5,"TypeScript, Node.js, React, MongoDB",Bengaluru
+E011,Aditya Joshi,Data Science,Senior ML Engineer,10,"Python, TensorFlow, Spark, Airflow",Pune
+E012,Ishita Banerjee,Design,UX Designer,4,"Figma, Prototyping, User Testing",Kolkata
+E013,Sanjay Reddy,Engineering,Staff Engineer,12,"Go, Distributed Systems, gRPC, Kafka",Hyderabad
+E014,Nisha Gupta,Product,Associate Product Manager,1,"SQL, Jira, Wireframing",Delhi
+E015,Farhan Qureshi,Platform,Cloud Architect,11,"AWS, Azure, Terraform, Networking",Mumbai
+E016,Lakshmi Subramanian,Data Science,Data Engineer,6,"Python, Spark, dbt, Snowflake",Chennai
+E017,Tanvi Shah,Engineering,QA Engineer,3,"Selenium, PyTest, API Testing",Ahmedabad
+E018,Manish Agarwal,Design,Design Lead,9,"Figma, Design Systems, Accessibility",Bengaluru
