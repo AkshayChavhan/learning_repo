@@ -11,6 +11,10 @@ import _bootstrap  # noqa: F401  re-launches under myenv/ if python3 is the wron
 from dotenv import load_dotenv
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
+# --- OPENAI ALTERNATIVE (commented) -----------------------------------------
+# from langchain_openai import OpenAIEmbeddings
+# ----------------------------------------------------------------------------
+
 from utils.helpers import print_seperator , print_title
 
 load_dotenv()
@@ -23,9 +27,23 @@ load_dotenv()
 #   curl "https://generativelanguage.googleapis.com/v1beta/models?key=$GOOGLE_API_KEY"
 EMBEDDING_MODEL = "models/gemini-embedding-001"
 
+# --- OPENAI ALTERNATIVE (commented) -----------------------------------------
+# OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
+# ----------------------------------------------------------------------------
+
 def main():
     print_title("Text Embeddings")
     embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
+
+    # --- OPENAI ALTERNATIVE (commented) -------------------------------------
+    # Swap the two lines to switch providers - nothing else changes, because both
+    # classes implement the same Embeddings interface. Dimensions differ though
+    # (Gemini 3072, OpenAI 1536), so an index built with one must be REBUILT,
+    # never reused, with the other.
+    #
+    # embeddings = OpenAIEmbeddings(model=OPENAI_EMBEDDING_MODEL)
+    # ------------------------------------------------------------------------
+
     text = "LangChain makes it easy to build applications powered by LLM"
     vector = embeddings.embed_query(text)
 

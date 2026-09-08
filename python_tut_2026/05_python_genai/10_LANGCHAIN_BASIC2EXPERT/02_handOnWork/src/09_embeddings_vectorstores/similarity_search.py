@@ -13,12 +13,20 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
+# --- OPENAI ALTERNATIVE (commented) -----------------------------------------
+# from langchain_openai import OpenAIEmbeddings
+# ----------------------------------------------------------------------------
+
 from utils.helpers import print_seperator , print_title
 
 load_dotenv()
 
 # See embeddings.py - text-embedding-004 is 404 on this account.
 EMBEDDING_MODEL = "models/gemini-embedding-001"
+
+# --- OPENAI ALTERNATIVE (commented) -----------------------------------------
+# OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
+# ----------------------------------------------------------------------------
 
 # Documents written by hand instead of loaded + split. Loading a file is the
 # previous topic; here the point is only the search, so a short list keeps the
@@ -47,6 +55,16 @@ def main():
     print_title("Similarity Search")
 
     embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
+
+    # --- OPENAI ALTERNATIVE (commented) -------------------------------------
+    # Swap the two lines to switch providers - nothing else changes, because both
+    # classes implement the same Embeddings interface. Dimensions differ though
+    # (Gemini 3072, OpenAI 1536), so an index built with one must be REBUILT,
+    # never reused, with the other.
+    #
+    # embeddings = OpenAIEmbeddings(model=OPENAI_EMBEDDING_MODEL)
+    # ------------------------------------------------------------------------
+
     vector_store = FAISS.from_documents(documents=DOCUMENTS, embedding=embeddings)
     print(f"Documents indexed: {len(DOCUMENTS)}")
     print_seperator()
