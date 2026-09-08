@@ -48,12 +48,16 @@
   // from the project root keeps that working.
   "python.terminal.executeInFileDir": false,
 
-  // Keep venvs and caches out of search results and the file tree.
+  // Keep caches and the OTHER venvs out of the file tree.
+  // myenv is false so the project venv SHOWS in the explorer - it is the one
+  // you interact with (selecting the interpreter, checking what is installed).
+  // It stays in search.exclude below, or every search would drown in
+  // site-packages hits.
   "files.exclude": {
     "**/__pycache__": true,
     "**/venv": true,
     "**/.venv": true,
-    "**/myenv": true
+    "**/myenv": false
   },
   "search.exclude": {
     "**/__pycache__": true,
