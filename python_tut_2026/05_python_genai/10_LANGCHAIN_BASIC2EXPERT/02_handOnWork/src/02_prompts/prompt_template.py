@@ -44,3 +44,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  PromptTemplate turns a prompt into a reusable function: write it once with
+#  {placeholders}, then .invoke() with different values.
+
+#  The braces belong to LangChain, NOT to Python - never prefix the template
+#  with f. An f-string is interpolated at import time and raises NameError for
+#  the variables it cannot see. Use PromptTemplate for plain-text completion and
+#  ChatPromptTemplate when you need message roles.
+
+# ======================================================================

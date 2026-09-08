@@ -64,3 +64,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  Chain-of-thought prompting: ask the model to reason step by step BEFORE
+#  committing to an answer.
+
+#  Working through intermediate steps measurably improves multi-step problems -
+#  arithmetic, eligibility rules, anything with several conditions - because the
+#  model conditions each step on the last instead of guessing in one jump.
+#  Costs output tokens, and reasoning models now do this internally anyway.
+
+# ======================================================================

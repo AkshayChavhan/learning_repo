@@ -59,7 +59,14 @@ def main():
 if __name__ == "__main__":
     main()
 
-# add some notes here
-# RunnableParallel is a chain that runs a sequence of runnables in parallel.
-# It is a chain that runs a sequence of runnables in parallel.
+# ======================================================================
+#  Concept Summary
+ 
+#  RunnableParallel runs several chains on the same input CONCURRENTLY and
+#  collects the results into a dict keyed by branch name.
 
+#  Wall-clock is the slowest branch, not the sum. It also reshapes data mid-
+#  chain: because the output is a dict, it is the standard way to build the
+#  {"context": retriever, "question": passthrough} input a RAG prompt expects.
+
+# ======================================================================

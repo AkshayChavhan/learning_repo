@@ -78,3 +78,23 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  The dials that shape generation, applied with llm.bind(**params) so one model
+#  object can be reused with different settings per call.
+
+#  temperature  randomness; 0 is near-deterministic, higher is more varied
+#  max_tokens   cap on the reply - on a REASONING model this covers thinking
+#               too, so a low cap can return an empty string with no error
+#  top_p        nucleus sampling; an alternative to temperature, not a partner
+#  frequency /  discourage repetition and encourage new topics
+#  presence
+#  stop         cut generation when a string appears
+
+#  Not every provider honours every one. top_p, frequency_penalty and
+#  presence_penalty are OpenAI-shaped; other providers may ignore them silently
+#  rather than raising.
+
+# ======================================================================

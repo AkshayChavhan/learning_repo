@@ -53,3 +53,17 @@ def main():
         
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  ConversationTokenBufferMemory prunes oldest messages to stay under a token
+#  budget.
+
+#  More honest than a message-count window, because messages vary hugely in
+#  length - k=5 could be 50 tokens or 5000. The llm argument is a TOKEN COUNTER
+#  here, not a generator; no request is sent. The kwarg is max_token_limit, and
+#  pydantic drops unknown kwargs silently, so a misspelling gives you the 2000
+#  default with no error.
+
+# ======================================================================

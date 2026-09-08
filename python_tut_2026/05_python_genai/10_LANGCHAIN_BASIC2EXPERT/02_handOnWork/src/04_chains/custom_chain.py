@@ -100,3 +100,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  When a workflow needs plain Python - loops, conditionals, several dependent
+#  steps - write a function and wrap it in RunnableLambda.
+
+#  It becomes a Runnable like any other, so it composes with the pipe operator
+#  and gains .invoke/.batch/.stream. This is the escape hatch: LCEL covers most
+#  shapes, and anything it does not express awkwardly is better written as
+#  ordinary code and wrapped.
+
+# ======================================================================

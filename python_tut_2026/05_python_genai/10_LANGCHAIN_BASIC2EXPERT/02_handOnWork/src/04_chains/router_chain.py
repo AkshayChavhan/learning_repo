@@ -56,3 +56,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  Routing picks WHICH chain to run based on the input.
+
+#  A function inspects the input and returns a chain; LCEL then invokes the
+#  returned Runnable with the original input automatically. Specialised prompts
+#  per category beat one prompt trying to cover everything. Keyword routing is
+#  cheap and brittle - substrings overlap - so classify with an LLM or use
+#  RunnableBranch once the categories get subtle.
+
+# ======================================================================

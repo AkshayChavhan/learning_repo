@@ -29,3 +29,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  Chat history is just an ordered list of Message objects - the substrate every
+#  memory class is built on.
+
+#  InMemoryChatMessageHistory stores HumanMessage and AIMessage in order and
+#  replays them. Models are stateless: they remember nothing between calls, so
+#  "memory" is only ever text you resend. Understanding that makes every memory
+#  class below it obvious.
+
+# ======================================================================

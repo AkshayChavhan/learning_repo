@@ -69,3 +69,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  MessagesPlaceholder reserves a slot in a ChatPromptTemplate that a LIST of
+#  messages is dropped into at invoke time.
+
+#  This is how conversation history reaches a prompt. Without it you would have
+#  to flatten past turns into a string and lose their roles. The slot takes real
+#  Message objects, so the model still sees who said what - which is what makes
+#  a follow-up question resolvable.
+
+# ======================================================================

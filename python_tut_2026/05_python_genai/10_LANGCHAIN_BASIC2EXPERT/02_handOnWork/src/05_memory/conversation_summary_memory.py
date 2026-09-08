@@ -48,3 +48,15 @@ def main():
 
 if __name__ == "__main__":
     main()    
+
+# ======================================================================
+#  Concept Summary
+ 
+#  ConversationSummaryMemory replaces the transcript with an LLM-written summary.
+
+#  The only strategy that keeps information from the WHOLE conversation while
+#  staying bounded - the others simply discard the old turns. The trade-offs are
+#  real: an extra LLM call per save, lossy compression, and detail that quietly
+#  disappears. It returns a single SystemMessage, not the original turns.
+
+# ======================================================================

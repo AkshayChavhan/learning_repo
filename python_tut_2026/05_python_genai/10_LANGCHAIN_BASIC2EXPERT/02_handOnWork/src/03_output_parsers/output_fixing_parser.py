@@ -62,3 +62,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  OutputFixingParser wraps another parser and, when parsing fails, sends the
+#  broken output back to an LLM to be repaired.
+
+#  It handles the realistic failure - output that is nearly right, like "5 years"
+#  where an int was wanted, or a comma-string where a list belongs. The cost is
+#  a second API call on every failure, so it is a safety net rather than a
+#  substitute for with_structured_output. Lives in langchain_classic.
+
+# ======================================================================

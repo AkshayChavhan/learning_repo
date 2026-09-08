@@ -40,3 +40,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  RunnableLambda turns an ordinary Python function into a Runnable.
+
+#  Any transformation LCEL has no operator for - reformatting, filtering,
+#  logging, calling an API - becomes a first-class chain step that pipes like
+#  everything else. The function takes one argument: whatever the previous step
+#  returned.
+
+# ======================================================================

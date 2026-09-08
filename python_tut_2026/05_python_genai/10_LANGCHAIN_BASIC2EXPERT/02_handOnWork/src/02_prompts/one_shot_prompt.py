@@ -61,3 +61,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  One-shot prompting: show the model a SINGLE worked example before the real
+#  question.
+
+#  The example teaches format and granularity far more reliably than describing
+#  them ever does - "Sentiment: Positive" fixes the output shape in a way that
+#  "reply with the sentiment" does not. Cheapest way to stabilise output before
+#  reaching for a parser or structured output.
+
+# ======================================================================

@@ -52,3 +52,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  A sequential chain runs steps in order, each consuming the previous step's
+#  output.
+
+#  Here the title chain's result becomes the outline chain's input. Two calls
+#  beat one big prompt when the steps are genuinely distinct: each stays focused,
+#  and the intermediate value is inspectable. The cost is latency - the second
+#  call cannot start until the first finishes.
+
+# ======================================================================

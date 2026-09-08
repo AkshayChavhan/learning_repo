@@ -27,6 +27,14 @@ def main():
 if __name__ == "__main__":
     main()
 
-# add some notes here
-# RunnableSequence is a chain that runs a sequence of runnables in order.
-# It is a chain that runs a sequence of runnables in order.
+# ======================================================================
+#  Concept Summary
+ 
+#  RunnableSequence chains steps so each one's output feeds the next. The pipe
+#  operator builds one: prompt | model | parser.
+
+#  Everything in LangChain implements the Runnable interface, which is what
+#  makes the pipe work at all and gives the whole chain .invoke, .batch and
+#  .stream for free. Read it left to right - format, generate, parse.
+
+# ======================================================================

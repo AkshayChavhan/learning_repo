@@ -52,7 +52,15 @@ def main():
 if __name__ == "__main__":
     main()
 
-# add some notes here
-# RunnablePassthrough forwards its input unchanged.
-# Use it as a dict value to feed the raw input into a prompt variable,
-# or RunnablePassthrough.assign(...) to add keys while keeping the originals.
+# ======================================================================
+#  Concept Summary
+ 
+#  RunnablePassthrough forwards its input unchanged.
+
+#  Two shapes. As a dict value, {"query": RunnablePassthrough()}, it drops the
+#  raw input into a prompt variable so the chain can take a plain string - a
+#  bare passthrough piped into a model fails, because a chat model cannot accept
+#  a dict. And .assign() ADDS computed keys while keeping the originals, which
+#  is how RAG keeps the question alongside the retrieved documents.
+
+# ======================================================================

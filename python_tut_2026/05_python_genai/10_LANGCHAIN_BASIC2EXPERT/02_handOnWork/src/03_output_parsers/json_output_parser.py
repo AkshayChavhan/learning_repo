@@ -82,3 +82,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  JsonOutputParser turns the reply into a plain Python dict.
+
+#  Lighter than the Pydantic parser: no schema, no validation, no type checking
+#  - you get whatever keys the model chose to emit. Use it for exploration or
+#  genuinely dynamic shapes, and Pydantic when the fields are known and wrong
+#  ones should be caught.
+
+# ======================================================================

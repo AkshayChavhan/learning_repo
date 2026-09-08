@@ -57,3 +57,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  ChatPromptTemplate builds a LIST OF MESSAGES with roles, rather than one
+#  block of text.
+
+#  The system message sets persona and rules and carries more weight than the
+#  same words in a human turn - which is why role structure matters. An "ai"
+#  message can seed the reply's tone. Modern chat models are trained on this
+#  shape, so it beats one flat prompt for anything conversational.
+
+# ======================================================================

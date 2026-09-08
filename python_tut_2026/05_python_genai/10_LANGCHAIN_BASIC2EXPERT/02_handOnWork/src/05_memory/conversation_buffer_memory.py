@@ -40,3 +40,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  ConversationBufferMemory keeps the COMPLETE conversation and replays all of
+#  it.
+
+#  Perfect recall, unbounded cost: tokens grow with every turn until the context
+#  window overflows. Fine for short sessions, unusable for long ones - which is
+#  the problem the window, token-buffer and summary variants each solve
+#  differently. load_memory_variables({}) takes the chain's inputs as a required
+#  argument that this class ignores.
+
+# ======================================================================

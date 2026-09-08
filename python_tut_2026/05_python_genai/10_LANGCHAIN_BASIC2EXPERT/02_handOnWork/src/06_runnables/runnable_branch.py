@@ -53,3 +53,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  RunnableBranch is if/elif/else for chains: (condition, runnable) TUPLES, then
+#  one bare runnable as the default.
+
+#  Each condition is a callable returning a BOOLEAN, not a label - a lambda
+#  returning "technical" is not a branch. Conditions are tried in order and the
+#  first match wins, so put the specific cases first: "non-technical" contains
+#  "technical" as a substring, and a naive check routes both the same way with
+#  no error.
+
+# ======================================================================

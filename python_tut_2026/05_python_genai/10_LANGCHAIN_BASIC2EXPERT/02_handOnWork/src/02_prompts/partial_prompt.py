@@ -47,3 +47,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  .partial() pre-fills SOME template variables and returns a new template still
+#  waiting for the rest.
+
+#  Useful when one value is fixed at setup and others vary per call - a domain,
+#  a tone, a date. The main real-world use is format_instructions from an output
+#  parser, which is known when the chain is built but has nothing to do with the
+#  caller's input.
+
+# ======================================================================

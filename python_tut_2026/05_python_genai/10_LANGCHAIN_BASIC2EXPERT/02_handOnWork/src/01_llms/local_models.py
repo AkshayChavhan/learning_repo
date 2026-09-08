@@ -45,3 +45,15 @@ def main():
 
 if(__name__ == "__main__"):
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  ChatOllama runs a model on your own machine instead of a hosted API.
+
+#  No API key, no per-token cost, and no data leaving the machine - the
+#  trade-offs are that you provide the hardware and `ollama serve` must be
+#  running on localhost:11434 with the model already pulled. The Runnable
+#  interface is identical, so a local model drops into any chain unchanged.
+
+# ======================================================================

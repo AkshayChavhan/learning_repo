@@ -59,3 +59,18 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  RunnableParallel runs several chains on the SAME input CONCURRENTLY and
+#  returns their results as a dict keyed by branch name.
+
+#  Independent work should not be serialised: three prompts against one topic
+#  take about as long as the slowest, not the sum. Use it whenever steps do not
+#  feed each other - a sequential chain would just be slower.
+
+#  Note: the three prompts in this file are currently identical, so it shows the
+#  MECHANISM but not the benefit. Give them different text to see the point.
+
+# ======================================================================

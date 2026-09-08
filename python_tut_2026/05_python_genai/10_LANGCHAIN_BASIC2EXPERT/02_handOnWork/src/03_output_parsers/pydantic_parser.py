@@ -82,3 +82,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  PydanticOutputParser validates the reply against a Pydantic model and returns
+#  a typed object with real attributes.
+
+#  Two halves that are easy to confuse: get_format_instructions() goes INTO the
+#  prompt to tell the model what to emit, and .invoke() runs on the REPLY to
+#  parse it. Instructions alone change nothing - llm.invoke() still returns an
+#  AIMessage whose .text is a JSON string with no .name or .department on it.
+
+# ======================================================================

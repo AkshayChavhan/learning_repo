@@ -68,3 +68,16 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  with_structured_output() constrains the model to a schema and returns a
+#  parsed object rather than text.
+
+#  This is the preferred approach where the provider supports it: the shape is
+#  guaranteed by the API, not requested in the prompt and hoped for. Accepts a
+#  JSON Schema dict or a Pydantic class. It guarantees SHAPE, never truth - a
+#  perfectly valid object can still hold invented values.
+
+# ======================================================================

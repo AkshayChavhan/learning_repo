@@ -61,3 +61,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  CommaSeparatedListOutputParser splits a comma-separated reply into a real
+#  Python list.
+
+#  The smallest useful parser, and the clearest illustration that format
+#  instructions and parsing are separate steps: the model returns ONE LINE of
+#  text, and something still has to split it. Fragile by nature - an item
+#  containing a comma cannot survive the round trip.
+
+# ======================================================================

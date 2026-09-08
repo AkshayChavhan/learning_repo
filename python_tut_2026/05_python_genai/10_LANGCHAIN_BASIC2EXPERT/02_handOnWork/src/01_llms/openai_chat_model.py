@@ -38,3 +38,16 @@ def chat_with_model() -> None:
 
 if(__name__ == "__main__"):
     chat_with_model()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  The entry point for every LangChain app: build a chat model, call .invoke()
+#  with a prompt, read the reply.
+
+#  Read response.text, not response.content. .text is a langchain_core property
+#  that returns a plain string for every provider, while .content can be a list
+#  of content blocks (Gemini does this) and breaks string operations.
+#  response.type tells you the message role - "ai" for a model reply.
+
+# ======================================================================

@@ -99,3 +99,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  Few-shot prompting: several examples instead of one, covering different cases.
+
+#  Multiple examples teach the DECISION BOUNDARY, not just the format - which is
+#  what one-shot cannot do. Here three labelled tickets spanning three
+#  categories let the model classify a fourth it has never seen. Cost is tokens:
+#  every example is resent on every call.
+
+# ======================================================================

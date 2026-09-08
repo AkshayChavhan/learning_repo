@@ -57,3 +57,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  ConversationBufferWindowMemory replays only the last k exchanges.
+
+#  A fixed token ceiling, at the price of forgetting anything older - ask about
+#  turn 1 on turn 20 and it is gone. Note what k does NOT do: save_context still
+#  appends every message, and the window is a slice taken on the way out
+#  (messages[-k*2:]). It bounds what the MODEL SEES, not what is stored.
+
+# ======================================================================
