@@ -17,7 +17,8 @@ from utils.helpers import print_seperator, print_title
 
 def main():
     print_title("Conversation Buffer Window Memory")
-    memory = ConversationBufferWindowMemory(k=2, return_messages=True)
+    memory = ConversationBufferWindowMemory(k=2, return_messages=True)  
+    # k is last  nth number of message to be showed
 
     conversations = [
         ("Hi, how are you?", "I'm good, thank you!"),
