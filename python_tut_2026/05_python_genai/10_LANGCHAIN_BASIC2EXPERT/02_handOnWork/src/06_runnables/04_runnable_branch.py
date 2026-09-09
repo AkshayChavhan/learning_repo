@@ -13,7 +13,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableBranch
 
 from llm_client import get_llm
-from utils.helpers import print_seperator, print_title
+from utils.helpers import print_title
 
 
 def main():
