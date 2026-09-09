@@ -22,6 +22,31 @@ def main():
     print(f"Total documents loaded: {len(documents)}")
     print_seperator()
 
+    # What `documents` actually is, before we index into it. .load() ALWAYS
+    # returns a LIST of Document objects, even when there is only one - that
+    # uniform shape is what lets a splitter or vector store accept the output
+    # of any loader without caring which one produced it.
+    #
+    # A Document has exactly two parts:
+    #   page_content  the text (a str)
+    #   metadata      where it came from (a dict)
+    #
+    # TextLoader puts the WHOLE file in one Document. PyPDFLoader would give
+    # one per page, CSVLoader one per row - so len() varies by loader.
+    print("Documents Object: \n")
+    print(f"  type        : {type(documents).__name__}")
+    print(f"  length      : {len(documents)}")
+    print(f"  item type   : {type(documents[0]).__name__}")
+    print(f"  item fields : {list(documents[0].model_dump())}")
+    print_seperator()
+
+    # The whole thing, untruncated. This is the raw list exactly as .load()
+    # returned it - note the \n stay escaped here, because printing a LIST
+    # shows the repr of each item rather than rendering the string.
+    print("Documents (full): \n")
+    print(documents)
+    print_seperator()
+
     document = documents[0]
 
     print(f"Document Metadata: {document.metadata}")
