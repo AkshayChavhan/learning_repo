@@ -11,8 +11,7 @@ import _bootstrap  # noqa: F401  re-launches under myenv/ if python3 is the wron
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage
 
-from llm_client import get_llm
-from utils.helpers import print_seperator, print_title
+from utils.helpers import print_title
 
 def main():
     print_title("Chat Message History")
