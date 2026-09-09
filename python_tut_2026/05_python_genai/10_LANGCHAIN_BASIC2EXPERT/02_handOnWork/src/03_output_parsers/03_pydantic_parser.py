@@ -25,7 +25,7 @@ class Employee(BaseModel):
 def main():
     print_title("Pydantic Output Parcer")
     llm = get_llm()
-    parser = PydanticOutputParser(pydantic_object=Employee)
+    parser = PydanticOutputParser[Employee](pydantic_object=Employee)
 
     prompt = PromptTemplate(
         template="""

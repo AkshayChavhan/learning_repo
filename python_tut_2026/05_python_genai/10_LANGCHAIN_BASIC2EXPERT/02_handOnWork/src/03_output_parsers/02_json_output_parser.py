@@ -49,6 +49,15 @@ def main():
         }
     )
 
+    # The object itself, before .text unwraps it. prompt.invoke() returns a
+    # PromptValue, not a string - the same input a chat model expects. .text
+    # is just one view of it; .to_messages() is the other, and it is what the
+    # model actually receives.
+    print("Prompt Value Object: \n")
+    print(f"  type     : {type(prompt_value).__name__}")
+    print(f"  messages : {prompt_value.to_messages()}")
+    print_seperator()
+
     print("Formatted Prompt \n")
     print(prompt_value.text)
 
@@ -69,6 +78,16 @@ def main():
     print_seperator()
 
     parsed_response = parser.invoke(response)
+
+    # The parsed value itself. JsonOutputParser hands back a PLAIN PYTHON DICT
+    # - one step up from 01's list, because keys carry meaning. Still no
+    # schema though: the keys are whatever the model chose to emit, and
+    # nothing validates the types. 03_pydantic_parser.py adds both.
+    print("Parsed Object: \n")
+    print(f"  type   : {type(parsed_response).__name__}")
+    print(f"  keys   : {list(parsed_response)}")
+    print(f"  value  : {parsed_response}")
+    print_seperator()
 
     print("Parsed JSON: \n")
     print(parsed_response)

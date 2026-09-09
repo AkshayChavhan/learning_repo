@@ -32,6 +32,16 @@ def main():
 
     prompt_value = prompt.invoke({})
 
+    # The object itself, before .text unwraps it. prompt.invoke() returns a
+    # PromptValue, not a string - the same input a chat model expects. .text
+    # is just one view of it; .to_messages() is the other, and it is what the
+    # model actually receives.
+    print("Prompt Value Object: \n")
+    print(f"  type     : {type(prompt_value).__name__}")
+    print(f"  repr     : {prompt_value!r}")
+    print(f"  messages : {prompt_value.to_messages()}")
+    print_seperator()
+
     print("Formatted Prompt \n")
     print(prompt_value.text)
 
@@ -52,6 +62,18 @@ def main():
     print_seperator()
 
     skills = parser.invoke(response)
+
+    # The parsed value itself, before any formatting. This parser hands back a
+    # PLAIN PYTHON LIST - not a LangChain object, not a model instance. So it
+    # has no attributes to explore: len(), indexing and slicing are all there
+    # is. 03_pydantic_parser.py is where a parser returns a real object with
+    # named fields you can reach with a dot.
+    print("Parsed Object: \n")
+    print(f"  type   : {type(skills).__name__}")
+    print(f"  value  : {skills}")
+    print(f"  length : {len(skills)}")
+    print(f"  first  : {skills[0]!r}")
+    print_seperator()
 
     print("Parsed Output: \n")
     print("Rank , Language")
