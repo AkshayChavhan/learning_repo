@@ -40,3 +40,15 @@ def main():
 
 if(__name__ == "__main__"):
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  Same code as the OpenAI script with a different provider behind get_llm().
+
+#  That is the point of LangChain's common interface: only the class, the key
+#  and the model id change, and everything downstream - prompts, chains,
+#  parsers - is untouched. Gemini is where .content returns content blocks
+#  rather than a string, so .text matters most here.
+
+# ======================================================================

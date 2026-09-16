@@ -1,0 +1,39 @@
+Northwind Analytics - Company Overview
+
+Northwind Analytics is a fictional B2B software company used as sample data
+throughout these LangChain exercises. Nothing here describes a real business.
+
+Founded in 2019 and headquartered in Pune, Northwind builds dashboards and
+reporting tools for mid-sized logistics operators. The company employs around
+180 people across Pune, Bengaluru, Chennai and Mumbai, and serves roughly 400
+customers in India and South-East Asia.
+
+Products
+
+  Northwind Insight    A reporting dashboard for fleet and warehouse metrics.
+                       The flagship product, used by about 90% of customers.
+  Northwind Connect    An integration layer that pulls data from ERP systems,
+                       telematics providers and spreadsheets.
+  Northwind Alerts     A rules engine that notifies operations teams when a
+                       shipment, vehicle or warehouse metric goes out of range.
+
+Support model
+
+Customers reach support through email and an in-app widget. Tickets are triaged
+into six categories: billing, technical, account, cancellation or refund, order
+and delivery, and general enquiries. Priority runs from low through critical.
+A ticket is escalated to a human specialist when it involves a refund above
+INR 50,000, a suspected data breach, or an outage affecting more than one
+customer.
+
+Support hours are 09:00 to 21:00 IST on weekdays, with an on-call rotation for
+critical incidents outside those hours. The published first-response target is
+four business hours for standard tickets and thirty minutes for critical ones.
+
+Billing
+
+Plans are billed annually in advance. The Starter plan covers up to 25 vehicles,
+Growth up to 200, and Enterprise is priced per deployment. Customers may cancel
+at any time; refunds are pro-rated from the start of the next billing month
+rather than the cancellation date, which is the single most common source of
+billing disputes.

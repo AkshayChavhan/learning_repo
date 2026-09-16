@@ -40,3 +40,15 @@ def main():
 
 if(__name__ == "__main__"):
     main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  The same script again against Anthropic, swapped purely through config.json.
+
+#  Three providers, one body of code, is the strongest argument for the
+#  abstraction. Each provider still needs its OWN section in config.json and its
+#  own API key; selecting one whose section is missing raises KeyError rather
+#  than falling back.
+
+# ======================================================================

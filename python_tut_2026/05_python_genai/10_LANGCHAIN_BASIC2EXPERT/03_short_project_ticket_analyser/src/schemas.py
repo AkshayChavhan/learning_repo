@@ -20,7 +20,7 @@ Priority = Literal[
     "critical",
 ] 
 
-ResolutionType = [
+ResolutionType = Literal[
     "self_service",
     "resolve",
     "escalate",
@@ -69,7 +69,7 @@ class GeneralAnalysis(BaseModel):
 
 class ResolutionDecision(BaseModel):
     resolution_type: ResolutionType = Field(description="The resolution type")
-    recommended_actions: str = Field(description="The recommended actions")
+    recommended_action: str = Field(description="The recommended actions")
     requires_human: bool = Field(description="Whether the resolution requires human intervention")
     reason: str = Field(description="The reason for the resolution decision")
 
@@ -81,7 +81,7 @@ class TicketResult(BaseModel):
     language: str
     case_summary: str
     resolution_type: str
-    recommended_actions: str
+    recommended_action: str
     requires_human: bool
     resolution_reason: str
     response: str

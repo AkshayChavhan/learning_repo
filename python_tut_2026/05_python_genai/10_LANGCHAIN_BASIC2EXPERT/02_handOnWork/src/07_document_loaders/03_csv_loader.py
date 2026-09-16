@@ -1,0 +1,41 @@
+from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+import _bootstrap  # noqa: F401  re-launches under myenv/ if python3 is the wrong one
+
+from langchain_community.document_loaders import CSVLoader
+from utils.helpers import print_seperator , print_title
+
+def main():
+    print_title("CSV Loader")
+    file_path = PROJECT_ROOT / "data" / "input" / "employees.csv"
+    loader = CSVLoader(file_path)
+    documents = loader.load()
+
+    print(f"Total ROWS Loaded: {len(documents)}")
+
+    print_seperator()
+    first_row = documents[0]
+    print(f"First Row Metadata: {first_row.metadata}")
+    print_seperator()
+
+    print(f"First Row Content: {first_row.page_content}")
+
+if __name__ == "__main__":
+    main()
+
+# ======================================================================
+#  Concept Summary
+ 
+#  CSVLoader returns ONE Document PER ROW, with a 'row' index in the metadata.
+
+#  Each Document's page_content is the row rendered as "column: value" lines,
+#  which is why quoted fields matter: a value containing commas stays one field
+#  rather than being shredded across columns.
+
+# ======================================================================

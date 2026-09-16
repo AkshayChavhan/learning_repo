@@ -1,0 +1,7 @@
+# Generated vector indexes. Rebuilt by running the scripts in
+# src/09_embeddings_vectorstores/, ~1.6MB of binary sqlite per run, and only
+# valid for the embedding model that produced them - not worth versioning.
+data/chroma_db/
+data/faiss_index/
+
+# The repo-root .gitignore already covers .env, myenv/ and __pycache__/.

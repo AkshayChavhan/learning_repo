@@ -1,0 +1,18 @@
+# The repo-root .gitignore already covers .env, myenv/ and __pycache__/.
+# This is the local, project-scoped copy.
+
+# Secrets - never commit
+.env
+.env.local
+
+# Virtual environment
+myenv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Generated vector indexes - rebuilt by running the code, and only valid for
+# the embedding model that produced them.
+data/chroma_db/
+data/faiss_index/

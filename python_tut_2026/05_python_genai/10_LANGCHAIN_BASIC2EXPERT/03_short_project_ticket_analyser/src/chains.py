@@ -3,11 +3,25 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableBranch
 
-from src.schemas import TicketTriage, BillingAnalysis, TechnicalAnalysis, AccountAnalysis, CancellationRefundAnalysis, OrderDeliveryAnalysis, GeneralAnalysis, ResolutionDecision, TicketResult
+from src.llm import with_schema
+from src.schemas import (
+    TicketTriage,
+    BillingAnalysis,
+    TechnicalAnalysis,
+    AccountAnalysis,
+    CancellationRefundAnalysis,
+    OrderDeliveryAnalysis,
+    GeneralAnalysis,
+    ResolutionDecision,
+)
 
-# Project root so prompt paths work no matter where we run from
+# Project root so prompt paths work no matter where we run from.
+# This file is at <project>/src/chains.py, so parents[1] IS the project.
+# parents[2] would land on 10_LANGCHAIN_BASIC2EXPERT/ and every prompt lookup
+# would miss. (02_handOnWork uses parents[2] because its scripts sit one
+# directory deeper, at src/<module>/script.py.)
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 # Short focus text passed into the shared case_analysis prompt
 
@@ -59,21 +73,25 @@ def load_prompt(file_path):
         raise FileNotFoundError(f"Prompt file not found: {path}")
 
 def create_triage_chain(llm):
-    f"""
+    """Stage 1 - classify the ticket.
+
+    No `f` prefix on this string: an f-string is not a docstring (__doc__ comes
+    back None), and the braces below would be read as format placeholders.
+
     Args:
         llm: The language model to use for the chain
     Returns:
         A chain that returns a TicketTriage Object.
     Example:
         triage_chain = create_triage_chain(llm)
-        result = triage__chain_invoke(
-        {"customer_name": "John Doe", "ticket_description": "I have a billing issue"})
+        result = triage_chain.invoke(
+            {"customer_name": "John Doe", "ticket": "I have a billing issue"})
     """
 
     prompt_text = load_prompt("prompts/classification_prompt.txt")
     prompt = ChatPromptTemplate.from_template(prompt_text)
 
-    structured_llm = llm.with_structured_output(TicketTriage)
+    structured_llm = with_schema(llm, TicketTriage)
     return prompt | structured_llm
 
 def _create_analysis_chain(llm, category , schema):
@@ -94,7 +112,7 @@ def _create_analysis_chain(llm, category , schema):
         analysis_focus = ANALYSIS_FOCUS[category]
     )
 
-    structured_llm = llm.with_structured_output(schema)
+    structured_llm = with_schema(llm, schema)
     return prompt_partial | structured_llm
 
 
@@ -116,37 +134,38 @@ def create_order_delivery_chain(llm):
 def create_general_chain(llm):
     return _create_analysis_chain(llm, "general", GeneralAnalysis)
 
-def create_resolution_decision_chain(llm):
-    return _create_analysis_chain(llm, "resolution_decision", ResolutionDecision)
-
-def create_ticket_result_chain(llm):
-    return _create_analysis_chain(llm, "ticket_result", TicketResult)
-
 def create_router(llm):
+    """Stage 2 - send the ticket to the analysis chain for its category.
+
+    Only the six CATEGORY chains belong here. Resolution has its own
+    create_resolution_chain() below, and TicketResult is assembled in
+    workflow.py - neither is a key in ANALYSIS_FOCUS, so routing them through
+    _create_analysis_chain() would raise KeyError.
+    """
     billing_chain = create_billing_chain(llm)
     technical_chain = create_technical_chain(llm)
     account_chain = create_account_chain(llm)
     cancellation_refund_chain = create_cancellation_refund_chain(llm)
     order_delivery_chain = create_order_delivery_chain(llm)
     general_chain = create_general_chain(llm)
-    resolution_decision_chain = create_resolution_decision_chain(llm)
-    ticket_result_chain = create_ticket_result_chain(llm)
 
+    # Each branch is a (condition, runnable) TUPLE, with one bare runnable at
+    # the end as the default. Writing them flat - `(cond), chain, (cond), chain`
+    # - only parenthesises the lambda and raises:
+    #   TypeError: RunnableBranch branches must be tuples or lists
     return RunnableBranch(
-        (lambda x: x["category"] == "billing") , billing_chain,
-        (lambda x: x["category"] == "technical") , technical_chain,
-        (lambda x: x["category"] == "account") , account_chain,
-        (lambda x: x["category"] == "cancellation_refund") , cancellation_refund_chain,
-        (lambda x: x["category"] == "order_delivery") , order_delivery_chain,
-        (lambda x: x["category"] == "resolution_decision") , resolution_decision_chain,
-        (lambda x: x["category"] == "ticket_result") , ticket_result_chain,
-        general_chain
+        (lambda x: x["category"] == "billing", billing_chain),
+        (lambda x: x["category"] == "technical", technical_chain),
+        (lambda x: x["category"] == "account", account_chain),
+        (lambda x: x["category"] == "cancellation_refund", cancellation_refund_chain),
+        (lambda x: x["category"] == "order_delivery", order_delivery_chain),
+        general_chain,
     )
 
 def create_resolution_chain(llm):
     prompt_text = load_prompt("prompts/resolution_prompt.txt")
     prompt = ChatPromptTemplate.from_template(prompt_text)
-    structured_llm = llm.with_structured_output(ResolutionDecision)
+    structured_llm = with_schema(llm, ResolutionDecision)
     return prompt | structured_llm
 
 def create_response_chain(llm):

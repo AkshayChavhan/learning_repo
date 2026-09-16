@@ -1,0 +1,28 @@
+{
+  "//": [
+    "Type-checker config for THIS project only. pyright and basedpyright search",
+    "upward from the file being analysed, so a config here scopes correctly -",
+    "unlike VS Code's python.analysis.extraPaths, which is Pylance-only and can",
+    "point at just one project at a time.",
+    "",
+    "Symptom this fixes: 'Import \"dotenv\" could not be resolved' on packages",
+    "that are demonstrably installed, because the checker was resolving against",
+    "the repo-root .venv instead of this project's myenv.",
+    "",
+    "venvPath is relative to this file. No Python version appears anywhere here,",
+    "so rebuilding myenv on a different Python does not silently break it."
+  ],
+
+  "venvPath": ".",
+  "venv": "myenv",
+
+  "//extraPaths": [
+    "Scripts in src/** do `from utils.helpers import ...` and",
+    "`from llm_client import get_llm`, which only resolve at runtime because",
+    "each one inserts PROJECT_ROOT into sys.path. This tells the checker the",
+    "same thing."
+  ],
+  "extraPaths": ["."],
+
+  "exclude": ["**/myenv", "**/__pycache__"]
+}

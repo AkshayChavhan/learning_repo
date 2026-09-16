@@ -1,0 +1,63 @@
+LangChain - Core Concepts
+
+What LangChain is
+
+LangChain is a framework for building applications on top of language models.
+It does not provide a model. It provides the plumbing around one: prompt
+templates, output parsing, chaining steps together, memory between turns,
+document loading, retrieval, and tool calling.
+
+The value is a common interface. Swap OpenAI for Gemini, Anthropic or a local
+Ollama model and the code downstream of the model object stays identical.
+
+The core components
+
+  Models           A common chat interface over many providers.
+  Prompts          Reusable templates with dynamic variables.
+  Output Parsers   Turn model text into structured Python objects.
+  Chains           Connect several steps into one callable pipeline.
+  Runnables        The interface that makes those steps composable.
+  Memory           Carry conversation state across turns.
+  Tools            Let the model call functions and external APIs.
+
+The Runnable interface
+
+Almost everything in LangChain is a Runnable, which means it supports invoke,
+batch and stream. Because they share that interface, they compose with the pipe
+operator:
+
+    chain = prompt | model | parser
+    result = chain.invoke({"topic": "vector databases"})
+
+The pipe reads left to right: the prompt formats the input, the model generates
+text, the parser turns that text into the shape you asked for.
+
+Useful runnables beyond the pipe:
+
+  RunnableSequence      Steps executed in order - what the pipe builds.
+  RunnableParallel      Several chains over the same input, results as a dict.
+  RunnableLambda        Wrap an ordinary Python function as a Runnable.
+  RunnableBranch        Route to a different chain based on a condition.
+  RunnablePassthrough   Forward the input unchanged, or add keys with assign.
+
+Structured output
+
+Calling a model returns text. Applications usually need fields. Two approaches:
+
+  with_structured_output(Schema)   The model is constrained to a schema and you
+                                   get a validated object back. Preferred.
+  PydanticOutputParser             Format instructions go into the prompt and
+                                   the reply is parsed afterwards. Works with
+                                   models that lack structured output support.
+
+A parser only checks shape, not truth. A well-formed object can still contain
+invented values.
+
+RAG components
+
+For question answering over your own documents, LangChain adds document
+loaders, text splitters, embeddings, vector stores and retrievers. Chained
+together they become:
+
+    Documents -> Loader -> Splitter -> Embeddings -> Vector Store
+              -> Retriever -> Model -> Answer
