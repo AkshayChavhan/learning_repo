@@ -1,0 +1,10 @@
+[server]
+# Streamlit's hot-reload watcher walks every module in sys.modules and pokes
+# each one's __path__. `transformers` (installed in the shared .venv for
+# sentence-transformers, not used by this app) exposes lazy submodules that
+# import torchvision when poked - which is not installed - so every rerun
+# floods the terminal with harmless "Examining the path of ... raised" logs.
+#
+# "none" disables the watcher entirely. Trade-off: after editing a .py file
+# you must restart `streamlit run app.py` instead of getting a rerun prompt.
+fileWatcherType = "none"

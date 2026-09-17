@@ -12,7 +12,9 @@ myenv/
 __pycache__/
 *.py[cod]
 
-# Generated vector indexes - rebuilt by running the code, and only valid for
-# the embedding model that produced them.
-data/chroma_db/
-data/faiss_index/
+# Generated FAISS index - rebuilt by "Build Knowledge Base", and only valid
+# for the embedding model that produced it (src/vectorstore.py writes here).
+data/vectorstore/
+
+# User-uploaded PDFs/DOCX - app.py saves uploads here. Not source.
+data/documents/
