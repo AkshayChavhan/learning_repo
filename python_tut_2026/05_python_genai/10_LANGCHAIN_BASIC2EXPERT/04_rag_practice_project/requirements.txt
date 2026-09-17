@@ -1,0 +1,46 @@
+# ============================
+# Web UI
+# ============================
+# app.py uses st.chat_input / st.chat_message / st.rerun and
+# use_container_width= on buttons - all present from 1.30 onwards.
+streamlit>=1.30,<2.0
+
+# ============================
+# Core LangChain
+# ============================
+# Only langchain-core is imported directly (Document, PromptTemplate,
+# VectorStoreRetriever). The `langchain` meta-package is not needed.
+langchain-core>=1.4.7,<2.0.0
+
+# ============================
+# LLM Provider
+# ============================
+# ChatGoogleGenerativeAI (src/rag_chain.py) and GoogleGenerativeAIEmbeddings
+# (src/embeddings.py). One provider, one key: GOOGLE_API_KEY.
+langchain-google-genai>=4.4.0,<5.0.0
+
+# ============================
+# Environment Variables
+# ============================
+python-dotenv>=1.1,<2.0
+
+# ============================
+# Document Loaders
+# ============================
+# PyPDFLoader and Docx2txtLoader live in langchain-community - they are NOT in
+# langchain-core, so without this src/loaders.py dies on import.
+langchain-community>=0.3,<1.0
+pypdf>=5.0,<6.0       # backs PyPDFLoader
+docx2txt>=0.8,<1.0    # backs Docx2txtLoader
+
+# ============================
+# Text Splitters
+# ============================
+langchain-text-splitters>=1.0.0,<2.0.0
+
+# ============================
+# Vector Database
+# ============================
+# Pinned exactly: 1.11+ ships no arm64 wheel for Python 3.11 and the source
+# build fails (needs swig/cmake). 1.10.0 has a working wheel.
+faiss-cpu==1.10.0
