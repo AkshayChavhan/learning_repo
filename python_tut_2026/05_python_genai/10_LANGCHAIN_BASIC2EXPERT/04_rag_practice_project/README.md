@@ -20,6 +20,83 @@ Blank scaffold, ready for code. Nothing is implemented yet — `app.py` and
 
 ---
 
+## How it works
+
+The model never reads your whole document. It reads only the **few pieces most
+similar to your question**, and is told to answer from those alone. Everything
+below exists to find those pieces.
+
+There are two phases. The first runs **once** per set of documents; the second
+runs **every time** you ask something.
+
+> For a step-by-step trace of a single question — what every variable holds at
+> each hop, and exactly what the model sees — read [`FLOW.md`](FLOW.md).
+
+### Phase 1 — Build the knowledge base (once)
+
+```text
+  you upload a PDF / DOCX
+          │  app.py saves it to data/documents/
+          ▼
+  1. LOAD      file  ──►  text                     src/loaders.py
+          │              (PDF: one piece per page)
+          ▼
+  2. SPLIT     text  ──►  chunks of ~1000 chars    src/vectorstore.py
+          │
+          ▼
+  3. EMBED     chunk ──►  3072 numbers             src/embeddings.py  (Gemini)
+          │              "a pin on a map"
+          ▼
+  4. STORE     numbers + text  ──►  FAISS index    data/vectorstore/
+                                    saved to disk, so you do this once
+```
+
+### Phase 2 — Ask a question (every time)
+
+```text
+  you type a question
+          │
+          ▼
+  1. EMBED     question ──► 3072 numbers          same Gemini model — must match
+          │
+          ▼
+  2. SEARCH    FAISS finds the 4 closest chunks    "nearest pins"
+          │
+          ▼
+  3. PROMPT    rules + chat history + 4 chunks + your question
+          │                                        prompts/rag_prompt.txt
+          ▼
+  4. ANSWER    Gemini replies using ONLY that context
+          │
+          ▼
+  5. SHOW      the answer + which file and page it came from
+```
+
+### Who does what
+
+| File | Job, in one line |
+|---|---|
+| `app.py` | the screen — upload button, build button, chat box |
+| `src/loaders.py` | turns a PDF or DOCX file into text |
+| `src/vectorstore.py` | cuts text into chunks, sends them to be embedded, saves the FAISS index |
+| `src/embeddings.py` | the number-maker — text in, 3072 floats out (Gemini) |
+| `src/rag_chain.py` | one question in → search → prompt → Gemini → answer out |
+| `src/schemas.py` | the shape of an answer: text + sources + chunk count |
+| `prompts/rag_prompt.txt` | the rules the model must follow ("answer ONLY from the context") |
+
+### Why each step is there
+
+| Step | If you skipped it |
+|---|---|
+| **Split** | a whole document is too big to embed well — one vector for 20 pages matches everything and nothing |
+| **Embed** | you cannot search text by *meaning* — only by exact words. Numbers make "closeness" computable |
+| **Store on disk** | you would pay for every embedding again on every run |
+| **Search for 4** | sending the whole document to the model costs tokens and buries the answer |
+| **The rules in the prompt** | the model would happily invent an answer when the documents do not contain one |
+| **Chat history** | "what about *them*?" would mean nothing without the previous turn |
+
+---
+
 ## How it was built
 
 ```bash
