@@ -1,0 +1,15 @@
+# Isolated env for THIS folder only - graph memory needs mem0ai 1.x.
+# mem0ai 2.0.0+ removed graph_store/Neo4j support entirely
+# (see ../06_adding_graph_database_support_for_agent.md).
+#
+#   python3.11 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+#   .venv/bin/python mem.py
+
+mem0ai==1.0.11          # last 1.x release; graph_store still works
+neo4j>=5.23.1           # Neo4j driver
+langchain-neo4j>=0.4.0  # mem0 1.x talks to Neo4j through langchain's Neo4jGraph
+rank-bm25>=0.2.2        # mem0 1.x re-ranks graph search results with BM25
+google-genai            # Gemini LLM + embedder (PROVIDER = "gemini"; embedder for "groq" too)
+groq                    # Groq chat LLM (MEM0_PROVIDER=groq) - fallback when Gemini 503s
+python-dotenv
