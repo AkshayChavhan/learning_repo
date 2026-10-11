@@ -1,21 +1,17 @@
 # Base Image
+FROM node:20.17.0-alpine3.19
 
-FROM ubuntu
+WORKDIR /home/app
 
-RUN apt-get update
-RUN apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_18.x -o /tmp/nodesource_setup.sh
-RUN bash /tmp/nodesource_setup.sh
-RUN apt-get install -y nodejs
+COPY package.json /home/app/package.json
+COPY package-lock.json /home/app/package-lock.json
 
+RUN npm install
 
 # Copying the source code to docker image
 
 COPY index.js /home/app/index.js
-COPY package.json /home/app/package.json
-COPY package-lock.json /home/app/package-lock.json
 
-WORKDIR /home/app
 
-RUN npm install
-
+#  To run the container, we need to specify the command to run the application
+CMD ["node", "start"]
