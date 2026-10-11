@@ -13,5 +13,8 @@ RUN npm install
 COPY index.js /home/app/index.js
 
 # EXPOSE 8080
-#  To run the container, we need to specify the command to run the application
-CMD ["node", "start"]
+#  To run the container, we need to specify the command to run the application.
+#  "npm start" runs the "start" script from package.json (= node index.js).
+#  ["node", "start"] would make node look for a module literally called
+#  /home/app/start, which doesn't exist -> MODULE_NOT_FOUND on container start.
+CMD ["npm", "start"]
