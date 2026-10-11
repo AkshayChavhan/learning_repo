@@ -12,6 +12,6 @@ RUN npm install
 
 COPY index.js /home/app/index.js
 
-
+# EXPOSE 8080
 #  To run the container, we need to specify the command to run the application
 CMD ["node", "start"]
