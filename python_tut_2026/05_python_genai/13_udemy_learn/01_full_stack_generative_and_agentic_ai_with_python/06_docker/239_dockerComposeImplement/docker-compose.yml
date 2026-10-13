@@ -1,0 +1,51 @@
+# One file = the whole project: the app AND the infrastructure it needs.
+#   docker compose up --build -d   -> build the app image, start everything
+#   docker compose down            -> stop + remove containers and network (volumes stay)
+#   docker compose down -v         -> ...and delete the volumes (reset the data)
+name: ecommerce                      # friendly name; also prefixes the network and volumes
+
+services:
+  backend:
+    build: .                         # build the image from ./Dockerfile
+                                     # (the other way: image: <username>/backend-app from Docker Hub -
+                                     #  every code change would mean build + push + pull. Overkill for dev)
+    container_name: backend
+    ports:
+      - "8000:8000"                  # the ONLY published port: the world needs the app
+    environment:                     # how the app finds the databases FROM INSIDE the network:
+      DB_HOST: db                    #   service name, not localhost (localhost = the backend container itself)
+      DB_PORT: "5432"                #   the CONTAINER port, not a published host port
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+    depends_on:
+      - db                           # start order only - index.js retries until they answer
+      - redis
+
+  db:                                # service name = hostname inside the network
+    image: postgres:16               # docker run postgres:16   <- version pinned IN the file
+    container_name: postgres         # --name postgres
+    environment:                     # -e ...  (names come from the postgres page on Docker Hub)
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    # ports:                         # removed: nobody OUTSIDE should reach the database.
+    #   - "5431:5432"                #   uncomment only to run the app on your Mac with `npm start`
+    volumes:
+      - postgres_data:/var/lib/postgresql/data   # named volume where postgres writes (path from Docker Hub)
+
+  redis:
+    image: redis
+    container_name: redis
+    # ports:                         # removed: same reason
+    #   - "6379:6379"
+    depends_on:
+      - db
+    volumes:
+      - redis_data:/data             # redis keeps its dump at /data
+
+# Named volumes. Compose creates them as <project>_<name>:
+#   ecommerce_postgres_data, ecommerce_redis_data
+# `docker compose down` keeps them; `docker compose down -v` deletes them.
+volumes:
+  postgres_data:
+  redis_data:
