@@ -1,0 +1,2 @@
+openai-agents     # the SDK; you import from `agents`
+python-dotenv

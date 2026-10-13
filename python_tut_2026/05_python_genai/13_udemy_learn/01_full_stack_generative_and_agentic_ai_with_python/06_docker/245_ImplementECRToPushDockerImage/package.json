@@ -1,0 +1,13 @@
+{
+  "name": "245_implement_ecr_push",
+  "version": "1.0.0",
+  "description": "Minimal backend image to push to Amazon ECR",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

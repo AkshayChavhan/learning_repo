@@ -1,0 +1,15 @@
+{
+  "name": "239_docker_compose_implement",
+  "version": "1.0.0",
+  "description": "Web app that needs Postgres + Redis; all three run from docker-compose.yml",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "ioredis": "^5.4.1",
+    "pg": "^8.12.0"
+  }
+}

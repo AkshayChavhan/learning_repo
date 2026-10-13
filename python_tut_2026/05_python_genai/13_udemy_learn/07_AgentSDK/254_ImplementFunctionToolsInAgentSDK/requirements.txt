@@ -1,0 +1,3 @@
+openai-agents     # the SDK; `function_tool` and `WebSearchTool` live in `agents`
+python-dotenv
+requests          # the tool itself calls wttr.in
