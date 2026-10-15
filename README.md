@@ -6,6 +6,9 @@ JavaScript, and reference PDFs for React, Next.js, Docker, HTML/CSS.
 **Setting up on a new machine?** → [ENVIRONMENT.md](ENVIRONMENT.md) has every
 API key, where each `.env` goes, and a one-command bootstrap.
 
+**Term you keep seeing but can't define?** → [GLOSSARY.md](GLOSSARY.md) holds
+cross-cutting concepts (hashing, base62, CDN, API gateway, …) that appear in more than one folder.
+
 ---
 
 ## Layout
