@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Positioning Playground</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:15px/1.45 system-ui,Arial;background:#f4f6fb;color:#172033}
+header{background:#172033;color:white;padding:18px 22px}h1{font-size:22px;margin:0 0 4px}
+main{max-width:1200px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(280px,.9fr) minmax(300px,1.1fr);gap:16px}
+.panel{background:#fff;border:1px solid #dce2ee;border-radius:12px;padding:14px;min-width:0}
+h2{font-size:16px;margin:0 0 12px}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+label{display:grid;gap:4px;flex:1;min-width:130px;font-size:12px;color:#4b5568}
+select,input,textarea,button{font:inherit;border:1px solid #cbd3e1;border-radius:7px;padding:8px;background:#fff;color:#172033}
+button{cursor:pointer;background:#2457d6;color:white;border-color:#2457d6;font-weight:600}
+textarea{width:100%;min-height:210px;resize:vertical;font:13px/1.5 ui-monospace,Consolas,monospace}
+.hint{font-size:12px;color:#687386;margin:8px 0}.stage{height:330px;border:1px dashed #b8c4d9;border-radius:10px;padding:12px;background:#fbfcff;overflow:auto;position:relative}
+.parent{height:275px;border:2px solid #3b82f6;border-radius:10px;background:#eff6ff;padding:12px;position:relative}
+.parent-title{font-size:12px;font-weight:700;color:#1d4ed8}.child{width:115px;min-height:54px;border-radius:8px;padding:10px;background:#dcfce7;border:1px solid #86d9a4;color:#166534;font-weight:700;text-align:center}
+.normal-child{background:#dbeafe;border-color:#8ab4f8;color:#17418b}
+#positioned{background:#fef3c7;border-color:#f5cc67;color:#854d0e;z-index:2}
+.spacer{height:100px;border:1px dashed #b8c4d9;border-radius:8px;margin-top:12px;padding:8px;font-size:12px;color:#687386}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin:8px 0}.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px}
+#scrollDemo{height:100%;overflow:auto}.long-content{height:520px;padding:10px;background:linear-gradient(#fbfcff,#e0e7ff);border-radius:8px}
+@media(max-width:760px){main{grid-template-columns:1fr;padding:10px}}
+</style>
+</head>
+<body>
+<header><h1>CSS Positioning Playground</h1><div>Learn how parent and child positioning work. Change the controls or edit the CSS and apply it.</div></header>
+<main>
+<section class="panel">
+<h2>1. Choose a positioning concept</h2>
+<div class="controls"><label>position<select id="pos"><option>static</option><option selected>relative</option><option>absolute</option><option>fixed</option><option>sticky</option></select></label>
+<label>Positioning parent<select id="parentMode"><option value="relative" selected>Parent: position: relative</option><option value="static">Parent: position: static</option></select></label></div>
+<div class="controls">
+<label>top (px)<input id="top" type="number" value="18"></label>
+<label>left (px)<input id="left" type="number" value="25"></label>
+</div>
+<div class="controls">
+<label>z-index<select id="z"><option>auto</option><option>0</option><option selected>2</option><option>10</option></select></label>
+<label>Scenario<select id="scenario"><option value="normal">Normal parent & child</option><option value="overlay">Badge inside card</option><option value="sticky">Sticky header in scroll box</option></select></label>
+</div>
+<h2>2. Editable CSS</h2>
+<textarea id="css" spellcheck="false">.parent {
+  position: relative;
+}
+#positioned {
+  position: relative;
+  top: 18px;
+  left: 25px;
+  z-index: 2;
+}</textarea>
+<div class="controls" style="margin-top:8px"><button id="apply">Apply CSS</button><button id="reset" type="button">Reset</button></div>
+<p class="hint">Try absolute with a relative parent, then change the parent to static. Compare the child's reference point.</p>
+</section>
+<section class="panel">
+<h2>Live visual preview</h2>
+<div class="legend"><span><i class="dot" style="background:#3b82f6"></i>Parent</span><span><i class="dot" style="background:#f5cc67"></i>Positioned child</span><span><i class="dot" style="background:#8ab4f8"></i>Normal-flow sibling</span></div>
+<div class="stage" id="stage">
+<div id="scrollDemo" hidden><div class="long-content"><div class="parent-title">Scrollable area</div><div id="stickyChild" class="child">Sticky child</div><p>Scroll inside this box to see sticky behavior.</p><div style="height:300px"></div><p>Bottom of scroll area</p></div></div>
+<div class="parent" id="parent"><div class="parent-title">PARENT BOX</div><div class="child normal-child">Normal child</div><div id="positioned" class="child">Positioned child</div><div class="spacer">Empty space inside parent — watch whether the child stays in normal flow.</div></div>
+</div>
+<div class="status" id="status" style="font-size:12px;color:#4b5568;margin-top:8px">Relative: child moves from its normal position but keeps its original space.</div>
+<h2 style="margin-top:18px">What each value means</h2>
+<ul>
+<li><code>static</code>: default flow; <code>top</code>/<code>left</code> do not move it.</li>
+<li><code>relative</code>: offsets from its normal spot; original space remains.</li>
+<li><code>absolute</code>: removed from normal flow; positioned against the nearest ancestor whose position is not <code>static</code>.</li>
+<li><code>fixed</code>: positioned against the viewport; usually stays put while the page scrolls.</li>
+<li><code>sticky</code>: behaves normally until it reaches a scroll threshold, then sticks within its scrolling container.</li>
+</ul>
+</section>
+</main>
+<style id="liveCSS"></style>
+<script>
+const $=id=>document.getElementById(id);
+const defaults=`.parent {
+  position: relative;
+}
+#positioned {
+  position: relative;
+  top: 18px;
+  left: 25px;
+  z-index: 2;
+}`;
+function buildCSS(){
+ const p=$('pos').value, parent=$('parentMode').value, top=$('top').value||0, left=$('left').value||0, z=$('z').value;
+ return `.parent {\n  position: ${parent};\n}\n#positioned {\n  position: ${p};\n  top: ${top}px;\n  left: ${left}px;\n  z-index: ${z};\n}`;
+}
+function refresh(){
+ const scenario=$('scenario').value;
+ $('scrollDemo').hidden=scenario!=='sticky';
+ $('parent').hidden=scenario==='sticky';
+ if(scenario==='overlay'){
+   $('pos').value='absolute'; $('parentMode').value='relative'; $('top').value=10; $('left').value=10;
+   $('positioned').textContent='NEW'; $('positioned').style.width='70px'; $('positioned').style.minHeight='40px';
+ }else if(scenario==='sticky'){
+   $('stickyChild').style.position='sticky'; $('stickyChild').style.top='0'; $('stickyChild').style.zIndex='3';
+ }else{
+   $('positioned').textContent='Positioned child'; $('positioned').style.width='115px'; $('positioned').style.minHeight='54px';
+ }
+ if(scenario!=='sticky'){ $('css').value=buildCSS(); applyCSS(); }
+ else $('status').textContent='Sticky child sticks to the top of its scroll container when you scroll inside it.';
+}
+function applyCSS(){
+ $('liveCSS').textContent=$('css').value;
+ if($('scenario').value!=='sticky'){
+  const p=$('pos').value, par=$('parentMode').value;
+  const messages={
+   static:'Static: top and left are ignored; child stays in normal flow.',
+   relative:'Relative: child moves from its normal position but keeps its original space.',
+   absolute:par==='relative'?'Absolute: child is positioned from the parent box and removed from normal flow.':'Absolute: with a static parent, child uses a different nearest positioned ancestor (or the initial containing block).',
+   fixed:'Fixed: child is positioned relative to the viewport, not the parent box.',
+   sticky:'Sticky: child stays in flow until it reaches its sticky threshold while scrolling.'
+  };
+  $('status').textContent=messages[p];
+ }
+}
+['pos','parentMode','top','left','z'].forEach(id=>$(id).addEventListener('change',()=>{if($('scenario').value==='sticky')$('scenario').value='normal';$('scrollDemo').hidden=true;$('parent').hidden=false;$('css').value=buildCSS();applyCSS();}));
+$('scenario').addEventListener('change',refresh);
+$('apply').addEventListener('click',applyCSS);
+$('reset').addEventListener('click',()=>{$('pos').value='relative';$('parentMode').value='relative';$('top').value=18;$('left').value=25;$('z').value='2';$('scenario').value='normal';$('css').value=defaults;refresh();});
+$('css').value=defaults;applyCSS();
+</script>
+</body>
+</html>
