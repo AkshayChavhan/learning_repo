@@ -40,6 +40,7 @@ let x = 5;
 x += 3;   // x = x + 3 → 8
 x *= 2;   // 16
 ```
+
 `=` `+=` `-=` `*=` `/=` `%=` `**=`
 
 ---
@@ -58,7 +59,7 @@ x *= 2;   // 16
 0 == false  // true   ← coerces false → 0
 ```
 
-> **Always use `===`.** Only deliberate use of `==`: `x == null` (matches `null` AND `undefined`).
+> ++***Always use***++ `===`++***. Only deliberate use of***++ `==`++***:***++ `x == null` ++***(matches***++ `null` ++***AND***++ `undefined`++***).***++
 
 ---
 
@@ -92,7 +93,7 @@ let canVote = age >= 18 ? "yes" : "no";
 
 ## Type coercion gotchas ★
 
-`+` with a string → **concatenation**. Every other math op → **convert to number**.
+`+` ++***with a string → concatenation. Every other math op → convert to number.***++
 
 ```js
 1 + "2"    // "12"   (+ prefers strings → glue)
@@ -101,7 +102,7 @@ let canVote = age >= 18 ? "yes" : "no";
 true + 1   // 2      (true → 1)
 ```
 
-> 🎯 Hook: **`+` is the only operator that prefers strings.** The rest coerce to numbers.
+> 🎯 Hook: `+` **is the only operator that prefers strings.** The rest coerce to numbers.
 
 ---
 
@@ -116,14 +117,14 @@ true + 1   // 2      (true → 1)
 0 ?? "default"   // 0          ← ?? keeps 0
 ```
 
-> Use `??` when `0`, `""`, or `false` are **valid** values you want to keep.
+> ++***Use***++ `??` ++***when***++ `0`++***,***++ `""`++***, or***++ `false` ++***are valid values you want to keep.***++
 
 ---
 
 ## `?.` optional chaining
 
 Safely read nested props — returns `undefined` instead of crashing.
-**`?.` guards the thing immediately to its LEFT.**
+`?.` **guards the thing immediately to its LEFT.**
 
 ```js
 let user = {};
@@ -184,15 +185,16 @@ Higher runs first (like math). Use `()` to be explicit and readable.
 
 ## Key takeaways
 
-- **`===` over `==`** — `==` coerces and causes bugs.
-- **`+` prefers strings** (concatenation); other math ops coerce to numbers.
+- `===` **over** `==` — `==` coerces and causes bugs.
+- `+` **prefers strings** (concatenation); other math ops coerce to numbers.
 - `&&`/`||` **return values** and short-circuit (default-value pattern).
-- **`??`** falls back only on `null`/`undefined`; **`||`** on any falsy.
-- **`?.`** guards the value on its left; place it after anything that may be missing.
+- `??` falls back only on `null`/`undefined`; `||` on any falsy.
+- `?.` guards the value on its left; place it after anything that may be missing.
 
 ---
 
 ### Interview angle
+
 - ★🔥 "`==` vs `===`?" → loose (coerces) vs strict (value + type); always prefer `===`.
 - ★ "`??` vs `||`?" → `??` only triggers on `null`/`undefined`; `||` on any falsy (`0`, `""`).
 - ★ "What does `?.` do / where to place it?" → safe nested access; guards the value to its left.

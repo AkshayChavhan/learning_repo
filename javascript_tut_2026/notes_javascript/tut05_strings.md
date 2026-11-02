@@ -1,7 +1,7 @@
 # JavaScript — Strings
 
-A **string** is text. Wrap it in `'…'`, `"…"`, or `` `…` ``.
-Strings are **immutable** — every "modification" returns a new string.
+A **string** is text. Wrap it in `'…'`, `"…"`, or ``…``.
+++***Strings are immutable — every "modification" returns a new string.***++
 
 ```text
                   ┌──────────────────────────┐
@@ -32,11 +32,11 @@ let c = `Backtick`;     // template literal
 console.log(typeof a);  // 'string'
 ```
 
-| Quote | Best for                                 |
-|-------|------------------------------------------|
-| `"…"` | most text                                |
-| `'…'` | text containing `"`                      |
-| `` `…` `` | interpolation, multi-line, embedded expressions |
+| Quote | Best for                                        |
+| ----- | ----------------------------------------------- |
+| `"…"` | most text                                       |
+| `'…'` | text containing `"`                             |
+| ``…`` | interpolation, multi-line, embedded expressions |
 
 ### Escape characters
 
@@ -48,17 +48,17 @@ console.log(typeof a);  // 'string'
 "❤"                // ❤ (unicode)
 ```
 
-| Sequence | Means |
-|---------|-------|
-| `\n` | newline |
-| `\t` | tab |
-| `\\` | backslash |
-| `\'` `\"` `` \` `` | escape that quote |
-| `\u{1F600}` | unicode codepoint |
+| Sequence       | Means             |
+| -------------- | ----------------- |
+| `\n`           | newline           |
+| `\t`           | tab               |
+| `\\`           | backslash         |
+| `\'` `\"` `\`` | escape that quote |
+| `\u{1F600}`    | unicode codepoint |
 
 ---
 
-## Template literals ★ (`` `…` ``)
+## Template literals ★ (``…``)
 
 The modern way to build strings.
 
@@ -72,7 +72,7 @@ const age  = 30;
 
 What they give you:
 
-- **Interpolation** — `${ any expression }` inside the backticks.
+- ++***Interpolation —***++ `${ any expression }` ++***inside the backticks.***++
 - **Multi-line** — line breaks are preserved.
 
 ```js
@@ -341,10 +341,10 @@ String(7).padStart(3, "0")               // '007'
 ## Interview angle
 
 - **Why are strings immutable?** Predictability, hashing/interning, thread/event-loop safety, and identity-style optimizations (engine can share the same buffer).
-- **`slice` vs `substring`?** `slice` accepts negatives, `substring` clamps and swaps. Use `slice`.
-- **`==` vs `===` with strings?** Always use `===`. `"5" == 5` is `true` (coercion), `"5" === 5` is `false`.
-- **Memory of `+` in a loop?** Each `+=` builds a new string. For tight loops, push to an array and `.join("")` at the end.
-- **Why `"🙂".length === 2`?** UTF-16 surrogate pair. The character is one code point but two code units.
+- `slice` **vs** `substring`**?** `slice` accepts negatives, `substring` clamps and swaps. Use `slice`.
+- `==` **vs** `===` **with strings?** Always use `===`. `"5" == 5` is `true` (coercion), `"5" === 5` is `false`.
+- **Memory of** `+` **in a loop?** Each `+=` builds a new string. For tight loops, push to an array and `.join("")` at the end.
+- **Why** `"🙂".length === 2`**?** UTF-16 surrogate pair. The character is one code point but two code units.
 
 ---
 
@@ -369,3 +369,9 @@ COMPARE          ===   s.toLowerCase()    a.localeCompare(b)
 PARSE NUM        Number(s)  parseInt(s,10)  parseFloat(s)  +s
 TO STRING        String(n)  n.toString()  n.toFixed(2)
 ```
+
+---
+
+## String Methods — Visual Reference
+
+![String Methods Cheatsheet](images/tut05_string_methods.png)

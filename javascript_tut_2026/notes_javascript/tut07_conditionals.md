@@ -29,6 +29,7 @@ else if (score >= 70) console.log("B");   // ← matches, stops here
 else if (score >= 50) console.log("C");
 else                  console.log("F");
 ```
+
 ```text
 B
 ```
@@ -56,18 +57,20 @@ switch (day) {
     console.log("Weekday");
 }
 ```
+
 ```text
 Monday blues
 ```
 
 **Two critical facts:**
 
-| Fact | Detail |
-|------|--------|
-| **`break`** | stops the switch. Omit it → **fall-through** to next case (bug, unless intended) |
-| **matches with `===`** | strict — `case "1"` will **not** match number `1` |
+| Fact                   | Detail                                                                           |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| `break`                | stops the switch. Omit it → **fall-through** to next case (bug, unless intended) |
+| **matches with** `===` | strict — `case "1"` will **not** match number `1`                                |
 
 ### Fall-through gotcha ★
+
 ```js
 switch (1) {
   case 1: console.log("one");   // runs
@@ -75,6 +78,7 @@ switch (1) {
           break;
 }
 ```
+
 ```text
 one
 two
@@ -117,7 +121,7 @@ let port = input ?? 3000;         // default only if null/undefined
 | ternary | choosing/returning a **value** in one line |
 | `&&` / `\|\|` / `??` | quick guards & defaults (no full `if`) |
 
-**`switch(true)` trick** — ranges inside a switch:
+`switch(true)` **trick** — ranges inside a switch:
 
 ```js
 switch (true) {
@@ -132,13 +136,18 @@ switch (true) {
 ## Key takeaways
 
 - `if/else if/else` → top-to-bottom, first truthy wins; order matters.
-- `switch` → one value, **exact `===`** matches; **always `break`** (else fall-through).
+- `switch` → one value, **exact** `===` matches; **always** `break` (else fall-through).
 - Ternary → returns a value; keep it shallow.
 - `&&`/`||`/`??` → lightweight guards & defaults.
+- user && console.log(user.name);   // run right side only if user is truthy
+isLoggedIn && showDashboard();    // common conditional-render pattern
+let name = input || "Guest";      // default if falsy
+let port = input ?? 3000;         // default only if null/undefined
 
 ---
 
 ### Interview angle
+
 - "Difference between `if-else` and `switch`?" → `if` for ranges/complex; `switch` for one value vs many exact (`===`) cases.
 - "What is switch fall-through?" → missing `break` runs the next case too; useful for stacking cases, otherwise a bug.
-- "Does `switch` coerce?" → No — it matches with **`===`** (`"1"` ≠ `1`).
+- "Does `switch` coerce?" → No — it matches with `===` (`"1"` ≠ `1`).

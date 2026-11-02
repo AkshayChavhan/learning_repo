@@ -1,26 +1,8 @@
 # JavaScript — Numbers & Math
 
-JS has **one** number type — IEEE-754 64-bit floats — used for both `42` and `3.14`.
-For huge whole numbers there's a separate `BigInt` type.
+JS has **one** number type — Every ordinary number in JavaScript is stored in binary, using the 64-bit floating-point format.
 
-```text
-                  ┌──────────────────────────┐
-                  │        NUMBERS           │
-                  │  one 64-bit float type   │
-                  │   (int + float merged)   │
-                  └──────────────────────────┘
-                            │
-        ┌───────────┬───────┴───────┬──────────────┐
-        ▼           ▼               ▼              ▼
-     LITERALS    SPECIAL         CONVERT         MATH
-   42  3.14      NaN             Number(s)       Math.round
-   0xff 0b10     Infinity        parseInt(s,10)  Math.random
-   1_000_000     -Infinity       +s   String(n)  Math.PI
-                            │
-                            ▼
-                        BigInt    1n   BigInt(10)
-                        (precise huge ints, no mixing)
-```
+There’s one exception. BigInt, written with an n at the end like 10n, is stored differently. It’s for very large whole numbers, and it can grow as big as needed.
 
 ---
 
@@ -236,7 +218,7 @@ parseInt("10", 16)   // 16   — base 16 (hex)
 parseInt("ff", 16)   // 255  — hex
 ```
 
-**Why always pass `10`:** if you omit the radix, JavaScript **guesses** the base from the
+**Why always pass** `10`**:** if you omit the radix, JavaScript **guesses** the base from the
 string's shape — and the guess can be wrong, giving silent bugs:
 
 ```js
@@ -250,7 +232,7 @@ parseInt("08", 10)   // 8    — explicit base 10 → always correct, every engi
    parseInt("08", 10)        ← radix 10 → unambiguous → always 8  ✅
 ```
 
-> **Rule: always write `parseInt(str, 10)`.** It removes the guessing, behaves identically
+> **Rule: always write** `parseInt(str, 10)`**.** It removes the guessing, behaves identically
 > on every engine, and many linters (ESLint `radix`) flag the missing argument.
 
 ---
@@ -373,7 +355,7 @@ Returns a float in `[0, 1)` — includes 0, excludes 1.
 Math.random()              // e.g. 0.7239...
 ```
 
-**Random integer in `[min, max]` (inclusive both ends):**
+**Random integer in** `[min, max]` **(inclusive both ends):**
 
 ```js
 const randInt = (min, max) =>
@@ -462,13 +444,13 @@ Bitwise ops (`& | ^ ~ << >> >>>`) coerce to **32-bit signed int**.
 
 ## Interview angle
 
-- **★🔥 Why `0.1 + 0.2 !== 0.3`?** IEEE-754 64-bit can't represent `0.1` or `0.2` exactly; the rounded sum is `0.30000000000000004`. Compare with `Math.abs(a-b) < Number.EPSILON`.
-- **★ Why `NaN !== NaN`?** IEEE-754 mandates: any comparison with `NaN` is false. So `===` can't detect it — use `Number.isNaN(x)`.
-- **`==` vs `===` with numbers?** `==` coerces (`"5" == 5` → `true`); `===` doesn't. Always `===`.
-- **Why is `parseInt("0.5")` `0`?** `parseInt` parses integers and stops at the `.`. Use `parseFloat` or `Number`.
+- **★🔥 Why** `0.1 + 0.2 !== 0.3`**?** IEEE-754 64-bit can't represent `0.1` or `0.2` exactly; the rounded sum is `0.30000000000000004`. Compare with `Math.abs(a-b) < Number.EPSILON`.
+- **★ Why** `NaN !== NaN`**?** IEEE-754 mandates: any comparison with `NaN` is false. So `===` can't detect it — use `Number.isNaN(x)`.
+- `==` **vs** `===` **with numbers?** `==` coerces (`"5" == 5` → `true`); `===` doesn't. Always `===`.
+- **Why is** `parseInt("0.5")` ****`0`**?** `parseInt` parses integers and stops at the `.`. Use `parseFloat` or `Number`.
 - **When use BigInt?** IDs / counters beyond `2^53`, big-int crypto. Don't use for decimals — BigInt is integers only.
 - **How to test "is integer" robustly?** `Number.isInteger(x)` — strict, no coercion, handles `NaN`/`Infinity` correctly.
-- **`Math.round(-2.5)`?** `-2` — half-rounds to **positive** infinity, not away from zero.
+- `Math.round(-2.5)`**?** `-2` — half-rounds to **positive** infinity, not away from zero.
 
 ---
 
@@ -497,3 +479,4 @@ RANDOM INT       Math.floor(Math.random()*(max-min+1)) + min
 BITWISE TRUNC    n | 0      ~~n      (32-bit signed, fast trunc)
 TOLERANCE EQ     Math.abs(a-b) < Number.EPSILON
 ```
+
