@@ -1,36 +1,11 @@
 # JavaScript — Variables & Constants
 
-A **variable** is a **named box** that holds a value. Three keywords create them:
-**`let`**, **`const`**, **`var`**.
+++***A variable is a named box that holds a value.***++ Three keywords create them:  
+`let`, `const`, `var`.
 
-```text
-              var (old)              const (modern)
-                  \                      /
-   function-scope ─\    DECLARING ──────/ can't reassign
-   re-declarable    \   VARIABLES     /  block-scope
-                     \               /
-   a NAME ───────────►  stores a   ◄──────── a VALUE
-                     /    value      \
-   let (modern)     /                 \
-   block-scope ────/                   \──── const = default,
-   reassignable                              let = when value changes,
-                                             var = avoid
-```
 
----
 
-## The basics
-
-```js
-let city = "Pune";       // can change later
-const pi = 3.14159;      // CANNOT be reassigned
-var old = "avoid this";  // old way — avoid
-
-let age = 25;
-age = 26;                // ✅ reassign a let
-```
-
-> **Default rule:** use **`const`**; switch to **`let`** only if the value must change; avoid **`var`**.
+> **Default rule:** use `const`; switch to `let` only if the value must change; avoid `var`.
 
 ---
 
@@ -67,11 +42,12 @@ const user = { name: "Akshay" };
 user.name = "Raj";    // ✅ allowed (mutating contents)
 user = {};            // ❌ TypeError (reassigning the variable)
 ```
+
 ```text
 { name: "Raj" }
 ```
 
-> To truly freeze contents → `Object.freeze()` (Topic 11).
+> To truly freeze contents → `Object.freeze()` .
 
 ---
 
@@ -103,7 +79,7 @@ function demo() {
 
 ---
 
-## Hoisting (intro — full detail in Topic 13)
+## Hoisting
 
 Declarations are conceptually "moved to the top"; the **value** is not.
 
@@ -115,15 +91,15 @@ console.log(myLet);  // ❌ ReferenceError (TDZ)
 let myLet = 5;
 ```
 
-- **`var`** → hoisted and initialized to `undefined`.
-- **`let` / `const`** → hoisted but **not initialized** → using them before their line throws
-  (the **Temporal Dead Zone**).
+- `var` → hoisted and initialized to `undefined`.
+- `let` ++***/***++ `const` ++***→ hoisted but not initialized → using them before their line throws
+(the Temporal Dead Zone).***++
 
 ---
 
 ## Key takeaways
 
-- **`const` by default, `let` when it changes, avoid `var`.**
+- `const` **by default,** `let` **when it changes, avoid** `var`**.**
 - `var` = function scope + re-declarable + hoists to `undefined` → bug-prone.
 - `let`/`const` = block scope + TDZ → safer.
 - `const` blocks **reassignment**, not **mutation** of objects/arrays.
@@ -132,6 +108,8 @@ let myLet = 5;
 ---
 
 ### Interview angle
+
 - ★ "Difference between `var`, `let`, `const`?" → use the table (scope, re-declare, re-assign, hoisting).
 - ★ "Can you change a `const` object?" → **Yes** — `const` locks the binding, not the contents.
-- "What's the TDZ?" → `let`/`const` exist but are unusable before their declaration line.
+- "What's the TDZ?" → `let`/`const` exist but are un
+- Let and const are hoisted, but they aren’t initialized, and that’s what creates the dead zone.usable before their declaration line.

@@ -1,36 +1,30 @@
 # JavaScript — Introduction & Setup
 
-**JavaScript (JS)** is a programming language that makes things *happen* — originally for
-interactive web pages, now runs almost everywhere. You write `.js` → an **engine** runs it.
-
 ```text
-                    BROWSER                          NODE.js
-                       \                               /
-        runs in ───────\        WHERE JS RUNS ───────/ servers, CLIs, scripts
-                        \                            /
-   you write .js ───────►   JavaScript ENGINE   ◄───────── reads your code
-                        /    (V8, SpiderMonkey)  \
-        parses ────────/                          \──── executes line by line
-                       /                            \
-                Single-threaded              Interpreted + JIT compiled
+JavaScript (JS) is the programming language that gives websites behavior. Like clicks, updates, and interactions. When you open a site, the server sends JavaScript to your browser. Your browser runs that JavaScript on the main thread, parsed, interpreted, and sped up by JIT. The server runs its own code separately on its own processors, and they talk over the internet. Threads are the paths of execution. JavaScript is usually single-threaded on the page, but you can add web workers for extra threads so the page stays smooth.
+
+Parse checks your code's structure and syntax. Interpret runs your code step by step. JIT turns hot spots into fast machine code while your program runs.
 ```
+
+
 
 ---
 
 ## How to run JS
 
-| Where | How | Use for |
-|-------|-----|---------|
-| **Browser console** | `F12` → Console → type code | Quick experiments |
-| **`<script>` tag** | JS inside an HTML file | Web pages |
-| **Node.js** | `node file.js` in terminal | Servers, scripts, learning |
-| **Online editor** | CodePen, JSFiddle | Zero setup |
+| Where               | How                         | Use for                    |
+| ------------------- | --------------------------- | -------------------------- |
+| **Browser console** | `F12` → Console → type code | Quick experiments          |
+| `<script>` **tag**  | JS inside an HTML file      | Web pages                  |
+| **Node.js**         | `node file.js` in terminal  | Servers, scripts, learning |
+| **Online editor**   | CodePen, JSFiddle           | Zero setup                 |
 
 First program — `console.log` prints to the screen (your main debugging tool):
 
 ```js
 console.log("Hello, JavaScript!");
 ```
+
 ```text
 Hello, JavaScript!
 ```
@@ -82,6 +76,7 @@ JS uses **ONE thread** — one task list, one step at a time — **no matter how
 console.log("first");   // step 1
 console.log("second");  // step 2 — waits for step 1
 ```
+
 ```text
 first
 second
@@ -132,16 +127,16 @@ undeclaredVar = 10;   // ❌ ReferenceError
 
 ## Key takeaways
 
-- JS runs in **browsers** and **Node.js**, via an **engine** (V8 most common).
-- `console.log()` prints output.
-- JS is **single-threaded** — one thing at a time, regardless of CPU cores.
-- JS is **interpreted + JIT-compiled** → fast start *and* fast execution.
-- `"use strict"` catches silent mistakes.
+- ++***JS runs in browsers and Node.js, via an engine (V8 most common).***++
+- ++***JS is single-threaded — one thing at a time, regardless of CPU cores.***++
+- ++***JS is interpreted + JIT-compiled → fast start and fast execution.***++
+- `"use strict"` ++***catches silent mistakes.***++
 
 ---
 
 ### Interview angle
-- ★ "Is JavaScript single-threaded?" → **Yes** (one call stack); concurrency comes from the
-  event loop + browser/Node APIs, not extra JS threads.
-- ★ "Compiled or interpreted?" → **Both** — modern engines use **JIT**.
+
+- ++***★ "Is JavaScript single-threaded?" → Yes (one call stack); concurrency comes from the
+event loop + browser/Node APIs, not extra JS threads.***++
+- ++***★ "Compiled or interpreted?" → Both — modern engines use JIT.***++
 - "What is `'use strict'`?" → safer mode; undeclared assignments and other silent errors throw.

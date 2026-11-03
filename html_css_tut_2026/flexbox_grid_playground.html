@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flexbox + Grid Playground</title>
+<style>
+  *{box-sizing:border-box} body{margin:0;font:15px/1.45 system-ui,Arial;background:#f4f6fb;color:#172033}
+  header{padding:18px 22px;background:#172033;color:white} h1{font-size:22px;margin:0 0 4px}
+  main{display:grid;grid-template-columns:minmax(260px, .9fr) minmax(300px,1.1fr);gap:16px;padding:16px;max-width:1200px;margin:auto}
+  section{background:white;border:1px solid #dce2ee;border-radius:12px;padding:14px;min-width:0}
+  h2{font-size:16px;margin:0 0 12px}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+  label{display:grid;gap:4px;font-size:12px;color:#4b5568;flex:1;min-width:110px}
+  select,input,textarea,button{font:inherit;border:1px solid #cbd3e1;border-radius:7px;padding:8px;background:white;color:#172033}
+  textarea{width:100%;min-height:250px;resize:vertical;font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}
+  button{cursor:pointer;background:#2457d6;color:white;border-color:#2457d6;font-weight:600}
+  .hint{font-size:12px;color:#687386;margin:8px 0}
+  .stage{border:1px dashed #b8c4d9;border-radius:10px;padding:12px;min-height:270px;background:#fbfcff}
+  #demo{display:flex;gap:10px;min-height:240px;align-content:start}
+  .item{background:#dbeafe;border:1px solid #8ab4f8;color:#17418b;border-radius:8px;padding:16px 8px;text-align:center;font-weight:700;min-width:54px}
+  .item:nth-child(2){background:#dcfce7;border-color:#86d9a4;color:#166534}
+  .item:nth-child(3){background:#fef3c7;border-color:#f5cc67;color:#854d0e}
+  .item:nth-child(4){background:#f3e8ff;border-color:#c6a5f5;color:#6b21a8}
+  .item:nth-child(5){background:#ffe4e6;border-color:#f9a8b4;color:#9f1239}
+  .status{font-size:12px;color:#4b5568;margin-top:8px}
+  @media(max-width:760px){main{grid-template-columns:1fr;padding:10px}}
+</style>
+</head>
+<body>
+<header><h1>Flexbox + Grid Playground</h1><div>Change the controls or edit the CSS, then see the layout update live.</div></header>
+<main>
+  <section>
+    <h2>1. Layout controls</h2>
+    <div class="controls">
+      <label>Layout mode<select id="mode"><option value="flex">Flexbox</option><option value="grid">Grid</option></select></label>
+      <label>Gap <select id="gap"><option>6px</option><option selected>10px</option><option>20px</option><option>32px</option></select></label>
+    </div>
+    <div id="flexControls">
+      <div class="controls">
+        <label>flex-direction<select id="direction"><option>row</option><option>row-reverse</option><option>column</option><option>column-reverse</option></select></label>
+        <label>justify-content<select id="justify"><option>flex-start</option><option>center</option><option>flex-end</option><option>space-between</option><option>space-around</option><option>space-evenly</option></select></label>
+      </div>
+      <div class="controls">
+        <label>align-items<select id="align"><option>stretch</option><option selected>center</option><option>flex-start</option><option>flex-end</option><option>baseline</option></select></label>
+        <label>flex-wrap<select id="wrap"><option>nowrap</option><option>wrap</option><option>wrap-reverse</option></select></label>
+      </div>
+    </div>
+    <div id="gridControls" hidden>
+      <div class="controls">
+        <label>grid-template-columns<select id="columns"><option>repeat(2, 1fr)</option><option selected>repeat(3, 1fr)</option><option>repeat(4, 1fr)</option><option>1fr 2fr</option><option>100px 1fr 2fr</option></select></label>
+        <label>justify-items<select id="justifyItems"><option>stretch</option><option>start</option><option selected>center</option><option>end</option></select></label>
+      </div>
+      <div class="controls">
+        <label>align-content<select id="alignContent"><option>start</option><option>center</option><option>end</option><option>space-between</option><option>space-around</option><option>stretch</option></select></label>
+        <label>grid-auto-rows<select id="rows"><option>60px</option><option selected>minmax(60px, auto)</option><option>100px</option></select></label>
+      </div>
+    </div>
+    <p class="hint">Tip: Flexbox is usually best for one-dimensional layouts (row or column). Grid is great for rows and columns together.</p>
+    <h2>2. Editable CSS</h2>
+    <textarea id="css" spellcheck="false">#demo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.item { flex: 0 1 100px; }</textarea>
+    <div class="controls" style="margin-top:8px"><button id="apply">Apply CSS</button><button id="reset" type="button">Reset CSS</button></div>
+    <div class="hint">Edit the CSS above and press “Apply CSS”. The preview uses your CSS.</div>
+  </section>
+  <section>
+    <h2>Live preview</h2>
+    <div class="stage"><div id="demo">
+      <div class="item">Item 1</div><div class="item">Item 2</div><div class="item">Item 3</div><div class="item">Item 4</div><div class="item">Item 5</div><div class="item">Item 6</div>
+    </div></div>
+    <div class="status" id="status">Flexbox layout active.</div>
+    <h2 style="margin-top:20px">What to experiment with</h2>
+    <ul>
+      <li><code>justify-content</code>: distributes items along the main axis.</li>
+      <li><code>align-items</code>: aligns items across the cross axis.</li>
+      <li><code>flex-wrap</code>: lets items move onto another line.</li>
+      <li><code>grid-template-columns</code>: sets the grid's column structure.</li>
+      <li><code>gap</code>: controls space between items in both layouts.</li>
+    </ul>
+  </section>
+</main>
+<style id="liveCSS"></style>
+<script>
+const $ = id => document.getElementById(id);
+const demo = $('demo'), css = $('css'), liveCSS = $('liveCSS');
+const defaults = css.value;
+function makeCSS(){
+  const mode = $('mode').value, gap = $('gap').value;
+  if(mode === 'flex'){
+    return `#demo {\n  display: flex;\n  flex-direction: ${$('direction').value};\n  justify-content: ${$('justify').value};\n  align-items: ${$('align').value};\n  flex-wrap: ${$('wrap').value};\n  gap: ${gap};\n}\n.item { flex: 0 1 100px; }`;
+  }
+  return `#demo {\n  display: grid;\n  grid-template-columns: ${$('columns').value};\n  justify-items: ${$('justifyItems').value};\n  align-content: ${$('alignContent').value};\n  grid-auto-rows: ${$('rows').value};\n  gap: ${gap};\n}\n.item { width: 100%; }`;
+}
+function updateFromControls(){
+  $('flexControls').hidden = $('mode').value !== 'flex';
+  $('gridControls').hidden = $('mode').value !== 'grid';
+  css.value = makeCSS(); applyCSS();
+}
+function applyCSS(){
+  liveCSS.textContent = css.value;
+  $('status').textContent = `${$('mode').value === 'flex' ? 'Flexbox' : 'Grid'} layout active. Preview updated from the CSS editor.`;
+}
+['mode','gap','direction','justify','align','wrap','columns','justifyItems','alignContent','rows'].forEach(id => $(id).addEventListener('change', updateFromControls));
+$('apply').addEventListener('click', applyCSS);
+$('reset').addEventListener('click', () => { css.value = defaults; $('mode').value='flex'; $('gap').value='10px'; $('direction').value='row'; $('justify').value='flex-start'; $('align').value='center'; $('wrap').value='wrap'; updateFromControls(); });
+updateFromControls();
+</script>
+</body>
+</html>

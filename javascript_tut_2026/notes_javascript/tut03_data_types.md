@@ -57,7 +57,7 @@ typeof null          // "object"     ← historic BUG (see below)
 
 ## Dynamic typing
 
-A variable can hold **any** type, and switch:
+++***A variable can hold any type, and switch:***++
 
 ```js
 let thing = "text";   // string
@@ -98,12 +98,12 @@ typeof null   // "object"   ← wrong, but never fixed
 
 ## Gotcha 2 — `null` vs `undefined`
 
-| | `undefined` | `null` |
-|---|------------|--------|
-| Meaning | not assigned yet (JS sets it) | intentionally empty (you set it) |
-| `typeof` | `"undefined"` | `"object"` (the bug) |
-| `null == undefined` | **true** (loose) | |
-| `null === undefined` | **false** (strict) | |
+|                      | `undefined`                             | `null`                                     |
+| -------------------- | --------------------------------------- | ------------------------------------------ |
+| Meaning              | ++***not assigned yet (JS sets it)***++ | ++***intentionally empty (you set it)***++ |
+| `typeof`             | `"undefined"`                           | `"object"` (the bug)                       |
+| `null == undefined`  | **true** (loose)                        |                                            |
+| `null === undefined` | **false** (strict)                      |                                            |
 
 ---
 
@@ -128,10 +128,11 @@ if ({})        { } // RUNS — objects are always truthy
 if ("0")       { } // RUNS — non-empty string
 ```
 
-**Why `[]`/`{}` are truthy:** they're **objects**, and *all objects are truthy* — empty or not.
+**Why** `[]`**/**`{}` **are truthy:** they're **objects**, and *all objects are truthy* — empty or not.
 Only primitives can be falsy.
 
 ### Real bug this causes
+
 ```js
 let arr = [];
 if (arr)            // ❌ always true (truthy) — wrong emptiness check
@@ -142,7 +143,7 @@ if (arr.length > 0) // ✅ correct way to test "has items"
 
 ## Key takeaways
 
-- **7 primitives** + **objects** (object/array/function).
+- ++***7 primitives + objects (object/array/function)***++.
 - `number` = all numbers; no separate int/float.
 - `typeof` arrays/null → `"object"` (array is object; null is a bug).
 - Primitives copy by **value**, objects by **reference**.
@@ -152,6 +153,7 @@ if (arr.length > 0) // ✅ correct way to test "has items"
 ---
 
 ### Interview angle
+
 - ★ "Primitive vs reference / pass-by-value vs reference?" → primitives copy value, objects share a reference.
 - ★ "What are the falsy values?" → `false, 0, -0, 0n, "", null, undefined, NaN` (and `[]`/`{}` are truthy).
 - "`typeof null`?" → `"object"` (historic bug).
