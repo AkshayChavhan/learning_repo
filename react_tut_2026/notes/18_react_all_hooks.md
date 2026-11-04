@@ -1,148 +1,97 @@
-Sure, Akshay, here's the full list in the same style.
+# 18: All React Hooks
 
-useState stores a value in a component, and changing it re-renders the component.
+> **Hooks** let function components use React features: state, side effects, context, refs, performance tools, and more.
+> Hooks **must be called at the top level** of a component or custom hook, never inside loops, conditions, or nested functions (except `use`).
 
-useEffect runs side effects after render, like fetching data or setting up a subscription.
+---
 
-useContext reads a value from the nearest context provider.
+## 📌 Quick Reference: all hooks at a glance
 
-useReducer manages state through a reducer function and dispatched actions.
+| Hook | Group | One-line purpose | Note |
+|---|---|---|---|
+| `useState` | State | Stores a value. Changing it re-renders | 04 |
+| `useReducer` | State | Manages related state through a reducer and actions | 10 |
+| `useEffect` | Effects | Runs side effects after render | 05 |
+| `useLayoutEffect` | Effects | Like `useEffect`, but runs before the browser paints | this note |
+| `useInsertionEffect` | Effects | Injects styles before layout. For library authors | this note |
+| `useContext` | Context | Reads the nearest Provider's value | 09 |
+| `useRef` | Refs | A mutable `{ current }` box that doesn't re-render | 07 |
+| `useImperativeHandle` | Refs | Chooses what a parent sees through a ref | 07 |
+| `useMemo` | Performance | Caches a computed value | 06 |
+| `useCallback` | Performance | Caches a function reference | 06 |
+| `useTransition` | Concurrent | Marks an update as low priority | this note |
+| `useDeferredValue` | Concurrent | Lets a value lag behind for smoother rendering | this note |
+| `useId` | Utility | Generates a unique, stable ID | this note |
+| `useSyncExternalStore` | External data | Subscribes to data outside React | this note |
+| `useDebugValue` | Debugging | Labels a custom hook in DevTools | this note |
+| `use` | Async / context | Reads a promise or context. Can be conditional | this note |
+| `useActionState` | Forms / actions | Tracks the state and result of an action | this note |
+| `useOptimistic` | Forms / actions | Shows an expected value while an update is pending | this note |
+| `useFormStatus` | Forms (`react-dom`) | Reads the pending state of the parent form | this note |
 
-useRef holds a mutable value that doesn't cause a re-render, often used to reach a DOM element.
+---
 
-useMemo caches a computed value until its dependencies change.
+## 🟢 Beginner: the everyday hooks
 
-useCallback caches a function reference until its dependencies change.
-
-useLayoutEffect is like useEffect, but it runs before the browser paints.
-
-useImperativeHandle controls what a parent can access through a ref.
-
-useInsertionEffect runs style-injection code before the DOM is changed. It's mainly for library authors.
-
-useId creates a unique, stable ID for accessibility attributes.
-
-useTransition marks an update as low priority, so urgent updates stay responsive.
-
-useDeferredValue lets a value update a little later, for smoother rendering.
-
-useSyncExternalStore subscribes to an external store.
-
-useDebugValue adds a label to a custom hook in React DevTools.
-
-use reads a promise or a context during rendering, and it can be called inside conditions and loops.
-
-useActionState tracks the state and result of a form action.
-
-useOptimistic shows an expected value immediately while a real update is pending.
-
-useFormStatus, from react-dom, gives a child component the pending state of its parent form.
-
-Sure, Akshay. We'll go one at a time. The first is useState.
-
-useState gives a component its own memory. You call it with an initial value, and it returns the current value and a setter function. When you call the setter, React re-renders the component with the new value.
+### `useState`: a component's memory
 
 ```jsx
 const [count, setCount] = useState(0);
+// count = current value, setCount = changes it and re-renders
 ```
 
-Good. Next is useEffect. It runs side effects after the component renders, such as fetching data, setting up a timer, or subscribing to an event. You control when it runs with the dependency array, and you can return a cleanup function to undo what it started.
+### `useEffect`: work after render
 
 ```jsx
 useEffect(() => {
   document.title = `Count: ${count}`;
+  return () => { /* cleanup */ };
 }, [count]);
 ```
 
-Good point, Akshay. With `useEffect`, you can map the component lifecycle like this.
+| Dependency array | When the effect runs |
+|---|---|
+| *(none)* | After every render |
+| `[]` | Once, after the first render (mount) |
+| `[a, b]` | After mount, and when `a` or `b` changes |
 
-Mount: an effect with an empty dependency array runs once, after the first render.
+- The **returned function** is the cleanup. It runs before the next effect, and on unmount.
 
-Update: an effect with dependencies runs again whenever one of those values changes. With no array, it runs after every render.
-
-Unmount: the function you return from the effect runs as cleanup when the component is removed.
-
-```jsx
-useEffect(() => {
-  console.log("mounted or updated");
-  return () => console.log("cleanup on unmount or before next run");
-}, [count]);
-```
-
- Right, Akshay. Here's what each dependency array setting does.
-
-No array at all: the effect runs after every render.
-
-An empty array: the effect runs only once, after the first render, like mount.
-
-An array with values: the effect runs after the first render, and again whenever any listed value changes, compared by reference.
-
-One detail to remember: every value the effect uses from the component should be in the array. If you leave one out, the effect can use an outdated value.
-
-useContext reads the value from the nearest provider of a context above the component. You don’t need to pass the value through props at each level.
-The component re-renders whenever that provider’s value changes.
-
-You're right, Akshay. Here's the full pattern, with the context created and provided.
+### `useContext`: read a shared value
 
 ```jsx
-import { createContext, useContext } from "react";
-
 const ThemeContext = createContext("light");
 
 function Button() {
-  const theme = useContext(ThemeContext);
-  return ;
+  const theme = useContext(ThemeContext);      // "dark" below
+  return <button className={theme}>Click</button>;
 }
 
-export default function App() {
-  return (
-    <ThemeContext.Provider value="dark">
-      <Button />
-    
-  );
-}
+<ThemeContext.Provider value="dark">
+  <Button />
+</ThemeContext.Provider>
 ```
 
-`createContext` makes the context with a default value, "light". The provider in `App` supplies "dark" to everything inside it. `Button` reads that value with `useContext`, so it gets "dark" without any props.
+---
 
+## 🟡 Intermediate: state, refs, and performance
 
-useReducer manages state through a reducer function. You pass it the reducer and an initial value, and it returns the current state plus a dispatch function. You call dispatch with an action, and the reducer returns the next state.
-
-
-You're right, Akshay. Here's the complete pattern, with the reducer defined.
+### `useReducer`: state with actions
 
 ```jsx
-import { useReducer } from "react";
-
 function reducer(state, action) {
   switch (action.type) {
-    case "increment":
-      return { count: state.count + 1 };
-    case "reset":
-      return { count: 0 };
-    default:
-      return state;
+    case "increment": return { count: state.count + 1 };
+    case "reset":     return { count: 0 };
+    default:          return state;
   }
 }
 
-export default function Counter() {
-  const [state, dispatch] = useReducer(reducer, { count: 0 });
-
-  return (
-    <>
-      {state.count}
-      
-      
-    </>
-  );
-}
+const [state, dispatch] = useReducer(reducer, { count: 0 });
+dispatch({ type: "increment" });
 ```
 
-The reducer decides the next state based on the action type, and the component sends actions through dispatch.
-
-Good. Next is useRef.
-
-useRef returns a box with a single current property. Changing current doesn't re-render the component, so it's good for holding values you need across renders without triggering updates, most often a DOM element.
+### `useRef`: a box that doesn't re-render
 
 ```jsx
 const inputRef = useRef(null);
@@ -150,82 +99,77 @@ const inputRef = useRef(null);
 inputRef.current.focus();
 ```
 
-Good point, Akshay. forwardRef lets a component receive a ref from its parent and pass it down to a DOM element inside.
-
-Normally a ref can't be passed to a function component, because React keeps it separate from props. forwardRef wraps the component so it gets the ref as a second argument.
+| Ref pattern | Purpose |
+|---|---|
+| `ref` on a DOM element | Access the element (focus, scroll, measure) |
+| `forwardRef` | Receive a ref from the parent and pass it down |
+| `useImperativeHandle` | Expose only chosen methods to the parent |
 
 ```jsx
-import { forwardRef } from "react";
-
 const FancyInput = forwardRef(function FancyInput(props, ref) {
-  return <input ref={ref} {...props} />;
+  return <input ref={ref} {...props} />;   // ref is the second argument
 });
 
-// in the parent
-const inputRef = useRef(null);
-<FancyInput ref={inputRef} />;
-```
-
-The parent's ref lands on the real input, so the parent can focus it.
-
-Sure, Akshay. Here's how it fits together with useImperativeHandle.
-
-Inside the child, you wrap the component in forwardRef, so it receives the parent's ref. Then useImperativeHandle decides what goes into that ref. Instead of the whole input, the parent gets only the methods you choose.
-
-```jsx
 const MyInput = forwardRef(function MyInput(props, ref) {
   const inputRef = useRef(null);
-
   useImperativeHandle(ref, () => ({
-    focus: () => inputRef.current.focus(),
+    focus: () => inputRef.current.focus(),  // parent only gets focus()
   }));
-
   return <input ref={inputRef} />;
 });
-
-// in the parent
-const myRef = useRef(null);
-<MyInput ref={myRef} />;
-myRef.current.focus();
 ```
 
-The parent calls `focus`, which runs the input's focus method inside the child. The parent never touches the input directly.
-
-
-Good. Next is useMemo. It caches a computed value and only recalculates it when one of its dependencies changes. It's useful for expensive calculations.
+### `useMemo` and `useCallback`: keep values stable
 
 ```jsx
 const total = useMemo(() => items.reduce((sum, i) => sum + i.price, 0), [items]);
-```
-
-Good. Next is useCallback. It caches a function reference, so the same function is passed on each render until its dependencies change. That matters when you pass a function to a memoized child.
-
-```jsx
 const handleClick = useCallback(() => console.log(count), [count]);
 ```
 
-Good. Next is useLayoutEffect. It works like useEffect, but it runs synchronously after the DOM updates and before the browser paints. Use it when you need to measure or adjust the layout, so the user doesn't see a flicker.
+- `useMemo` caches a **value**. `useCallback` caches a **function**.
+- Useful when passing values to a `memo` child or using them in an effect's dependencies.
+- Details: see note 06.
+
+---
+
+## 🔴 Expert: layout, concurrency, external data, and forms
+
+### `useLayoutEffect`: run before paint
 
 ```jsx
 useLayoutEffect(() => {
-  const height = boxRef.current.offsetHeight;
-  console.log(height);
+  const height = boxRef.current.offsetHeight;   // measure
+  // adjust layout here, before the user sees the frame
 }, []);
 ```
 
-Good. Next is useId. It generates a unique, stable ID for a component, which is useful for linking a label to an input, especially when the same component appears more than once.
+| | `useEffect` | `useLayoutEffect` |
+|---|---|---|
+| Runs | After paint | After DOM update, **before** paint |
+| Use for | Most side effects | Measuring or fixing layout without a flicker |
+
+### `useInsertionEffect`: for CSS-in-JS libraries
+
+Runs before layout effects, so a library can inject `<style>` rules before the DOM reads them. Application code rarely needs it. It can't access refs or state.
+
+### `useId`: stable unique IDs
 
 ```jsx
-const id = useId();
-
-<input id={id} />
+function Field() {
+  const id = useId();
+  return (
+    <>
+      <label htmlFor={id}>Email</label>
+      <input id={id} />
+    </>
+  );
+}
 ```
 
-The ID stays the same across renders, and it's unique on the page.
+- The same ID on the server and client, so it's safe for hydration.
+- Use it for `id`, `htmlFor`, and ARIA attributes. Don't use it for list `key`s.
 
-useTransition. It marks an update as low priority, so urgent updates, like typing, stay responsive while the slower one renders in the background.
-
-Here's a search filter where typing stays smooth and a spinner shows during the slower update:
+### `useTransition`: keep typing responsive
 
 ```jsx
 import { useState, useTransition } from "react";
@@ -236,78 +180,116 @@ export default function Search({ items }) {
   const [isPending, startTransition] = useTransition();
 
   function handleChange(e) {
-    setQuery(e.target.value);
+    const value = e.target.value;
+    setQuery(value);                        // urgent: input updates now
     startTransition(() => {
-      setFiltered(items.filter(item => item.includes(e.target.value)));
+      setFiltered(items.filter(item => item.includes(value)));  // low priority
     });
   }
 
   return (
     <>
       <input value={query} onChange={handleChange} />
-      {isPending && Updating...}
-      
-        {filtered.map(item => {item})}
-      
+      {isPending && <p>Updating...</p>}
+      <ul>
+        {filtered.map(item => <li key={item}>{item}</li>)}
+      </ul>
     </>
   );
 }
 ```
 
-The input updates immediately with `setQuery`, so typing feels instant. The filter list update is wrapped in `startTransition`, so React can delay it if needed. While it's pending, `isPending` is true and "Updating..." shows.
+```text
+Type "a" → input shows "a" immediately; list updates in the background
+```
 
-Good. Next is useDeferredValue. It gives you a copy of a value that can lag behind the latest one, so a slow render can use the older value while the new one catches up.
+### `useDeferredValue`: lag a value behind
 
 ```jsx
 const deferredQuery = useDeferredValue(query);
+// use deferredQuery for the slow list; query for the input
 ```
 
-It's similar to useTransition, but it works on a value you already have, instead of wrapping an update.
+| | `useTransition` | `useDeferredValue` |
+|---|---|---|
+| Works on | An update you wrap | A value you already have |
+| Gives you | `isPending` and `startTransition` | A value that may be older |
 
-Good. Next is useSyncExternalStore. It lets a component subscribe to data that lives outside React, like a browser API or a third-party store, and re-renders when that data changes.
-
-```jsx
-const width = useSyncExternalStore(subscribe, () => window.innerWidth);
-```
-
-You pass a subscribe function and a function that reads the current value.
-
-Good. Next is useDebugValue. It adds a label to a custom hook in React DevTools, so you can see its state while debugging. It doesn't affect how the app behaves.
+### `useSyncExternalStore`: subscribe to outside data
 
 ```jsx
-useDebugValue(isOnline ? "Online" : "Offline");
-```
+// Define subscribe OUTSIDE the component, so its identity is stable
+function subscribe(callback) {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+}
 
-Good. Next is `use`. It reads a promise or a context during rendering. Unlike other hooks, it can be called inside conditions and loops.
-
-```jsx
-const theme = use(ThemeContext);
-```
-
-Good question, Akshay. The main use is reading a promise. You pass it a promise, and the component suspends until it resolves, with a Suspense boundary showing a fallback.
-
-```jsx
-function Comments({ commentsPromise }) {
-  const comments = use(commentsPromise);
-  return {comments.map(c => {c.text})};
+function WindowWidth() {
+  const width = useSyncExternalStore(subscribe, () => window.innerWidth);
+  return <p>Width: {width}</p>;
 }
 ```
 
-The other use is reading a context, the same way useContext does, but with the flexibility to call it conditionally.
+> Use it for browser APIs and external stores. Prefer normal state for data React owns.
+
+### `useDebugValue`: label for DevTools
 
 ```jsx
+function useOnlineStatus() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  // ... subscribe with an effect ...
+  useDebugValue(isOnline ? "Online" : "Offline");   // shows in DevTools only
+  return isOnline;
+}
+```
+
+### `use`: read a promise or context, conditionally
+
+```jsx
+// Read a promise: suspends until it resolves (needs a Suspense boundary)
+function Comments({ commentsPromise }) {
+  const comments = use(commentsPromise);
+  return <ul>{comments.map(c => <li key={c.id}>{c.text}</li>)}</ul>;
+}
+
+// Read a context inside a condition (useContext can't do this)
 if (show) {
   const theme = use(ThemeContext);
 }
 ```
 
-Here's a full example. A name shows the new value immediately while the save is still running.
+> Create the promise **outside** the component (or cache it). Creating a new promise on every render causes an endless suspend loop.
+
+### `useActionState`: track a form action's result
+
+```jsx
+import { useActionState } from "react";
+
+async function submitName(prevState, formData) {
+  const name = formData.get("name");
+  return name ? { message: `Saved ${name}` } : { message: "Name required" };
+}
+
+function NameForm() {
+  const [state, formAction, isPending] = useActionState(submitName, { message: "" });
+
+  return (
+    <form action={formAction}>
+      <input name="name" />
+      <button disabled={isPending}>Save</button>
+      <p>{state.message}</p>
+    </form>
+  );
+}
+```
+
+### `useOptimistic`: show the expected value first
 
 ```jsx
 import { useOptimistic, useState } from "react";
 
 async function saveName(newName) {
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  await new Promise(resolve => setTimeout(resolve, 1000));   // fake slow save
 }
 
 export default function NameEditor() {
@@ -316,46 +298,89 @@ export default function NameEditor() {
 
   async function handleSubmit(formData) {
     const newName = formData.get("name");
-    setOptimisticName(newName);
+    setOptimisticName(newName);     // shows immediately
     await saveName(newName);
-    setName(newName);
+    setName(newName);               // store the real value
   }
 
   return (
-    
+    <form action={handleSubmit}>
+      <p>Current: {optimisticName}</p>
+      <input name="name" />
+      <button>Save</button>
+    </form>
   );
 }
 ```
 
-When you submit, `setOptimisticName` shows the new name right away. The `saveName` call takes a second. Then `setName` stores the real value. Until then, the screen shows the optimistic value.
+- The screen shows `optimisticName` while the save is pending.
+- If the action fails before `setName`, React **reverts** to the real `name` once the action finishes.
 
-If the save failed and you never called `setName`, React would fall back to the real name.
-
-Good, Akshay. Next is useFormStatus. It's from react-dom, and a child component inside a form can use it to read whether that form is currently submitting.
+### `useFormStatus`: the parent form's pending state
 
 ```jsx
 import { useFormStatus } from "react-dom";
 
 function SubmitButton() {
-  const { pending } = useFormStatus();
-  return ;
+  const { pending } = useFormStatus();   // reads the nearest parent <form>
+  return <button disabled={pending}>{pending ? "Saving..." : "Save"}</button>;
 }
+
+<form action={saveAction}>
+  <input name="name" />
+  <SubmitButton />                       {/* must be INSIDE the form */}
+</form>
 ```
 
-The button disables itself while the parent form is pending, without the form having to pass that down as a prop.
+- The child must sit **inside** the `<form>`. It reads the status of the nearest form above it.
+- It does **not** work in the component that renders the `<form>` itself.
 
-React tracks the form's submission. When a form with an `action` is submitted, React marks that form as pending until the action finishes. `useFormStatus` reads that state from the nearest parent form.
+---
 
-So the flow is: the user submits, React sets pending to true for that form, the action runs, and when it finishes, pending goes back to false. Any child component using `useFormStatus` re-renders with the new value.
+## 🧭 Rules of Hooks
 
-Important point: `useFormStatus` only works in a component rendered inside the form, not in the component that owns the form.
+| Rule | Why |
+|---|---|
+| Call hooks at the **top level** | React relies on the same hooks running in the same order each render |
+| Call hooks only in **components or custom hooks** | Hooks need React's render context |
+| Custom hooks start with `use` | Lets linters check the rules |
+| Exception: **`use`** can be conditional | It doesn't depend on call order the same way |
 
-No, Akshay, `useFormStatus` doesn't search for a form by itself. It connects through the React tree. When a component renders inside a `form`, React passes that form's status down to it.
+> Enable `eslint-plugin-react-hooks` to catch violations and missing dependencies.
 
-In the example, `SubmitButton` is rendered inside the `form` element. So when you submit, React marks that form as pending, and `useFormStatus` in `SubmitButton` reads that state from the nearest parent form above it.
+---
 
-So the link comes from placement: the child has to sit inside the form, and it reads the nearest one.
+## ⚠️ Common Mistakes
 
-Does that make sense?   
+| Mistake | Fix |
+|---|---|
+| Calling a hook inside `if` or a loop | Move it to the top level |
+| Missing dependency in `useEffect`, `useMemo`, `useCallback` | Add it, or use the lint rule |
+| Creating a promise inside a component for `use` | Create it outside, or cache it |
+| Defining `subscribe` inside the component for `useSyncExternalStore` | Define it outside |
+| Using `useState` for values that should not re-render | Use `useRef` |
+| Using `useRef` for values the screen shows | Use `useState` |
+| Using `useFormStatus` in the form's own component | Put it in a child inside the form |
 
+---
 
+## 🎯 Interview Quick Answers
+
+| Question | Short answer |
+|---|---|
+| What are hooks? | Functions that let function components use state, effects, context, refs, and other React features. |
+| Why must hooks be called at the top level? | React matches hook calls to their state by call order, so the order must stay the same each render. |
+| `useEffect` vs `useLayoutEffect`? | `useEffect` runs after paint. `useLayoutEffect` runs before paint, for layout measurements. |
+| `useMemo` vs `useCallback`? | `useMemo` caches a value. `useCallback` caches a function. |
+| `useTransition` vs `useDeferredValue`? | `useTransition` wraps an update as low priority. `useDeferredValue` gives a lagging copy of a value. |
+| What does `use` add? | It reads promises and context, and it can be called conditionally. |
+| What does `useOptimistic` do? | It shows an expected value during a pending action, then reverts or updates to the real value. |
+| What does `useFormStatus` need? | To be rendered inside the `<form>`. It reads the nearest parent form's status. |
+
+---
+
+## ✅ Key Takeaways
+
+- Hooks fall into groups: **state**, **effects**, **context**, **refs**, **performance**, **concurrent**, **external data**, **forms**, and **debugging**.
+- Start with `useState`, `useEffect`, `useContext`, `useRef`, `useMemo`, and `useCallback`. Learn the others when you need them.
+- Always follow the **rules of hooks**, and keep dependency arrays complete.
