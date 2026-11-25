@@ -20,6 +20,10 @@ Everything in notes 01 and 02, checked against this app.
 | `not-found.jsx`, `notFound()` | ✅ | [10](10_not_found.md) |
 | `template.jsx` | ✅ | [11](11_template_vs_layout.md) |
 | Parallel routes `@slot`, `default.jsx` | ✅ | [12](12_parallel_routes_and_default.md) |
+| Time-based caching (`use cache`, `cacheLife`) | ✅ | [15](15_time_based_caching.md) |
+| `fetch` `next.revalidate` vs `no-store` | ✅ | [16](16_fetch_revalidate_vs_no_store.md) |
+| `updateTag`, `revalidatePath`, `revalidateTag` | ✅ | [17](17_on_demand_updateTag_revalidateTag_revalidatePath.md) |
+| Previous model (route `revalidate`, `unstable_cache`) | ✅ documented | [18](18_previous_model_and_notes_corrections.md) |
 
 ## Test results
 

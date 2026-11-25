@@ -24,6 +24,10 @@ Source notes: [01_nextjs.md](../../notes/01_nextjs.md) and [02_special_files.md]
 | 12 | [Parallel routes and default](12_parallel_routes_and_default.md) | `@slot`, `default.jsx` | `app/dashboard/@stats/*` |
 | 13 | [Route handlers (API)](13_route_handlers_api.md) | `route.js`, HTTP-method exports | `app/api/**/route.js` |
 | 14 | [Verification and gotchas](14_verification_and_gotchas.md) | Checklist, real test results, notes corrections | all |
+| 15 | [Time-based caching](15_time_based_caching.md) | `"use cache"`, `cacheLife`, stale-while-revalidate | `lib/cached.js`, `app/cache/page.jsx` |
+| 16 | [fetch: revalidate vs no-store](16_fetch_revalidate_vs_no_store.md) | `next.revalidate`, `cache: "no-store"`, client-side pitfall | `app/cache/page.jsx` |
+| 17 | [On-demand revalidation](17_on_demand_updateTag_revalidateTag_revalidatePath.md) | `updateTag`, `revalidatePath`, `revalidateTag` | `app/cache/actions.js`, `app/api/revalidate/route.js` |
+| 18 | [Previous model and notes corrections](18_previous_model_and_notes_corrections.md) | Route-segment `revalidate`, `unstable_cache`, deprecated signatures | all of the above |
 
 ## Run it
 
@@ -46,6 +50,7 @@ npm run build && npm start
 /posts/999             missing post -> notFound() -> not-found.jsx
 /dashboard             layout + @stats slot + layout counter
 /dashboard/settings    template counter (resets) + layout counter (kept)
+/cache                 caching lab: time-based, fetch options, updateTag, revalidatePath
 /api/hello             route handler
 /api/posts             route handler (list)
 /api/posts/1           dynamic route handler
