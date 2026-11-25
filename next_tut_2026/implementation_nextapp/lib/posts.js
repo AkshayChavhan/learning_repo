@@ -16,3 +16,10 @@ export async function getPosts() {
 export async function getPost(id) {
   return posts.find((post) => post.id === id) ?? null;
 }
+
+// Used by the caching lab (app/cache). Lives only as long as the server process.
+export function addPost(title, body) {
+  const post = { id: String(posts.length + 1), title, body };
+  posts.push(post);
+  return post;
+}
