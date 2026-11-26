@@ -29,6 +29,35 @@ Server Component  →  runs on the server, sends only HTML/result to the browser
 Client Component  →  runs in the browser, handles clicks, state, and effects
 ```
 
+**Pre-rendered HTML** = Next.js builds the full HTML on the server and sends it to the browser instantly — you see content fast.
+
+**Hydration** = Then React "wakes up" only the Client Components (adds event listeners, state) so buttons/forms become interactive.
+
+Server Components = never hydrated (no JS sent).
+
+Client Components = hydrated (JS sent to browser).
+
+## Server vs Client Components — Rendering & Hydration
+
+| Aspect | 🟢 Server Component | 🔵 Client Component |
+|---|---|---|
+| **Renders on server** | ✅ Always | ✅ (initial HTML only) |
+| **Runs on client (browser)** | ❌ Never | ✅ Yes |
+| **HTML sent to browser** | ✅ Yes | ✅ Yes |
+| **JS bundle sent to browser** | ❌ No | ✅ Yes |
+| **Hydration** | ❌ Not needed | ✅ Yes (after HTML loads) |
+| **Can use state/hooks** (`useState`, `useEffect`) | ❌ No | ✅ Yes |
+| **Can access browser APIs** (`window`, `localStorage`) | ❌ No | ✅ Yes |
+| **Default in Next.js (App Router)** | ✅ Yes | ❌ No (`"use client"` needed) |
+
+**Flow (both types):**
+
+```text
+Server pre-renders HTML → HTML sent to browser → (Client Component only) JS bundle loads → Hydration on client
+```
+
+**Rule of thumb:** Server Component code *never* leaves the server. Client Component code runs once on the server (for the first HTML) **and again** in the browser (for interactivity).
+
 ### Folders are routes
 
 In the App Router, the folder structure inside `app/` **is** the routing.
@@ -79,7 +108,7 @@ export default function Counter() {
 
 ### Data fetching in Server Components
 
-A Server Component can be `async` and `await` the data directly. No `useEffect` is needed.
+++**A Server Component can be**++ `async` ++**and**++ `await` ++**the data directly. No**++ `useEffect` ++**is needed.**++
 
 ```jsx
 // app/posts/page.jsx  (Server Component)
@@ -160,7 +189,7 @@ Client Component ("use client")
 ```
 
 - A `"use client"` file is a **boundary**. Everything it imports also runs on the client.
-- Server Components can render Client Components, but Client Components can't import Server Components directly. They can receive them as `children` or props.
+- ***Server Components can render Client Components, but Client Components can't import Server Components directly. They can receive them as*** `children` ***or props.***
 
 ### Where to put the `"use client"` line
 
