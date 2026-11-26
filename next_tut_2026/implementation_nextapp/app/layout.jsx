@@ -6,7 +6,8 @@ export const metadata = {
   description: "Covers the App Router notes: layouts, special files, routes and APIs.",
 };
 
-// Root layout: required. Must contain <html> and <body>.
+// Root layout: required. Must contain <html> and <body>. <main> lives here, so every page renders inside it.
+// Alternative: multiple root layouts via route groups. See learning/03_root_layout_and_navigation.md.
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

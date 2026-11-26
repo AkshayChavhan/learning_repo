@@ -65,3 +65,4 @@ Source: `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions
 - Templates reset state on navigation to their own segment only, not to deeper ones.
 - Parallel slots need a `default.jsx` or they can fail on hard refresh.
 - Internal page links: `<Link>`. Route handlers: plain `<a>`.
+- The root layout must exist and hold `<html>`/`<body>`. Multiple root layouts (route groups) are the alternative, with full page reloads between groups. See [03](03_root_layout_and_navigation.md).
